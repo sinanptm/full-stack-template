@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "isolatedModules": true,
     "paths": {
       "@/*": ["./src/*"]
     },

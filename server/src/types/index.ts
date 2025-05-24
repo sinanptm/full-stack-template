@@ -28,6 +28,8 @@ export enum StatusCode {
   ServiceUnavailable = 503,
 }
 
+export type DateString = Date | string;
+
 export interface CustomRequest extends Request {
   user?: {
     email: string;

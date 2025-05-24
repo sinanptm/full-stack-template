@@ -4,13 +4,13 @@ import IOtpRepository from "@/domain/interfaces/repositories/IOtpRepository";
 import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import ITokenService from "@/domain/interfaces/services/ITokenService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
-import MailService from "@/infrastructure/services/MailService";
 import { NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { inject, injectable } from "inversify";
 import { UserRole } from "@/types";
 import { generateOtp } from "@/utils";
 import { differenceInMinutes } from "date-fns";
 import { OTP_EXPIRATION_MINUTES } from "@/config";
+import IMailService from "@/domain/interfaces/services/IMailService";
 
 interface Payload {
   email: string;
@@ -24,7 +24,7 @@ export default class OtpUseCase {
     @inject(Services.TokenService) private readonly tokenService: ITokenService,
     @inject(Services.ValidatorService) private readonly validatorService: IValidatorService,
     @inject(Repositories.OtpRepository) private readonly otpRepository: IOtpRepository,
-    @inject(Services.MailService) private readonly mailService: MailService,
+    @inject(Services.MailService) private readonly mailService: IMailService,
   ) {}
 
   async exec({ email, otp }: Payload) {
