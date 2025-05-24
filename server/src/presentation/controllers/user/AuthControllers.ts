@@ -67,4 +67,11 @@ export default class AuthControllers {
     await this.resetPasswordUseCase.exec(req.body);
     res.status(StatusCode.Success).json({ message: "Password changing Successful, Please login again" });
   });
+
+  refreshAccessToken = tryCatch(async (req: Request, res: Response) => {
+    const { user_token } = req.cookies;
+    if (!user_token) return res.status(StatusCode.Forbidden).json({ message: "Unauthenticated" });
+    const { accessToken } = await this.signinUseCase.refreshAccessToken(user_token);
+    res.status(StatusCode.Success).json({ accessToken });
+  });
 }

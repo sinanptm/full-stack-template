@@ -5,9 +5,11 @@ import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import IHashService from "@/domain/interfaces/services/IHashService";
 import IMailService, { EmailType } from "@/domain/interfaces/services/IMailService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
-import { NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
+import { ForbiddenError, NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { inject, injectable } from "inversify";
 import { generateOtp } from "@/utils";
+import ITokenService from "@/domain/interfaces/services/ITokenService";
+import { UserRole } from "@/types";
 
 interface Payload {
   email: string;
@@ -22,6 +24,7 @@ export default class SigninUseCase {
     @inject(Repositories.OtpRepository) private readonly otpRepository: IOtpRepository,
     @inject(Services.MailService) private readonly mailService: IMailService,
     @inject(Services.HashService) private readonly hashService: IHashService,
+    @inject(Services.TokenService) private readonly tokenService: ITokenService
   ) {}
 
   async exec({ email, password }: Payload) {
@@ -55,5 +58,18 @@ export default class SigninUseCase {
       otp,
       type,
     });
+  }
+
+  async refreshAccessToken(token: string): Promise<{ accessToken: string; }> {
+    const { id, email } = this.tokenService.verifyRefreshToken(token);
+
+    const user = await this.userRepository.findById(id);
+    if (!user) throw new UnauthorizedError("Unauthorized");
+
+    if (user.isBlocked) throw new ForbiddenError("Account is blocked");
+
+    const accessToken = this.tokenService.createAccessToken({ email, id, role: UserRole.User });
+
+    return { accessToken };
   }
 }

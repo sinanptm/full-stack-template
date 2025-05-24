@@ -49,17 +49,20 @@ export default class OtpUseCase {
       throw new UnauthorizedError("OTP expired");
     }
 
-    await this.otpRepository.deleteMany(email);
+    // await this.otpRepository.deleteMany(email);
 
     const accessToken = this.tokenService.createAccessToken({
       email: user.email!,
       id: user._id!.toString(),
       role: UserRole.User,
     });
+
     const refreshToken = this.tokenService.createRefreshToken({
       email: user.email!,
       id: user._id!.toString(),
     });
+
+    await this.userRepository.update(user._id!, { token: refreshToken });
 
     return {
       accessToken,

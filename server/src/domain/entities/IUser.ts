@@ -5,6 +5,8 @@ export default interface IUser {
   readonly name?: string;
   readonly email?: string;
   readonly password?: string;
+  readonly token?: string;
+  readonly isBlocked?: boolean;
   readonly createdAt?: DateString;
   readonly updatedAt?: DateString;
 }
