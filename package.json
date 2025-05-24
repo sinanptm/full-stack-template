@@ -1,0 +1,22 @@
+{
+  "name": "full-stack-template",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"pnpm --prefix server dev\" \"pnpm --prefix web dev\"",
+    "format": "prettier --write ."
+  },
+  "directories": {
+    "web": "web",
+    "server": "server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.4",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.5.3"
+  }
+}

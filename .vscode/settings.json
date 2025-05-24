@@ -1,0 +1,50 @@
+{
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "icon": "check",
+            "type": "tag",
+            "foreground": "#FFFF00",
+            "background": "#000000"
+        },
+        "FIXME": {
+            "icon": "alert",
+            "type": "tag",
+            "foreground": "#FF0000",
+            "background": "#000000"
+        },
+        "BUG": {
+            "icon": "bug",
+            "type": "tag",
+            "foreground": "#FF4500",
+            "background": "#000000"
+        },
+        "HACK": {
+            "icon": "flame",
+            "type": "tag",
+            "foreground": "#FF69B4",
+            "background": "#000000"
+        },
+        "NOTE": {
+            "icon": "note",
+            "type": "tag",
+            "foreground": "#00CED1",
+            "background": "#000000"
+        },
+        "OPTIMIZE": {
+            "icon": "zap",
+            "type": "tag",
+            "foreground": "#32CD32",
+            "background": "#000000"
+        }
+    },
+    "todo-tree.general.tags": [
+        "TODO",
+        "FIXME",
+        "BUG",
+        "HACK",
+        "NOTE",
+        "OPTIMIZE"
+    ],
+    "prettier.configPath": ".prettierrc",
+    "editor.formatOnSave": true
+}
