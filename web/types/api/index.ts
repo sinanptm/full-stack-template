@@ -3,6 +3,7 @@ import { GetRoutes, GetRoutesWithParams } from "./GetRoutes";
 import { PutRoutes, PutRoutesWithParams } from "./PutRoutes";
 import { DeleteRoutes, DeleteRoutesWithParams } from "./DeleteRoutes";
 import { PatchRoutes, PatchRoutesWithParams } from "./PatchRoutes";
+import { UserRole } from "..";
 
 export enum StatusCode {
     Success = 200,
@@ -27,34 +28,38 @@ export enum StatusCode {
 export type Params = Record<string, string>;
 export type Body = Record<string, any>;
 
-export interface PostParams {
+interface Role {
+    role?: UserRole;
+}
+
+export interface PostParams extends Role {
     route: PostRoutes | PostRoutesWithParams;
     params?: Params;
     body?: Body;
     url?: string;
 }
 
-export interface GetParams {
+export interface GetParams extends Role {
     route: GetRoutes | GetRoutesWithParams;
     params?: Params;
     url?: string;
 }
 
-export interface PutParams {
+export interface PutParams extends Role {
     route: PutRoutes | PutRoutesWithParams;
     params?: Params;
     body?: Body;
     url?: string;
 }
 
-export interface DeleteParams {
+export interface DeleteParams extends Role {
     route: DeleteRoutes | DeleteRoutesWithParams;
     params?: Params;
     body?: Body;
     url?: string;
 }
 
-export interface PatchParams {
+export interface PatchParams extends Role {
     route: PatchRoutes | PatchRoutesWithParams;
     params?: Params;
     body?: Body;

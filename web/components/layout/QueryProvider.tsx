@@ -11,6 +11,7 @@ const QueryProvider = ({ children }: { children: ReactNode; }) => {
                         staleTime: 60 * 1000 * 60,
                         refetchInterval: 60 * 1000 * 60,
                         refetchOnWindowFocus: false,
+                        //eslint-disable-next-line
                         retry: (failureCount, error: any) => {
                             return (
                                 failureCount < 2 &&

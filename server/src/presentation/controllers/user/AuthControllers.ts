@@ -70,7 +70,6 @@ export default class AuthControllers {
 
   refreshAccessToken = tryCatch(async (req: Request, res: Response) => {
     const { user_token } = req.cookies;
-    if (!user_token) return res.status(StatusCode.Forbidden).json({ message: "Unauthenticated" });
     const { accessToken } = await this.signinUseCase.refreshAccessToken(user_token);
     res.status(StatusCode.Success).json({ accessToken });
   });

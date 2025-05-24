@@ -61,6 +61,9 @@ export default class SigninUseCase {
   }
 
   async refreshAccessToken(token: string): Promise<{ accessToken: string; }> {
+    if (!token) {
+      throw new ForbiddenError("Unauthenticated");
+    }
     const { id, email } = this.tokenService.verifyRefreshToken(token);
 
     const user = await this.userRepository.findById(id);

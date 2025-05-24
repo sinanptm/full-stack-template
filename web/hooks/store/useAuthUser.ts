@@ -7,7 +7,6 @@ import { Tokens } from "@/types";
 type User = {
     name: string;
     id: string;
-    profile?: string;
 };
 
 interface UserAuthState {

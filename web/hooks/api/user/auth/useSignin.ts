@@ -15,17 +15,13 @@ const useSigninUser = () => {
     return useMutation({
         mutationFn: async (data: SigninData) => {
             const response = await POST<MessageResponse>({
-                route: PostRoutes.SignIn,
+                route: PostRoutes.SigninUser,
                 body: data,
             });
             return response;
         },
         onSuccess: ({ message }: MessageResponse) => {
-            toast.success(message, {
-                icon: "🔑",
-                duration: 3000,
-                position: "top-center",
-            });
+            toast.success(message);
             setTimeout(() => {
                 router.push("/otp-verification");
             }, 1000);
