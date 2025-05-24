@@ -1,11 +1,9 @@
-import ITokenService, {
-  AccessTokenPayload,
-  RefreshTokenPayload,
-} from "@/domain/interfaces/services/ITokenService";
+import ITokenService, { AccessTokenPayload, RefreshTokenPayload } from "@/domain/interfaces/services/ITokenService";
 import { JwtPayload, TokenExpiredError, sign, verify, SignOptions } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET, NODE_ENV, REFRESH_TOKEN_SECRET } from "@/config";
-import { ForbiddenError, UnauthorizedError } from "@/domain/entities/CustomErrors";
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "@/config";
+import { CustomError, ForbiddenError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { injectable } from "inversify";
+import { StatusCode } from "@/types";
 
 @injectable()
 export default class TokenService implements ITokenService {
@@ -17,7 +15,7 @@ export default class TokenService implements ITokenService {
       return verify(token, secret) as JwtPayload;
     } catch (error) {
       if (error instanceof TokenExpiredError) {
-        throw new UnauthorizedError("Token Expired");
+        throw new CustomError("Token Expired", StatusCode.TokenExpired);
       }
       throw new ForbiddenError("Invalid token");
     }

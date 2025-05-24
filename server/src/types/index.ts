@@ -26,7 +26,8 @@ export enum StatusCode {
   NotImplemented = 501,
   BadGateway = 502,
   ServiceUnavailable = 503,
-  RateLimitExceeded = 429
+  RateLimitExceeded = 429,
+  TokenExpired = 498
 }
 
 export type DateString = Date | string;

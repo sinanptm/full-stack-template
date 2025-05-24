@@ -16,7 +16,7 @@ router.post("/forgot-password", limiter, authControllers.forgotPassword.bind(aut
 router.post("/reset-password", authControllers.resetPassword.bind(authControllers));
 router.post("/verify-otp", authControllers.verifyOtp.bind(authControllers));
 router.post("/resend-otp", limiter, authControllers.resendOtp.bind(authControllers));
-router.post("/refresh-token", limiter, authControllers.refreshAccessToken.bind(authControllers));
+router.get("/refresh-token", limiter, authControllers.refreshAccessToken.bind(authControllers));
 router.delete("/logout", authControllers.logout.bind(authControllers));
 
 export default router;

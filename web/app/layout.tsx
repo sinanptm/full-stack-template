@@ -1,13 +1,29 @@
 import { mainFont } from "@/lib/fonts";
 import { WrapperProps } from "@/types";
 import "@/styles/globals.css";
+import { Toaster } from "sonner";
+import ThemeProvider from "@/components/layout/ThemeProvider";
+import QueryProvider from "@/components/layout/QueryProvider";
 
 export { metadata } from "./metadata";
 
 const RootLayout = ({ children }: WrapperProps) => {
   return (
     <html lang="en">
-      <body className={`${mainFont.className} antialiased`}>{children}</body>
+      <body
+        className={`${mainFont.className} antialiased`}
+      >
+        <ThemeProvider
+          attribute="class"
+          enableSystem
+          defaultTheme="dark"
+        >
+          <QueryProvider>
+            {children}
+            <Toaster />
+          </QueryProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 };
