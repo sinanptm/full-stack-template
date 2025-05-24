@@ -9,14 +9,13 @@ export { metadata } from "./metadata";
 
 const RootLayout = ({ children }: WrapperProps) => {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${mainFont.className} antialiased`}
       >
         <ThemeProvider
           attribute="class"
           enableSystem
-          defaultTheme="dark"
         >
           <QueryProvider>
             {children}
