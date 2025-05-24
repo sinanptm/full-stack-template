@@ -10,7 +10,7 @@ interface SigninData {
     password: string;
 }
 
-const useSignin = () => {
+const useSigninUser = () => {
     const router = useRouter();
     return useMutation({
         mutationFn: async (data: SigninData) => {
@@ -27,10 +27,10 @@ const useSignin = () => {
                 position: "top-center",
             });
             setTimeout(() => {
-                router.push("/applications");
-            }, 0);
+                router.push("/otp-verification");
+            }, 1000);
         },
     });
 };
 
-export default useSignin;
+export default useSigninUser;
