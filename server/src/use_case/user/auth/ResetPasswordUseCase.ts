@@ -27,7 +27,7 @@ export default class ResetPasswordUseCase {
         @inject(Services.MailService) private readonly mailService: IMailService,
     ) { }
 
-    async initiate({ email }: { email: string; }) {
+    async forgotPassword({ email }: { email: string; }) {
         const otp = generateOtp();
 
         const user = await this.userRepository.findByEmail(email);

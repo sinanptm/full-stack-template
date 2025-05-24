@@ -12,7 +12,7 @@ const limiter = rateLimiter.exec.bind(rateLimiter)
 
 router.post("/signin", limiter, authControllers.signin.bind(authControllers));
 router.post("/signup", authControllers.signup.bind(authControllers));
-router.post("/start-reset-password", limiter, authControllers.startResetPassword.bind(authControllers));
+router.post("/forgot-password", limiter, authControllers.forgotPassword.bind(authControllers));
 router.post("/reset-password", authControllers.resetPassword.bind(authControllers));
 router.post("/verify-otp", authControllers.verifyOtp.bind(authControllers));
 router.post("/resend-otp", limiter, authControllers.resendOtp.bind(authControllers));

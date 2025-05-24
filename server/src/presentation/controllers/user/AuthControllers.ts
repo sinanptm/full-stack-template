@@ -58,8 +58,8 @@ export default class AuthControllers {
     res.status(StatusCode.Success).json({ message: "New OTP sent to your email" });
   });
 
-  startResetPassword = tryCatch(async (req: Request, res: Response) => {
-    await this.resetPasswordUseCase.initiate(req.body);
+  forgotPassword = tryCatch(async (req: Request, res: Response) => {
+    await this.resetPasswordUseCase.forgotPassword(req.body);
     res.status(StatusCode.Success).json({ message: "Reset password OTP sent to your email" });
   });
 
