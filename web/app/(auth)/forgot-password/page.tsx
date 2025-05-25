@@ -7,17 +7,13 @@ import useForgotPassword from "@/hooks/store/auth/useForgetPassword";
 import LoadingState from "@/components/user/forgot-password/LoadingState";
 import InvalidTokenState from "@/components/user/forgot-password/InvalidTokenState";
 import ResetPasswordForm from "@/components/user/forgot-password/ResetPasswordForm";
-
-interface TokenData {
-  otp: string;
-  createdDate: string;
-}
+import { ForgotPasswordTokenData } from "@/types";
 
 const ForgotPasswordPage = () => {
   const router = useRouter();
   const [token] = useQueryState("token");
   const { email: storedEmail, clear } = useForgotPassword();
-  const [tokenData, setTokenData] = useState<TokenData | null>(null);
+  const [tokenData, setTokenData] = useState<ForgotPasswordTokenData | null>(null);
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
 
   useEffect(() => {

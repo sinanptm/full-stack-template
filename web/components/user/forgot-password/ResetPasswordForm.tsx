@@ -11,19 +11,7 @@ import CustomInput from "@/components/forms/elements/CustomInput";
 import SubmitButton from "@/components/forms/elements/SubmitButton";
 import useResetPasswordUser from "@/hooks/api/user/auth/useResetPassword";
 import { resetPasswordSchema } from "@/lib/schema";
-import type { ResetPasswordFormData } from "@/types";
-
-interface TokenData {
-    otp: string;
-    createdDate: string;
-}
-
-interface ResetPasswordFormProps {
-    email: string;
-    tokenData: TokenData;
-    onBackToLogin: () => void;
-    onSuccess: () => void;
-}
+import type { ResetPasswordFormData, ResetPasswordFormProps } from "@/types";
 
 const ResetPasswordForm = ({ email, tokenData, onBackToLogin, onSuccess }: ResetPasswordFormProps) => {
     const { mutate: resetPassword, isPending } = useResetPasswordUser();

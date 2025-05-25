@@ -4,7 +4,6 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
 import { onError } from "@/lib/utils";
-onError
 
 interface ResendOtpUser {
     email: string;

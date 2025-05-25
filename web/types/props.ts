@@ -1,16 +1,14 @@
 import { ReactNode } from "react";
 import { forgotPasswordSchema, resetPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
-import { string, z } from "zod";
+import { z } from "zod";
 
 export interface WrapperProps {
   children: ReactNode;
 }
 
-
 export type SigninFormData = z.infer<typeof signinSchema>;
 export type SignupFormData = z.infer<typeof signupSchema>;
-export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>
-
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 export type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
 
 
@@ -77,4 +75,16 @@ export interface BaseFormFieldProps {
   disabled?: boolean;
   className?: string;
   error?: string;
+}
+
+export interface ForgotPasswordTokenData {
+  otp: string;
+  createdDate: string;
+}
+
+export interface ResetPasswordFormProps {
+  email: string;
+  tokenData: ForgotPasswordTokenData;
+  onBackToLogin: () => void;
+  onSuccess: () => void;
 }
