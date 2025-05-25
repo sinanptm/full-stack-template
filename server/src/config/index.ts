@@ -9,6 +9,7 @@ export const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET ?? "Secreta
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET ?? "Secret";
 export const NODEMAILER_PASSKEY = process.env.NODEMAILER_PASSKEY ?? "alsdf";
 export const SENDER_EMAIL = process.env.SENDER_EMAIL ?? "alsdfk";
+export const CLIENT_URL = process.env.CLIENT_URL ?? "http://localhost:3000";
 
 // Company Name for Email Sending
 export const COMPANY_NAME = "Mern stack template project";

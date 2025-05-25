@@ -1,12 +1,14 @@
 import express from "express";
-import { PORT } from "./config";
+import { CLIENT_URL, PORT } from "./config";
 import { initConfig } from "./config/initConfig";
 import router from "./presentation/routes";
 import logger from "./utils/logger";
+import cors from 'cors';
 import cookieParser from 'cookie-parser'
 
 const app = express();
 
+app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.json());
