@@ -2,14 +2,10 @@
 import { memo, useRef, useState } from "react";
 import { Upload, X, File } from "lucide-react";
 import { cn } from "@/lib/utils";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
+import { BaseFormFieldProps } from "@/types";
 
-export interface CustomFileInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
+export interface CustomFileInputProps extends BaseFormFieldProps, Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
     maxSize?: number;
     allowedTypes?: string[];
     showPreview?: boolean;

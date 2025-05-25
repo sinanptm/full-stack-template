@@ -6,7 +6,8 @@ import * as React from "react";
 import { useEffect, useId, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
+import { BaseFormFieldProps } from "@/types";
 
 export interface Option {
     value: string;
@@ -22,14 +23,7 @@ interface GroupOption {
     [key: string]: Option[];
 }
 
-interface MultipleSelectorProps {
-    // Enhanced props from CustomMultiSelect
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
-
+export interface MultipleSelectorProps extends BaseFormFieldProps {
     // Original MultipleSelector props
     value?: Option[];
     defaultOptions?: Option[];
@@ -584,7 +578,7 @@ const MultipleSelector = React.forwardRef<HTMLInputElement, MultipleSelectorProp
                                     type="button"
                                     onClick={handleClearAll}
                                     className={cn(
-                                        "text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute end-0 top-0 flex size-9 items-center justify-center rounded-md border border-transparent transition-[color,box-shadow] outline-none focus-visible:ring-[3px]",
+                                        "text-muted-foreground/80 cursor-pointer hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute end-0 top-0 flex size-9 items-center justify-center rounded-md border border-transparent transition-[color,box-shadow] outline-none focus-visible:ring-[3px]",
                                         (hideClearAllButton ||
                                             disabled ||
                                             selected.length < 1 ||

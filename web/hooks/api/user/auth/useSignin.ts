@@ -26,6 +26,10 @@ const useSigninUser = () => {
                 router.push("/otp-verification");
             }, 1000);
         },
+        onError: (error) => {
+            console.log(error);
+
+        }
     });
 };
 

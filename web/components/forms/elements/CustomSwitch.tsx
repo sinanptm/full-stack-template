@@ -1,20 +1,13 @@
 import { memo } from "react";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
+import { BaseFormFieldProps } from "@/types";
 
-export interface CustomSwitchProps {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
-    description?: string;
+export interface CustomSwitchProps extends BaseFormFieldProps {
     checked?: boolean;
     defaultChecked?: boolean;
     onCheckedChange?: (checked: boolean) => void;
-    disabled?: boolean;
-    className?: string;
 }
 
 const CustomSwitch = (props: CustomSwitchProps) => (

@@ -1,16 +1,11 @@
 import { Input } from "@/components/ui/input";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
 import { memo, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BaseFormFieldProps } from "@/types";
 
-interface CustomInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
-}
+export interface CustomInputProps extends BaseFormFieldProps, React.InputHTMLAttributes<HTMLInputElement> { }
 
 const CustomInput = ({ type, ...props }: CustomInputProps) => {
     const [showPassword, setShowPassword] = useState(false);

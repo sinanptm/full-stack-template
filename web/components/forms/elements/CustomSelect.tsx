@@ -1,21 +1,15 @@
 import { memo } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
+import { BaseFormFieldProps } from "@/types";
 
-export interface CustomSelectProps {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
+export interface CustomSelectProps extends BaseFormFieldProps {
     options: { value: string; label: string; disabled?: boolean; }[];
     placeholder?: string;
     value?: string;
     defaultValue?: string;
     onValueChange?: (value: string) => void;
-    disabled?: boolean;
-    className?: string;
 }
 
 export const CustomSelect = ({ options, placeholder, ...props }: CustomSelectProps) => (

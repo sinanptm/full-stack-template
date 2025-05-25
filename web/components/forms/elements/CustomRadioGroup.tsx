@@ -1,7 +1,8 @@
 import { memo } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
+import { BaseFormFieldProps } from "@/types";
 
 export interface RadioOption {
     value: string;
@@ -10,19 +11,12 @@ export interface RadioOption {
     disabled?: boolean;
 }
 
-export interface CustomRadioGroupProps {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
+export interface CustomRadioGroupProps extends BaseFormFieldProps {
     options: RadioOption[];
     value?: string;
     defaultValue?: string;
     onValueChange?: (value: string) => void;
-    className?: string;
     orientation?: "horizontal" | "vertical";
-    disabled?: boolean;
 }
 
 const CustomRadioGroup = memo(({ options, orientation = "vertical", ...props }: CustomRadioGroupProps) => (

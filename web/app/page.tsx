@@ -1,13 +1,13 @@
 "use client";
 
-import CustomCheckbox from "@/components/form/elements/CustomCheckbox";
-import CustomFileInput from "@/components/form/elements/CustomFileInput";
-import CustomInput from "@/components/form/elements/CustomInput";
-import MultipleSelector from "@/components/form/elements/MultipleSelector";
-import CustomRadioGroup from "@/components/form/elements/CustomRadioGroup";
-import CustomSelect from "@/components/form/elements/CustomSelect";
-import CustomSwitch from "@/components/form/elements/CustomSwitch";
-import CustomTextArea from "@/components/form/elements/CustomTextArea";
+import CustomCheckbox from "@/components/forms/elements/CustomCheckbox";
+import CustomFileInput from "@/components/forms/elements/CustomFileInput";
+import CustomInput from "@/components/forms/elements/CustomInput";
+import MultipleSelector from "@/components/forms/elements/MultipleSelector";
+import CustomRadioGroup from "@/components/forms/elements/CustomRadioGroup";
+import CustomSelect from "@/components/forms/elements/CustomSelect";
+import CustomSwitch from "@/components/forms/elements/CustomSwitch";
+import CustomTextArea from "@/components/forms/elements/CustomTextArea";
 import { useState } from "react";
 
 const frameworks = ["React", "Vue", "Angular", "Svelte", "Next.js", "Nuxt.js", "Gatsby", "Remix"];

@@ -1,20 +1,13 @@
 import { memo } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import FormFieldWrapper from "@/components/form/FormFieldWrapper";
+import FormFieldWrapper from "./FormFieldWrapper";
+import { BaseFormFieldProps } from "@/types";
 
-export interface CustomCheckBoxProps {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
-    description?: string;
-    checked?: boolean;
+export interface CustomCheckBoxProps extends BaseFormFieldProps {
     defaultChecked?: boolean;
     onCheckedChange?: (checked: boolean) => void;
-    disabled?: boolean;
-    className?: string;
+    checked?: boolean;
 }
 
 const CustomCheckbox = (props: CustomCheckBoxProps) => (
