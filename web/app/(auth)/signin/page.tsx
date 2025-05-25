@@ -5,11 +5,9 @@ import LoginForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninUser from "@/hooks/api/user/auth/useSignin";
 import ForgotPasswordDialog from "@/components/dialogs/ForgotPasswordDialog";
-import useForgotPasswordUser from "@/hooks/api/user/auth/useForgotPassword";
 
 const Signin = () => {
   const { mutate: handleSignin, isPending: isSigninPending } = useSigninUser();
-  const { mutate: handleForgotPassword, isPending: isForgotPasswordPending } = useForgotPasswordUser();
   const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false);
 
   const handleOpenForgotPassword = useCallback(() => {
@@ -32,7 +30,7 @@ const Signin = () => {
             showSignUp={true}
             onForgotPassword={handleOpenForgotPassword}
             defaultValues={{
-              email: "demouser@gmail.com",
+              email: "muhammedsinan0549@gmail.com",
               password: "fjfjfj"
             }}
           />
@@ -41,8 +39,6 @@ const Signin = () => {
       <ForgotPasswordDialog
         open={showForgotPasswordDialog}
         onOpenChange={setShowForgotPasswordDialog}
-        onSubmit={handleForgotPassword}
-        isLoading={isForgotPasswordPending}
       />
     </div>
   );

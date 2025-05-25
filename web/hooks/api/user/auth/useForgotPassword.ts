@@ -4,18 +4,22 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
 import { onError } from "@/lib/utils";
+import useForgotPassword from "@/hooks/store/auth/useForgetPassword";
 
 interface ForgotPasswordData {
     email: string;
 }
 
 const useForgotPasswordUser = () => {
+    // for state mangemnet
+    const { setEmail } = useForgotPassword();
     return useMutation({
         mutationFn: async (data: ForgotPasswordData) => {
             const response = await POST<MessageResponse>({
                 route: PostRoutes.ForgotPasswordUser,
                 body: data,
             });
+            setEmail(data.email);
             return response;
         },
         onSuccess: ({ message }: MessageResponse) => {

@@ -3,7 +3,7 @@ import { DELETE } from "@/lib/api";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
 import { DeleteRoutes } from "@/types/api/DeleteRoutes";
-import useAuthUser from "@/hooks/store/useAuthUser";
+import useAuthUser from "@/hooks/store/auth/useAuthUser";
 
 
 const useVerifyOtpUser = () => {

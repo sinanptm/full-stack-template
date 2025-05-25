@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { forgotPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
+import { forgotPasswordSchema, resetPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
 import { string, z } from "zod";
 
 export interface WrapperProps {
@@ -9,7 +9,7 @@ export interface WrapperProps {
 
 export type SigninFormData = z.infer<typeof signinSchema>;
 export type SignupFormData = z.infer<typeof signupSchema>;
-
+export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>
 
 export type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
 
@@ -38,8 +38,6 @@ export interface SigninFormProps {
 export interface ForgotPasswordDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (data: ForgotPasswordData) => void | Promise<void>;
-  isLoading?: boolean;
   title?: string;
   description?: string;
   submitButtonText?: string;
@@ -47,6 +45,7 @@ export interface ForgotPasswordDialogProps {
   emailLabel?: string;
   emailPlaceholder?: string;
   className?: string;
+  onSubmit?: () => void;
 }
 
 

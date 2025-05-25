@@ -2,6 +2,7 @@ import { mainFont } from "@/lib/fonts";
 import { WrapperProps } from "@/types";
 import "@/styles/globals.css";
 import ThemeProvider from "@/components/layout/ThemeProvider";
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import QueryProvider from "@/components/layout/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -13,15 +14,17 @@ const RootLayout = ({ children }: WrapperProps) => {
       <body
         className={`${mainFont.className} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          enableSystem
-        >
-          <QueryProvider>
-            {children}
-            <Toaster />
-          </QueryProvider>
-        </ThemeProvider>
+        <QueryProvider>
+          <NuqsAdapter>
+            <ThemeProvider
+              attribute="class"
+              enableSystem
+            >
+              {children}
+              <Toaster />
+            </ThemeProvider>
+          </NuqsAdapter>
+        </QueryProvider>
       </body>
     </html>
   );

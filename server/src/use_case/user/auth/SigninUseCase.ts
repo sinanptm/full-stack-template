@@ -56,7 +56,6 @@ export default class SigninUseCase {
       email,
       name,
       otp,
-      type,
     });
   }
 

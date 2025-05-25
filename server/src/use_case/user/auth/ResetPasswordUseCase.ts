@@ -9,12 +9,15 @@ import { NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors
 import { inject, injectable } from "inversify";
 import { generateOtp } from "@/utils";
 import { differenceInMinutes } from "date-fns";
-import { OTP_EXPIRATION_MINUTES } from "@/config";
+import { CLIENT_URL } from "@/config";
 
-interface Payload {
+const RESET_LINK_EXPIRATION_MINUTES = 5;
+
+interface ResetPasswordPayload {
     email: string;
     password: string;
     otp: string;
+    createdDate: string;
 }
 
 @injectable()
@@ -29,6 +32,7 @@ export default class ResetPasswordUseCase {
 
     async forgotPassword({ email }: { email: string; }) {
         const otp = generateOtp();
+        const createdDate = new Date().toISOString();
 
         const user = await this.userRepository.findByEmail(email);
         if (!user) {
@@ -37,40 +41,53 @@ export default class ResetPasswordUseCase {
         await this.otpRepository.deleteMany(email);
         await this.otpRepository.create(otp, email);
 
-        await this.mailService.sendOtpMail({
+        const resetLink = `${CLIENT_URL}/forgot-password/?token=${otp}X_X${encodeURIComponent(createdDate)}`;
+        await this.mailService.sendPasswordResetLink({
             email,
-            otp,
+            resetLink,
             name: user.name!,
-            type: "password-reset",
         });
     }
 
-    async exec({ email, password, otp }: Payload) {
+    async exec({ email, password, otp, createdDate }: ResetPasswordPayload) {
         this.validatorService.validateEmailFormat(email);
         this.validatorService.validatePassword(password);
-        this.validatorService.validateRequiredFields({ email, password, otp });
+        this.validatorService.validateRequiredFields({ email, password, otp, createdDate });
 
         const user = await this.userRepository.findByEmail(email);
         if (!user) {
             throw new NotFoundError("User not found");
         }
 
-
+        // Verify the OTP exists in the database
         const storedOtp = await this.otpRepository.findOne(+otp, email);
         if (!storedOtp) {
-            throw new UnauthorizedError("Invalid or expired OTP");
+            throw new UnauthorizedError("Invalid or expired reset link");
         }
 
-        const otpCreatedAt = new Date(storedOtp.createdAt!);
+        // Check if the link has expired (5 minutes)
+        const linkCreatedAt = new Date(decodeURIComponent(createdDate));
         const now = new Date();
 
-        if (differenceInMinutes(now, otpCreatedAt) > OTP_EXPIRATION_MINUTES) {
-            throw new UnauthorizedError("OTP expired");
+        if (differenceInMinutes(now, linkCreatedAt) > RESET_LINK_EXPIRATION_MINUTES) {
+            // Clean up expired OTP
+            await this.otpRepository.deleteMany(email);
+            throw new UnauthorizedError("Reset link has expired");
         }
 
+        // Verify the OTP from the database matches the creation time
+        const otpCreatedAt = new Date(storedOtp.createdAt!);
+        const timeDifferenceSeconds = Math.abs(linkCreatedAt.getTime() - otpCreatedAt.getTime()) / 1000;
+
+        if (timeDifferenceSeconds > 10) {
+            throw new UnauthorizedError("Invalid reset link");
+        }
+
+        // Update the password
         const hashedPassword = await this.hashService.hash(password);
         await this.userRepository.update(user._id!, { password: hashedPassword });
 
+        // Clean up the used OTP
         await this.otpRepository.deleteMany(email);
     }
 }

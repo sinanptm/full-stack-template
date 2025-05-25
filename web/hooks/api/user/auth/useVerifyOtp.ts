@@ -2,9 +2,10 @@ import { useMutation } from "@tanstack/react-query";
 import { POST } from "@/lib/api";
 import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
-import useAuthUser from "@/hooks/store/useAuthUser";
+import useAuthUser from "@/hooks/store/auth/useAuthUser";
 import { useRouter } from "next/navigation";
 import { onError } from "@/lib/utils";
+import { MessageResponse } from "@/types";
 
 
 interface ForgotPasswordData {
@@ -12,7 +13,7 @@ interface ForgotPasswordData {
     otp: number;
 }
 
-interface Response {
+interface Response extends MessageResponse {
     accessToken: string;
     user: {
         name: string;
@@ -31,11 +32,11 @@ const useVerifyOtpUser = () => {
             });
             return response;
         },
-        onSuccess: ({ accessToken, user }: Response) => {
+        onSuccess: ({ accessToken, user, message }: Response) => {
             setToken(accessToken);
             setUser(user);
             router.push("/");
-            toast.success("Otp verification success");
+            toast.success(message, { icon: '🎉' });
         },
         onError
     });

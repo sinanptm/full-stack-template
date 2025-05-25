@@ -1,13 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { POST } from "@/lib/api";
 import { PostRoutes } from "@/types/api/PostRoutes";
-import { toast } from "sonner";
 import { onError } from "@/lib/utils";
 import { MessageResponse } from "@/types";
 
 interface ResetPasswordData {
     email: string;
     password: string;
+    createdDate: string;
+    otp: number;
 }
 
 const useResetPasswordUser = () => {
@@ -18,9 +19,6 @@ const useResetPasswordUser = () => {
                 body: data,
             });
             return response;
-        },
-        onSuccess: ({ message }: MessageResponse) => {
-            toast.success(message);
         },
         onError
     });

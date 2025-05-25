@@ -92,7 +92,6 @@ export default class OtpUseCase {
       email,
       name: user.name!,
       otp,
-      type: "verification",
     });
   }
 }

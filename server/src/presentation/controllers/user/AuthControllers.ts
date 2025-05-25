@@ -19,12 +19,47 @@ export default class AuthControllers {
 
   signin = tryCatch(async (req: Request, res: Response) => {
     await this.signinUseCase.exec(req.body);
-    res.status(StatusCode.Success).json({ message: "Signin Successful, OTP sent to your email" });
+    res.status(StatusCode.Success).json({ message: "Sign-in initiated. Please check your email for the OTP." });
   });
 
   signup = tryCatch(async (req: Request, res: Response) => {
     await this.signupUseCase.exec(req.body);
-    res.status(StatusCode.Created).json({ message: "User created, Please Login" });
+    res.status(StatusCode.Created).json({ message: "Account created successfully. Please sign in to continue." });
+  });
+
+
+  verifyOtp = tryCatch(async (req: Request, res: Response) => {
+    const { accessToken, refreshToken, user } = await this.otpUseCase.exec(req.body);
+
+    res.cookie(Cookies.User, refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(StatusCode.Success).json({ accessToken, user, message: "OTP verified. You are now signed in." });
+  });
+
+  resendOtp = tryCatch(async (req: Request, res: Response) => {
+    await this.otpUseCase.resendOtp(req.body);
+    res.status(StatusCode.Success).json({ message: "A new OTP has been sent to your email." });
+  });
+
+  forgotPassword = tryCatch(async (req: Request, res: Response) => {
+    await this.resetPasswordUseCase.forgotPassword(req.body);
+    res.status(StatusCode.Success).json({ message: "A password reset link has been sent to your email." });
+  });
+
+  resetPassword = tryCatch(async (req: Request, res: Response) => {
+    await this.resetPasswordUseCase.exec(req.body);
+    res.status(StatusCode.Success).json({ message: "Password reset successfully. Please sign in with your new password." });
+  });
+
+  refreshAccessToken = tryCatch(async (req: Request, res: Response) => {
+    const { user_token } = req.cookies;
+    const { accessToken } = await this.signinUseCase.refreshAccessToken(user_token);
+    res.status(StatusCode.Success).json({ accessToken, message: "Access token refreshed successfully." });
   });
 
   logout = tryCatch(async (req: Request, res: Response) => {
@@ -37,40 +72,6 @@ export default class AuthControllers {
       secure: true,
     });
 
-    res.status(StatusCode.Success).json({ message: "Logout successful" });
-  });
-
-  verifyOtp = tryCatch(async (req: Request, res: Response) => {
-    const { accessToken, refreshToken, user } = await this.otpUseCase.exec(req.body);
-
-    res.cookie(Cookies.User, refreshToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    });
-
-    res.status(StatusCode.Success).json({ accessToken, user });
-  });
-
-  resendOtp = tryCatch(async (req: Request, res: Response) => {
-    await this.otpUseCase.resendOtp(req.body);
-    res.status(StatusCode.Success).json({ message: "New OTP sent to your email" });
-  });
-
-  forgotPassword = tryCatch(async (req: Request, res: Response) => {
-    await this.resetPasswordUseCase.forgotPassword(req.body);
-    res.status(StatusCode.Success).json({ message: "Reset password OTP sent to your email" });
-  });
-
-  resetPassword = tryCatch(async (req: Request, res: Response) => {
-    await this.resetPasswordUseCase.exec(req.body);
-    res.status(StatusCode.Success).json({ message: "Password changing Successful, Please login again" });
-  });
-
-  refreshAccessToken = tryCatch(async (req: Request, res: Response) => {
-    const { user_token } = req.cookies;
-    const { accessToken } = await this.signinUseCase.refreshAccessToken(user_token);
-    res.status(StatusCode.Success).json({ accessToken });
+    res.status(StatusCode.Success).json({ message: "Successfully logged out." });
   });
 }

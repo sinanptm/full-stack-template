@@ -15,34 +15,39 @@ import CustomInput from "@/components/forms/elements/CustomInput";
 import SubmitButton from "../forms/elements/SubmitButton";
 import { ForgotPasswordData, ForgotPasswordDialogProps } from "@/types";
 import { forgotPasswordSchema } from "@/lib/schema";
+import useForgotPasswordUser from "@/hooks/api/user/auth/useForgotPassword";
 
 const ForgotPasswordDialog = ({
     open,
     onOpenChange,
-    onSubmit,
-    isLoading = false,
     title = "Reset your password",
     description = "Enter your email address and we'll send you further instructions to reset your password.",
-    submitButtonText = "Send reset link",
+    submitButtonText = "Send reset Mail",
     cancelButtonText = "Cancel",
     emailLabel = "Email",
     emailPlaceholder = "Enter your email address",
     className = "",
+    onSubmit
 }: ForgotPasswordDialogProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors },
         reset,
     } = useForm<ForgotPasswordData>({
         resolver: zodResolver(forgotPasswordSchema),
         mode: "onBlur",
+        defaultValues: {
+            email: "muhammedsinan0549@gmail.com"
+        }
     });
+    const { mutate, isPending } = useForgotPasswordUser()
 
     const handleFormSubmit = async (data: ForgotPasswordData) => {
         try {
-            await onSubmit(data);
+            mutate(data);
             reset();
+            onSubmit?.()
         } catch (error) {
             console.error("Forgot password submission error:", error);
         }
@@ -59,8 +64,6 @@ const ForgotPasswordDialog = ({
         reset();
         onOpenChange(false);
     };
-
-    const isFormLoading = isLoading || isSubmitting;
 
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -84,14 +87,15 @@ const ForgotPasswordDialog = ({
                                 error={errors.email?.message}
                                 className="w-full"
                                 {...register("email")}
+                                autoComplete="off"
                             />
                         </div>
 
                         <div className="flex flex-col gap-3 pt-2">
                             <SubmitButton
-                                isLoading={isFormLoading}
+                                isLoading={isPending}
                                 className="w-full h-11 font-medium "
-                                disabled={isFormLoading}
+                                disabled={isPending}
                             >
                                 {submitButtonText}
                             </SubmitButton>
@@ -100,7 +104,7 @@ const ForgotPasswordDialog = ({
                                 type="button"
                                 variant="ghost"
                                 onClick={handleCancel}
-                                disabled={isFormLoading}
+                                disabled={isPending}
                                 className="w-full h-11 font-medium hover:bg-muted/50 cursor-pointer"
                             >
                                 {cancelButtonText}

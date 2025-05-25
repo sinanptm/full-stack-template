@@ -1,9 +1,9 @@
-import IMailService, { SendOtpMailProps } from "@/domain/interfaces/services/IMailService";
+import IMailService, { SendOtpMailProps, SendPasswordResetLinkProps } from "@/domain/interfaces/services/IMailService";
 import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
-import { COMPANY_NAME, NODEMAILER_PASSKEY, SENDER_EMAIL } from "@/config";
+import { COMPANY_NAME, NODEMAILER_PASSKEY, SENDER_EMAIL, CLIENT_URL } from "@/config";
 import { injectable } from "inversify";
 
 const readFileAsync = promisify(fs.readFile);
@@ -32,8 +32,8 @@ export default class MailService implements IMailService {
     });
   }
 
-  async sendOtpMail({ email, name, otp, type }: SendOtpMailProps): Promise<void> {
-    const subject = type === "password-reset" ? "Password Reset" : "Account Verification";
+  async sendOtpMail({ email, name, otp }: SendOtpMailProps): Promise<void> {
+    const subject = "Account Verification";
 
     let html = await this.loadTemplate("../../../public/otpEmailTemplate.html");
 
@@ -43,6 +43,21 @@ export default class MailService implements IMailService {
       .replace(/{{CompanyName}}/g, COMPANY_NAME)
       .replace(/{{CompanyDomain}}/g, COMPANY_NAME)
       .replace(/{{type}}/g, subject)
+      .replace(/{{subject}}/g, subject);
+
+    await this.send(email, subject, html);
+  }
+
+  async sendPasswordResetLink({ email, name, resetLink }: SendPasswordResetLinkProps): Promise<void> {
+    const subject = "Password Reset";
+
+    let html = await this.loadTemplate("../../../public/passwordResetLinkTemplate.html");
+
+    html = html
+      .replace(/{{name}}/g, name)
+      .replace(/{{resetLink}}/g, resetLink)
+      .replace(/{{CompanyName}}/g, COMPANY_NAME)
+      .replace(/{{CompanyDomain}}/g, COMPANY_NAME)
       .replace(/{{subject}}/g, subject);
 
     await this.send(email, subject, html);
