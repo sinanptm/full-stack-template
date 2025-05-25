@@ -100,8 +100,8 @@ const createApiInstance = (role: UserRole): AxiosInstance => {
                 }
             }
 
-            error.statusCode = error.response?.status;
-            error.userMessage = error.response?.data?.message || "An error occurred";
+            error.status = error.response?.status;
+            error.message = error.response?.data?.message || "An error occurred";
             return Promise.reject(error);
         },
     );

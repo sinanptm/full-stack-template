@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { loginFormSchema } from "./schema";
+import { signinSchema, signupSchema } from "@/lib/schema";
 import { string, z } from "zod";
 
 export interface WrapperProps {
@@ -7,7 +7,8 @@ export interface WrapperProps {
 }
 
 
-export type LoginFormData = z.infer<typeof loginFormSchema>;
+export type LoginFormData = z.infer<typeof signinSchema>;
+export type SignupFormData = z.infer<typeof signupSchema>
 
 export interface LoginFormProps {
   className?: string;
@@ -27,6 +28,25 @@ export interface LoginFormProps {
   signUpText?: string;
   defaultValues?: Partial<LoginFormData>;
 }
+export interface SignupFormProps {
+  onSubmit: (data: SignupFormData) => void | Promise<void>;
+  isLoading?: boolean;
+  className?: string;
+  submitButtonText?: string;
+
+  showSignIn?: boolean;
+  signInText?: string;
+  signInLinkText?: string;
+  signInLink?: string;
+
+  defaultValues?: {
+    name?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+  };
+}
+
 export interface BaseFormFieldProps {
   label?: string;
   hint?: string;

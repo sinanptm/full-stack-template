@@ -6,45 +6,41 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import CustomInput from "@/components/forms/elements/CustomInput";
 import SubmitButton from "@/components/forms/elements/SubmitButton";
-import { signinSchema } from "@/lib/schema";
-import { LoginFormProps } from "@/types";
+import { signupSchema } from "@/lib/schema";
+import { SignupFormProps } from "@/types";
 import Link from "next/link";
 
-export type LoginFormData = z.infer<typeof signinSchema>;
+export type SignupFormData = z.infer<typeof signupSchema>;
 
-const LoginForm = ({
+const SignupForm = ({
     onSubmit,
     isLoading = false,
     className = "",
-    submitButtonText = "Sign In",
+    submitButtonText = "Sign Up",
 
-    showForgotPassword = true,
-    forgotPasswordText = "Forgot your password?",
-    forgotPasswordLink,
-
-    showSignUp = true,
-    signUpText = "Don't have an account?",
-    signUpLinkText = "Sign up",
-    signUpLink,
+    showSignIn = true,
+    signInText = "Already have an account?",
+    signInLinkText = "Sign in",
+    signInLink,
 
     defaultValues
 
-}: LoginFormProps) => {
+}: SignupFormProps) => {
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting }
-    } = useForm<LoginFormData>({
-        resolver: zodResolver(signinSchema),
+    } = useForm<SignupFormData>({
+        resolver: zodResolver(signupSchema),
         mode: "onBlur",
         defaultValues,
     });
 
-    const handleFormSubmit = async (data: LoginFormData) => {
+    const handleFormSubmit = async (data: SignupFormData) => {
         try {
             await onSubmit(data);
         } catch (error) {
-            console.error("Login form submission error:", error);
+            console.error("Signup form submission error:", error);
         }
     };
 
@@ -52,12 +48,20 @@ const LoginForm = ({
 
     return (
         <div className={`space-y-6 ${className}`}>
-
             <form
                 onSubmit={handleSubmit(handleFormSubmit)}
                 className="space-y-4"
                 noValidate
             >
+                <CustomInput
+                    label="Full Name"
+                    type="text"
+                    placeholder="Enter your full name"
+                    error={errors.name?.message}
+                    autoComplete="name"
+                    {...register("name")}
+                />
+
                 <CustomInput
                     label="Email"
                     type="email"
@@ -67,28 +71,23 @@ const LoginForm = ({
                     {...register("email")}
                 />
 
-                <div className="space-y-2">
-                    <CustomInput
-                        label="Password"
-                        type="password"
-                        placeholder="Enter your password"
-                        error={errors.password?.message}
-                        autoComplete="current-password"
-                        {...register("password")}
-                    />
+                <CustomInput
+                    label="Password"
+                    type="password"
+                    placeholder="Enter your password"
+                    error={errors.password?.message}
+                    autoComplete="new-password"
+                    {...register("password")}
+                />
 
-                    {showForgotPassword && forgotPasswordLink && (
-                        <div className="flex justify-end">
-                            <Link
-                                className="text-sm text-primary hover:text-primary/80 hover:underline transition-colors"
-                                href={forgotPasswordLink}
-                                prefetch={false}
-                            >
-                                {forgotPasswordText}
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                <CustomInput
+                    label="Confirm Password"
+                    type="password"
+                    placeholder="Confirm your password"
+                    error={errors.confirmPassword?.message}
+                    autoComplete="new-password"
+                    {...register("confirmPassword")}
+                />
 
                 <SubmitButton
                     type="submit"
@@ -100,17 +99,17 @@ const LoginForm = ({
                 </SubmitButton>
             </form>
 
-            {showSignUp && signUpLink && (
+            {showSignIn && signInLink && (
                 <div className="text-center">
                     <span className="text-sm text-muted-foreground">
-                        {signUpText}{" "}
+                        {signInText}{" "}
                     </span>
                     <Link
                         prefetch={false}
-                        href={signUpLink}
+                        href={signInLink}
                         className="text-sm font-medium text-primary hover:text-primary/80 hover:underline transition-colors"
                     >
-                        {signUpLinkText}
+                        {signInLinkText}
                     </Link>
                 </div>
             )}
@@ -118,4 +117,4 @@ const LoginForm = ({
     );
 };
 
-export default memo(LoginForm);
+export default memo(SignupForm);

@@ -1,10 +1,10 @@
 export enum PostRoutes {
-    SigninUser = "/signin",
-    SignupUser = "/signup",
-    ForgotPasswordUser = "/forgot-password",
-    ResetPasswordUser = "/reset-password",
-    VerifyOtpUser = "/verify-otp",
-    ResendOtpUser = "/resend-otp",
+    SigninUser = "/auth/signin",
+    SignupUser = "/auth/signup",
+    ForgotPasswordUser = "/auth/forgot-password",
+    ResetPasswordUser = "/auth/reset-password",
+    VerifyOtpUser = "/auth/verify-otp",
+    ResendOtpUser = "/auth/resend-otp",
 }
 export enum PostRoutesWithParams {
     test = "/test/:id",

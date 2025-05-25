@@ -3,6 +3,7 @@ import { POST } from "@/lib/api";
 import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
+import { onError } from "@/lib/utils";
 
 interface SignupData {
     name: string;
@@ -22,6 +23,7 @@ const useSignUpUser = () => {
         onSuccess: ({ message }: MessageResponse) => {
             toast.success(message);
         },
+        onError
     });
 };
 

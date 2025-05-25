@@ -4,6 +4,7 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { MessageResponse } from "@/types";
+import { onError } from "@/lib/utils";
 
 interface SigninData {
     email: string;
@@ -26,10 +27,7 @@ const useSigninUser = () => {
                 router.push("/otp-verification");
             }, 1000);
         },
-        onError: (error) => {
-            console.log(error);
-
-        }
+        onError
     });
 };
 
