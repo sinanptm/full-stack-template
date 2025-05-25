@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { signinSchema, signupSchema } from "@/lib/schema";
+import { forgotPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
 import { string, z } from "zod";
 
 export interface WrapperProps {
@@ -7,27 +7,49 @@ export interface WrapperProps {
 }
 
 
-export type LoginFormData = z.infer<typeof signinSchema>;
-export type SignupFormData = z.infer<typeof signupSchema>
+export type SigninFormData = z.infer<typeof signinSchema>;
+export type SignupFormData = z.infer<typeof signupSchema>;
 
-export interface LoginFormProps {
-  className?: string;
-  onSubmit: (data: LoginFormData) => void | Promise<void>;
-  onForgotPassword?: () => void;
-  onSignUp?: () => void;
-  onGoogleLogin?: () => void;
+
+export type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
+
+
+export interface SigninFormProps {
+  onSubmit: (data: SigninFormData) => Promise<void> | void;
   isLoading?: boolean;
-  showGoogleLogin?: boolean;
+  className?: string;
+  submitButtonText?: string;
+
+  onForgotPassword?: () => void;
   showForgotPassword?: boolean;
-  showSignUpLink?: boolean;
+  forgotPasswordText?: string;
+  forgotPasswordLink?: string;
+
+  showSignUp?: boolean;
+  signUpText?: string;
+  signUpLinkText?: string;
+  signUpLink?: string;
+
+  defaultValues?: {
+    email?: string;
+    password?: string;
+  };
+}
+export interface ForgotPasswordDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSubmit: (data: ForgotPasswordData) => void | Promise<void>;
+  isLoading?: boolean;
   title?: string;
   description?: string;
   submitButtonText?: string;
-  googleButtonText?: string;
-  forgotPasswordText?: string;
-  signUpText?: string;
-  defaultValues?: Partial<LoginFormData>;
+  cancelButtonText?: string;
+  emailLabel?: string;
+  emailPlaceholder?: string;
+  className?: string;
 }
+
+
 export interface SignupFormProps {
   onSubmit: (data: SignupFormData) => void | Promise<void>;
   isLoading?: boolean;
@@ -56,25 +78,4 @@ export interface BaseFormFieldProps {
   disabled?: boolean;
   className?: string;
   error?: string;
-}
-
-export interface LoginFormProps {
-  onSubmit: (data: LoginFormData) => Promise<void> | void;
-  isLoading?: boolean;
-  className?: string;
-  submitButtonText?: string;
-
-  showForgotPassword?: boolean;
-  forgotPasswordText?: string;
-  forgotPasswordLink?: string;
-
-  showSignUp?: boolean;
-  signUpText?: string;
-  signUpLinkText?: string;
-  signUpLink?: string;
-
-  defaultValues?: {
-    email?: string;
-    password?: string;
-  };
 }

@@ -92,7 +92,6 @@ const SignupForm = ({
                 <SubmitButton
                     type="submit"
                     isLoading={isFormLoading}
-                    disabled={isFormLoading}
                     className="w-full h-11"
                 >
                     {submitButtonText}

@@ -4,6 +4,8 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import useAuthUser from "@/hooks/store/useAuthUser";
 import { useRouter } from "next/navigation";
+import { onError } from "@/lib/utils";
+
 
 interface ForgotPasswordData {
     email: string;
@@ -35,6 +37,7 @@ const useVerifyOtpUser = () => {
             router.push("/");
             toast.success("Otp verification success");
         },
+        onError
     });
 };
 

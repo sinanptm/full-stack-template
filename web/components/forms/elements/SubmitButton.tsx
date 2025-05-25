@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SubmitButtonProps {
     isLoading?: boolean;
@@ -18,6 +19,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
     children = "Submit",
     onClick,
     type = "submit",
+    className,
     ...props
 }) => {
     return (
@@ -25,9 +27,10 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
             type={type}
             disabled={disabled || isLoading}
             onClick={onClick}
+            className={cn("cursor-pointer", className)}
             {...props}
         >
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin " />}
             {children}
         </Button>
     );

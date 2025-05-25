@@ -3,16 +3,13 @@
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import CustomInput from "@/components/forms/elements/CustomInput";
 import SubmitButton from "@/components/forms/elements/SubmitButton";
 import { signinSchema } from "@/lib/schema";
-import { LoginFormProps } from "@/types";
+import { SigninFormData, SigninFormProps } from "@/types";
 import Link from "next/link";
 
-export type LoginFormData = z.infer<typeof signinSchema>;
-
-const LoginForm = ({
+const SigninForm = ({
     onSubmit,
     isLoading = false,
     className = "",
@@ -21,6 +18,7 @@ const LoginForm = ({
     showForgotPassword = true,
     forgotPasswordText = "Forgot your password?",
     forgotPasswordLink,
+    onForgotPassword,
 
     showSignUp = true,
     signUpText = "Don't have an account?",
@@ -29,18 +27,18 @@ const LoginForm = ({
 
     defaultValues
 
-}: LoginFormProps) => {
+}: SigninFormProps) => {
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting }
-    } = useForm<LoginFormData>({
+    } = useForm<SigninFormData>({
         resolver: zodResolver(signinSchema),
         mode: "onBlur",
         defaultValues,
     });
 
-    const handleFormSubmit = async (data: LoginFormData) => {
+    const handleFormSubmit = async (data: SigninFormData) => {
         try {
             await onSubmit(data);
         } catch (error) {
@@ -83,6 +81,12 @@ const LoginForm = ({
                                 className="text-sm text-primary hover:text-primary/80 hover:underline transition-colors"
                                 href={forgotPasswordLink}
                                 prefetch={false}
+                                onClick={(e) => {
+                                    if (onForgotPassword) {
+                                        e.preventDefault();
+                                        onForgotPassword();
+                                    }
+                                }}
                             >
                                 {forgotPasswordText}
                             </Link>
@@ -93,7 +97,6 @@ const LoginForm = ({
                 <SubmitButton
                     type="submit"
                     isLoading={isFormLoading}
-                    disabled={isFormLoading}
                     className="w-full h-11"
                 >
                     {submitButtonText}
@@ -118,4 +121,4 @@ const LoginForm = ({
     );
 };
 
-export default memo(LoginForm);
+export default memo(SigninForm);

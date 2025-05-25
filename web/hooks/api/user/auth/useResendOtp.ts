@@ -3,6 +3,8 @@ import { POST } from "@/lib/api";
 import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
+import { onError } from "@/lib/utils";
+onError
 
 interface ResendOtpUser {
     email: string;
@@ -20,6 +22,7 @@ const useResendOtpUser = () => {
         onSuccess: ({ message }: MessageResponse) => {
             toast.success(message);
         },
+        onError
     });
 };
 

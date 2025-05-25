@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { POST } from "@/lib/api";
 import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
+import { onError } from "@/lib/utils";
 import { MessageResponse } from "@/types";
 
 interface ResetPasswordData {
@@ -21,6 +22,7 @@ const useResetPasswordUser = () => {
         onSuccess: ({ message }: MessageResponse) => {
             toast.success(message);
         },
+        onError
     });
 };
 
