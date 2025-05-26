@@ -43,6 +43,8 @@ export default class SigninUseCase {
     }
 
     await this.sendMail(email, user.name!, "verification");
+
+    return { email }
   }
 
   private async sendMail(email: string, name: string, type: EmailType) {

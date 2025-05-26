@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import FormFieldWrapper from "./FormFieldWrapper";
 import { BaseFormFieldProps } from "@/types";
 
-export interface CustomFileInputProps extends BaseFormFieldProps, Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+interface CustomFileInputProps extends BaseFormFieldProps, Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
     maxSize?: number;
     allowedTypes?: string[];
     showPreview?: boolean;

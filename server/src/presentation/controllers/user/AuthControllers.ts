@@ -18,8 +18,8 @@ export default class AuthControllers {
   ) { }
 
   signin = tryCatch(async (req: Request, res: Response) => {
-    await this.signinUseCase.exec(req.body);
-    res.status(StatusCode.Success).json({ message: "Sign-in initiated. Please check your email for the OTP." });
+    const { email } = await this.signinUseCase.exec(req.body);
+    res.status(StatusCode.Success).json({ message: "Sign-in initiated. Please check your email for the OTP.", email });
   });
 
   signup = tryCatch(async (req: Request, res: Response) => {

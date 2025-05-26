@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import FormFieldWrapper from "./FormFieldWrapper";
 import { BaseFormFieldProps } from "@/types";
 
-export interface CustomSelectProps extends BaseFormFieldProps {
+interface CustomSelectProps extends BaseFormFieldProps {
     options: { value: string; label: string; disabled?: boolean; }[];
     placeholder?: string;
     value?: string;

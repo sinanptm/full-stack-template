@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { forgotPasswordSchema, resetPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
+import { forgotPasswordSchema, otpVerificationSchema, resetPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
 import { z } from "zod";
 
 export interface WrapperProps {
@@ -10,7 +10,7 @@ export type SigninFormData = z.infer<typeof signinSchema>;
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 export type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
-
+export type OtpVerificationFormData = z.infer<typeof otpVerificationSchema>
 
 export interface SigninFormProps {
   onSubmit: (data: SigninFormData) => Promise<void> | void;
@@ -76,6 +76,10 @@ export interface BaseFormFieldProps {
   className?: string;
   error?: string;
 }
+export interface FormFieldWrapperProps extends BaseFormFieldProps {
+  children: (id: string, describedBy: string | undefined) => React.ReactNode;
+}
+
 
 export interface ForgotPasswordTokenData {
   otp: string;
@@ -87,4 +91,15 @@ export interface ResetPasswordFormProps {
   tokenData: ForgotPasswordTokenData;
   onBackToLogin: () => void;
   onSuccess: () => void;
+}
+
+export interface OtpVerificationFormProps {
+  onSubmit: (otp: number) => void;
+  onResendOtp: () => void;
+  isLoading?: boolean;
+  isResending?: boolean;
+  className?: string;
+  submitButtonText?: string;
+  resendTimerDuration?: number;
+  email: string;
 }

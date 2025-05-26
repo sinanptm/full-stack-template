@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import FormFieldWrapper from "./FormFieldWrapper";
 import { BaseFormFieldProps } from "@/types";
 
-export interface CustomSwitchProps extends BaseFormFieldProps {
+interface CustomSwitchProps extends BaseFormFieldProps {
     checked?: boolean;
     defaultChecked?: boolean;
     onCheckedChange?: (checked: boolean) => void;

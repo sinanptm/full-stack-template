@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 import { useQueryState } from "nuqs";
 import { useRouter } from "next/navigation";
 import { differenceInMinutes } from "date-fns";
-import useForgotPassword from "@/hooks/store/auth/useForgetPassword";
+import useMailSetter from "@/hooks/store/auth/useMailSetter";
 import LoadingState from "@/components/user/forgot-password/LoadingState";
 import InvalidTokenState from "@/components/user/forgot-password/InvalidTokenState";
 import ResetPasswordForm from "@/components/user/forgot-password/ResetPasswordForm";
@@ -12,7 +12,7 @@ import { ForgotPasswordTokenData } from "@/types";
 const ForgotPasswordPage = () => {
   const router = useRouter();
   const [token] = useQueryState("token");
-  const { email: storedEmail, clear } = useForgotPassword();
+  const { email: storedEmail, clear } = useMailSetter();
   const [tokenData, setTokenData] = useState<ForgotPasswordTokenData | null>(null);
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
 

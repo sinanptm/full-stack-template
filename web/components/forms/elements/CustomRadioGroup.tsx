@@ -4,14 +4,14 @@ import { cn } from "@/lib/utils";
 import FormFieldWrapper from "./FormFieldWrapper";
 import { BaseFormFieldProps } from "@/types";
 
-export interface RadioOption {
+interface RadioOption {
     value: string;
     label: string;
     description?: string;
     disabled?: boolean;
 }
 
-export interface CustomRadioGroupProps extends BaseFormFieldProps {
+interface CustomRadioGroupProps extends BaseFormFieldProps {
     options: RadioOption[];
     value?: string;
     defaultValue?: string;

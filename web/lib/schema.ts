@@ -44,3 +44,13 @@ export const resetPasswordSchema = z
         message: "Passwords do not match",
         path: ["confirmPassword"],
     });
+
+export const otpVerificationSchema = z.object({
+    otp: z
+        .string()
+        .min(6, "OTP must be 6 digits")
+        .max(6, "OTP must be 6 digits")
+        .regex(/^\d+$/, "OTP must contain only numbers"),
+});
+
+export type OtpVerificationFormData = z.infer<typeof otpVerificationSchema>;

@@ -10,15 +10,15 @@ interface ForgotPasswordState {
     clear: () => void;
 }
 
-const useForgotPassword = create<ForgotPasswordState>((set, get) => {
-    const storedEmail = getItemLocalStorage("forgotPassword_email") || "";
+const useMailSetter = create<ForgotPasswordState>((set, get) => {
+    const storedEmail = getItemLocalStorage("mail_sended_mail") || "";
 
     return {
         email: storedEmail,
 
         setEmail: (email: string) => {
 
-            setItemLocalStorage("forgotPassword_email", email);
+            setItemLocalStorage("mail_sended_mail", email);
 
             set({
                 email,
@@ -26,7 +26,7 @@ const useForgotPassword = create<ForgotPasswordState>((set, get) => {
         },
 
         clear: () => {
-            setItemLocalStorage("forgotPassword_email", "");
+            setItemLocalStorage("mail_sended_mail", "");
 
             set({
                 email: "",
@@ -35,4 +35,4 @@ const useForgotPassword = create<ForgotPasswordState>((set, get) => {
     };
 });
 
-export default useForgotPassword;
+export default useMailSetter;

@@ -30,7 +30,6 @@ export default class OtpUseCase {
   async exec({ email, otp }: Payload) {
     this.validatorService.validateRequiredFields({ email, otp });
     this.validatorService.validateEmailFormat(email);
-    this.validatorService.validateLength(otp, 6, 6);
 
     const user = await this.userRepository.findByEmail(email);
     if (!user) {

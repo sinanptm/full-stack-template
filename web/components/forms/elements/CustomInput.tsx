@@ -5,7 +5,7 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BaseFormFieldProps } from "@/types";
 
-export interface CustomInputProps extends BaseFormFieldProps, React.InputHTMLAttributes<HTMLInputElement> { }
+interface CustomInputProps extends BaseFormFieldProps, React.InputHTMLAttributes<HTMLInputElement> { }
 
 const CustomInput = ({ type, ...props }: CustomInputProps) => {
     const [showPassword, setShowPassword] = useState(false);

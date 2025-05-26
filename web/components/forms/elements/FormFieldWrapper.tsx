@@ -3,18 +3,8 @@
 import { Label } from "@radix-ui/react-label";
 import { memo, useId } from "react";
 import { cn } from "@/lib/utils";
+import { FormFieldWrapperProps } from "@/types";
 
-export interface FormFieldWrapperProps {
-    label?: string;
-    error?: string;
-    hint?: string;
-    required?: boolean;
-    showHint?: boolean;
-    description?: string;
-    disabled?: boolean;
-    className?: string;
-    children: (id: string, describedBy: string | undefined) => React.ReactNode;
-}
 
 const FormFieldWrapper = ({
     label,

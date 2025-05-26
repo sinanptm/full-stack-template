@@ -4,7 +4,7 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
 import { onError } from "@/lib/utils";
-import useForgotPassword from "@/hooks/store/auth/useForgetPassword";
+import useMailSetter from "@/hooks/store/auth/useMailSetter";
 
 interface ForgotPasswordData {
     email: string;
@@ -12,7 +12,7 @@ interface ForgotPasswordData {
 
 const useForgotPasswordUser = () => {
     // for state mangemnet
-    const { setEmail } = useForgotPassword();
+    const { setEmail } = useMailSetter();
     return useMutation({
         mutationFn: async (data: ForgotPasswordData) => {
             const response = await POST<MessageResponse>({
