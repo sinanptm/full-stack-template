@@ -1,25 +1,37 @@
 import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import UserModel from "../models/User";
-import IUser from "@/domain/entities/IUser";
+import IUser, { UserProfilePromise, UserPromise } from "@/domain/entities/IUser";
 import { injectable } from "inversify";
 
 @injectable()
 export default class UserRepository implements IUserRepository {
   model = UserModel;
 
-  async findById(id: string): Promise<IUser | null> {
+  async findById(id: string): UserProfilePromise {
+    return await this.model.findById(id).lean().select("-password -token");
+  }
+
+  async findByEmail(email: string): UserProfilePromise {
+    return await this.model.findOne({ email }).lean().select("-password -token");
+  }
+
+  async findByIdWithCredentials(id: string): UserPromise {
     return await this.model.findById(id).lean();
   }
-  async update(id: string, entity: IUser): Promise<IUser | null> {
-    return await this.model.findByIdAndUpdate(id, entity);
+
+  async findByEmailWithCredentials(email: string): UserPromise {
+    return await this.model.findOne({ email }).lean();
   }
+
+  async update(id: string, entity: IUser): UserPromise {
+    return await this.model.findByIdAndUpdate(id, entity, { new: true }).lean();
+  }
+
   async delete(id: string): Promise<void> {
-    await this.model.deleteMany({ id });
+    await this.model.deleteOne({ _id: id });
   }
+
   async create(payload: IUser): Promise<IUser> {
     return await this.model.create(payload);
-  }
-  async findByEmail(email: string): Promise<IUser | null> {
-    return await this.model.findOne({ email });
   }
 }

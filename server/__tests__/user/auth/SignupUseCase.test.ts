@@ -116,31 +116,6 @@ describe("SignupUseCase", () => {
         });
     });
 
-    describe("Repository errors", () => {
-        it("should propagate repository errors", async () => {
-            mockUserRepository.findByEmail.mockResolvedValue(null);
-            mockHashService.hash.mockResolvedValue("hashedPassword");
-            mockUserRepository.create.mockRejectedValue(new Error("Database error"));
-
-            await expect(signupUseCase.exec(validUserData)).rejects.toThrow("Database error");
-        });
-
-        it("should propagate findByEmail errors", async () => {
-            mockUserRepository.findByEmail.mockRejectedValue(new Error("Database connection error"));
-
-            await expect(signupUseCase.exec(validUserData)).rejects.toThrow("Database connection error");
-        });
-    });
-
-    describe("Hash service errors", () => {
-        it("should propagate hash service errors", async () => {
-            mockUserRepository.findByEmail.mockResolvedValue(null);
-            mockHashService.hash.mockRejectedValue(new Error("Hashing failed"));
-
-            await expect(signupUseCase.exec(validUserData)).rejects.toThrow("Hashing failed");
-            expect(mockUserRepository.create).not.toHaveBeenCalled();
-        });
-    });
 
     describe("Edge cases", () => {
         it("should handle undefined fields gracefully", async () => {

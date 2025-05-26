@@ -6,6 +6,8 @@ const mockUserRepository: jest.Mocked<IUserRepository> = {
     update: jest.fn(),
     delete: jest.fn(),
     findByEmail: jest.fn(),
+    findByEmailWithCredentials: jest.fn(),
+    findByIdWithCredentials: jest.fn()
 };
 
 export default mockUserRepository;

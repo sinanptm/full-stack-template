@@ -16,7 +16,7 @@ export default class RateLimiterMiddleware {
         try {
             await this.rateLimiter.consume(req.ip!);
             next();
-        } catch (err) {
+        } catch (_) {
             res.status(StatusCode.RateLimitExceeded).json({
                 message: 'Rate limit exceeded. Please try again later.',
             });

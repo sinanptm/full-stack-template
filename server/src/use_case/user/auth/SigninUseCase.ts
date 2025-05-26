@@ -3,7 +3,7 @@ import { Services } from "@/di/services";
 import IOtpRepository from "@/domain/interfaces/repositories/IOtpRepository";
 import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import IHashService from "@/domain/interfaces/services/IHashService";
-import IMailService, { EmailType } from "@/domain/interfaces/services/IMailService";
+import IMailService from "@/domain/interfaces/services/IMailService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { ForbiddenError, NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { inject, injectable } from "inversify";
@@ -32,7 +32,7 @@ export default class SigninUseCase {
     this.validatorService.validateEmailFormat(email);
     this.validatorService.validatePassword(password);
 
-    const user = await this.userRepository.findByEmail(email);
+    const user = await this.userRepository.findByEmailWithCredentials(email);
     if (!user) {
       throw new NotFoundError("User not found");
     }
@@ -42,12 +42,12 @@ export default class SigninUseCase {
       throw new UnauthorizedError("Invalid credentials");
     }
 
-    await this.sendMail(email, user.name!, "verification");
+    await this.sendMail(email, user.name!);
 
     return { email }
   }
 
-  private async sendMail(email: string, name: string, type: EmailType) {
+  private async sendMail(email: string, name: string) {
     const otp = generateOtp();
 
     await this.otpRepository.deleteMany(email);

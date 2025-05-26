@@ -1,6 +1,10 @@
-import IUser from "@/domain/entities/IUser";
-import BaseRepository from "./BaseRepository";
+import IUser, { UserProfilePromise, UserPromise } from "@/domain/entities/IUser";
+import IBaseRepository from "./IBaseRepository";
 
-export default interface IUserRepository extends BaseRepository<IUser> {
-  findByEmail(email: string): Promise<IUser | null>;
+export default interface IUserRepository extends IBaseRepository<IUser> {
+  findByEmail(email: string): UserProfilePromise;
+  findById(id: string): UserProfilePromise;
+
+  findByIdWithCredentials(id: string): UserPromise;
+  findByEmailWithCredentials(email: string): UserPromise;
 }
