@@ -15,12 +15,14 @@
 ## ✨ Features
 
 - 🏗️ **Clean Architecture** - Well-structured and maintainable codebase
-- 🔐 **Complete Authentication System** - Sign up, login, OTP verification, password reset
+- 🔐 **Complete Authentication System** - Signup → Signin → OTP → Authenticated session with automatic token refresh
+- 🔑 **JWT Token Management** - Access and refresh tokens with HTTP-only cookies
+- 📧 **Email-based OTP** - Secure verification via Nodemailer
+- 🛡️ **Protected Routes** - Profile endpoint and authentication middleware
 - 🎨 **Modern UI Components** - Built with Radix UI and Tailwind CSS
 - 📱 **Responsive Design** - Mobile-first approach with dark/light theme support
 - 🛡️ **Type Safety** - Full TypeScript implementation
 - 🔄 **Real-time Updates** - React Query for efficient data fetching
-- 📧 **Email Integration** - Nodemailer for email services
 - ⚡ **Fast Development** - Hot reload with Turbopack
 - 🧪 **Testing Ready** - Jest configuration included
 - 📊 **Logging System** - Winston logger with daily rotation
@@ -121,7 +123,6 @@ pnpm --prefix server dev    # Backend on http://localhost:8000
 pnpm --prefix web dev       # Frontend on http://localhost:3000
 ```
 
-
 ## 📁 Project Structure
 
 ```
@@ -185,71 +186,182 @@ This template follows **Clean Architecture** principles with clear separation of
    - Service and repository bindings
    - Loose coupling between layers
 
-## 🔐 Authentication Flow
+## 🔐 Complete Authentication System
 
-The template includes a complete authentication system with clean architecture:
+The template provides a comprehensive authentication system with JWT-based session management and automatic token refresh capabilities.
 
-### 1. User Registration Flow (`SignupUseCase`)
+### 📊 Authentication Flow Diagram
+
+```mermaid
+graph TB
+    A[User Registration] --> B[Fill Email, Password, Name]
+    B --> C[Validation & Account Creation]
+    C --> D[Redirect to Sign In Page]
+    
+    D --> E[User Sign In]
+    E --> F[Enter Email & Password]
+    F --> G{Credentials Valid?}
+    G -->|No| H[Show Error Message]
+    H --> F
+    G -->|Yes| I[Generate 6-digit OTP]
+    I --> J[Send OTP to Email]
+    J --> K[Redirect to OTP Page]
+    
+    K --> L[Enter OTP]
+    L --> M{OTP Valid & Not Expired?}
+    M -->|No| N[Show Error Message]
+    N --> L
+    M -->|Yes| O[Generate JWT Tokens]
+    O --> P[Set HTTP-Only Cookies]
+    P --> Q[Authenticated Session]
+    
+    Q --> R[Access Protected Routes]
+    R --> S[Profile Endpoint]
+    R --> T[Other Protected APIs]
+    
+    U[Token Expiry] --> V[Automatic Refresh]
+    V --> W[New Access Token]
+    W --> Q
+    
+    X[Forgot Password] --> Y[Send Reset Link]
+    Y --> Z[OTP Verification]
+    Z --> AA[Password Reset]
+    AA --> D
+    
+    style A fill:#e1f5fe
+    style Q fill:#c8e6c9
+    style O fill:#fff3e0
+    style V fill:#fce4ec
 ```
-📧 Email/Password → Validation → Password Hashing → User Creation
+
+### 🔄 Authentication Flow Overview
+
+```
+Sign Up → Sign In → OTP Verification → Authenticated Session → Profile Access
+```
+
+#### Step-by-Step User Journey:
+
+1. **User Registration** 📝
+   - User enters email, password, and name on signup page
+   - System validates input and creates account
+   - User is redirected to signin page
+
+2. **User Login** 🔑
+   - User enters the same email and password used during signup
+   - System validates credentials and generates 6-digit OTP
+   - OTP is sent to user's email address
+   - User is redirected to OTP verification page
+
+3. **OTP Verification** ✅
+   - User enters the OTP received in their email
+   - System validates OTP and expiration (10-minute limit)
+   - Upon successful verification:
+     - Access token (JWT) is generated and stored as HTTP-only cookie
+     - Refresh token is generated for automatic token renewal
+     - User gains access to protected routes
+
+4. **Authenticated Session** 🛡️
+   - User can now access protected endpoints like `/api/profile`
+   - Access and refresh tokens work together automatically in the background
+   - No manual token management required from the user
+
+### 🏗️ Authentication Architecture
+
+#### 1. User Registration Flow (`SignupUseCase`)
+```
+📧 Email/Password → Validation → Password Hashing → User Creation → Redirect to Signin
 ```
 - **Input validation**: Email format, password strength, name length
 - **Duplicate check**: Prevents multiple accounts with same email
 - **Secure hashing**: bcrypt with salt for password protection
 - **Clean error handling**: Domain-specific error messages
 
-### 2. User Login Flow (`SigninUseCase`)
+#### 2. User Login Flow (`SigninUseCase`)
 ```
-📧 Credentials → Validation → Password Verification → OTP Generation → Email Sent
+📧 Credentials → Validation → Password Verification → OTP Generation → Email Sent → Redirect to OTP
 ```
 - **Credential verification**: Email and password validation
 - **Password comparison**: Secure bcrypt comparison
-- **OTP generation**: 6-digit verification code
+- **OTP generation**: 6-digit verification code with expiration
 - **Email delivery**: Automated OTP email via Nodemailer
-- **Token refresh**: JWT refresh token mechanism
 
-### 3. OTP Verification Flow (`OtpUseCase`)
+#### 3. OTP Verification Flow (`OtpUseCase`)
 ```
-🔢 OTP Input → Validation → Expiration Check → Token Generation → Login Success
+🔢 OTP Input → Validation → Expiration Check → JWT Generation → Authenticated Session
 ```
 - **OTP validation**: Database verification with expiration check
 - **Time-based expiry**: Configurable expiration (default: 10 minutes)
 - **JWT generation**: Access and refresh token creation
-- **User session**: Secure token storage and management
+- **Cookie storage**: Secure HTTP-only cookie for token storage
 - **OTP cleanup**: Automatic removal after successful verification
 
-### 4. Password Reset Flow (`ResetPasswordUseCase`)
+#### 4. Profile Access (`ProfileUseCase`)
 ```
-📧 Email → Reset Link → OTP Verification → Password Update → Cleanup
+🔒 Protected Request → Token Validation → User Data Retrieval → Response
 ```
-- **Forgot password**: Email-based reset link generation
-- **Secure links**: Time-limited reset URLs with embedded tokens
-- **Link expiration**: 5-minute expiry for security
+- **Token authentication**: Automatic validation of access token
+- **User profile**: Returns authenticated user's profile information
+- **Testing endpoint**: Validates that JWT authentication is working correctly
+
+#### 5. Token Refresh Flow (`RefreshTokenUseCase`)
+```
+🔄 Expired Access Token → Refresh Token Validation → New Access Token → Seamless Continuation
+```
+- **Automatic refresh**: Background token renewal without user intervention
+- **Seamless experience**: Users never experience authentication interruptions
+- **Security**: Refresh tokens have longer expiry but are securely managed
+
+#### 6. Password Reset Flow (`ResetPasswordUseCase`)
+```
+📧 Forgot Password → Reset Link → OTP Verification → Password Update → Cleanup
+```
+- **Email-based reset**: Secure reset link generation
+- **Time-limited access**: 5-minute expiry for security
 - **Password update**: Secure hash generation and storage
 - **Token cleanup**: Automatic OTP removal after reset
 
-### 5. Session Management Features
-- **Automatic token refresh**: Seamless user experience
-- **Secure cookie handling**: HTTP-only cookies for tokens
-- **Session persistence**: Refresh token storage
-- **Account blocking**: Admin capability to block users
-- **Multi-device support**: Multiple active sessions
+### 🛡️ Session Management Features
+- **Automatic token refresh**: Seamless user experience with background token renewal
+- **Secure cookie handling**: HTTP-only cookies prevent XSS attacks
+- **Session persistence**: Refresh tokens maintain long-term sessions
+- **Token expiration**: Configurable access token lifetimes
+- **Account security**: Admin capability to block users
+- **Multi-device support**: Multiple active sessions across devices
 
-## 🛡️ API Security Features
+## 🛡️ API Security & Endpoints
 
+### Protected Routes
+All protected routes require valid JWT authentication via HTTP-only cookies.
+
+#### Authentication Endpoints
+- `POST /api/auth/signup` - User registration
+- `POST /api/auth/signin` - User login (sends OTP to email)
+- `POST /api/auth/verify-otp` - OTP verification (generates JWT tokens)
+- `POST /api/auth/refresh` - Automatic token refresh
+- `POST /api/auth/forgot-password` - Password reset request
+- `POST /api/auth/reset-password` - Password reset with OTP
+
+#### Protected Endpoints
+- `GET /api/profile` - Get authenticated user's profile data
+  - **Purpose**: Testing endpoint to validate JWT authentication
+  - **Returns**: User profile information (name, email, etc.)
+  - **Authentication**: Requires valid access token
+
+### Security Features
 - **Rate Limiting**: Prevents API abuse with configurable limits
-- **CORS Protection**: Configured for cross-origin requests
+- **CORS Protection**: Configured for cross-origin requests  
 - **Input Validation**: Joi schema validation for all inputs
-- **JWT Authentication**: Secure token-based authentication
+- **JWT Authentication**: Secure token-based authentication with automatic refresh
 - **Password Security**: bcrypt hashing with salt rounds
-- **Cookie Security**: HTTP-only cookies for token storage
+- **Cookie Security**: HTTP-only cookies prevent XSS attacks
+- **Token Management**: Access tokens with refresh token rotation
 
 ## 🧪 Testing
 
 ```bash
 # Run backend tests
 pnpm --prefix server test
-
 ```
 
 ## 📦 Build for Production
