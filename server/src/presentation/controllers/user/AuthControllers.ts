@@ -14,19 +14,22 @@ export default class AuthControllers {
     @inject(UseCases.SigninUseCase) private readonly signinUseCase: SigninUseCase,
     @inject(UseCases.SignupUseCase) private readonly signupUseCase: SignupUseCase,
     @inject(UseCases.OtpUseCase) private readonly otpUseCase: OtpUseCase,
-    @inject(UseCases.ResetPasswordUseCase) private readonly resetPasswordUseCase: ResetPasswordUseCase
-  ) { }
+    @inject(UseCases.ResetPasswordUseCase) private readonly resetPasswordUseCase: ResetPasswordUseCase,
+  ) {}
 
   signin = tryCatch(async (req: Request, res: Response) => {
     const { email } = await this.signinUseCase.exec(req.body);
-    res.status(StatusCode.Success).json({ message: "Sign-in initiated. Please check your email for the OTP.", email });
+    res
+      .status(StatusCode.Success)
+      .json({ message: "Sign-in initiated. Please check your email for the OTP.", email });
   });
 
   signup = tryCatch(async (req: Request, res: Response) => {
     await this.signupUseCase.exec(req.body);
-    res.status(StatusCode.Created).json({ message: "Account created successfully. Please sign in to continue." });
+    res
+      .status(StatusCode.Created)
+      .json({ message: "Account created successfully. Please sign in to continue." });
   });
-
 
   verifyOtp = tryCatch(async (req: Request, res: Response) => {
     const { accessToken, refreshToken, user } = await this.otpUseCase.exec(req.body);
@@ -38,7 +41,9 @@ export default class AuthControllers {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(StatusCode.Success).json({ accessToken, user, message: "OTP verified. You are now signed in." });
+    res
+      .status(StatusCode.Success)
+      .json({ accessToken, user, message: "OTP verified. You are now signed in." });
   });
 
   resendOtp = tryCatch(async (req: Request, res: Response) => {
@@ -53,7 +58,9 @@ export default class AuthControllers {
 
   resetPassword = tryCatch(async (req: Request, res: Response) => {
     await this.resetPasswordUseCase.exec(req.body);
-    res.status(StatusCode.Success).json({ message: "Password reset successfully. Please sign in with your new password." });
+    res
+      .status(StatusCode.Success)
+      .json({ message: "Password reset successfully. Please sign in with your new password." });
   });
 
   refreshAccessToken = tryCatch(async (req: Request, res: Response) => {

@@ -5,12 +5,12 @@ import { WrapperProps } from "@/types";
 import { notFound } from "next/navigation";
 
 const layout = ({ children }: WrapperProps) => {
-    const { email } = useMailSetter();
+  const { email } = useMailSetter();
 
-    if (!email) {
-        notFound();
-    } else {
-        return children;
-    }
+  if (!email) {
+    notFound();
+  } else {
+    return children;
+  }
 };
 export default layout;

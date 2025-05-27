@@ -1,7 +1,7 @@
 export enum PutRoutes {
-    test = "/test",
+  test = "/test",
 }
 
 export enum PutRoutesWithParams {
-    test = "/test/:id",
+  test = "/test/:id",
 }

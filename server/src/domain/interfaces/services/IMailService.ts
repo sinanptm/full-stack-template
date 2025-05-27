@@ -8,7 +8,7 @@ export type SendPasswordResetLinkProps = {
   email: string;
   name: string;
   resetLink: string;
-}
+};
 
 export type EmailType = "verification" | "password-reset";
 

@@ -4,12 +4,12 @@ import { WrapperProps } from "@/types";
 import { notFound } from "next/navigation";
 
 const layout = ({ children }: WrapperProps) => {
-    const { isAuthenticated } = useAuthUser();
+  const { isAuthenticated } = useAuthUser();
 
-    if (isAuthenticated) {
-        notFound();
-    } else {
-        return children;
-    }
+  if (isAuthenticated) {
+    notFound();
+  } else {
+    return children;
+  }
 };
 export default layout;

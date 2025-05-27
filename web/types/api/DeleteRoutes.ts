@@ -1,6 +1,6 @@
 export enum DeleteRoutes {
-    LogoutUser = "/auth/logout"
+  LogoutUser = "/auth/logout",
 }
 export enum DeleteRoutesWithParams {
-    test = "/test/:id",
+  test = "/test/:id",
 }

@@ -8,7 +8,7 @@ const router = Router();
 const authControllers = resolve<AuthControllers>(Controllers.AuthControllers);
 // Rate limiter for email sending endpoints
 const rateLimiter = new RateLimiterMiddleware(30);
-const limiter = rateLimiter.exec.bind(rateLimiter)
+const limiter = rateLimiter.exec.bind(rateLimiter);
 
 router.post("/signin", limiter, authControllers.signin.bind(authControllers));
 router.post("/signup", authControllers.signup.bind(authControllers));
@@ -20,4 +20,3 @@ router.get("/refresh-token", limiter, authControllers.refreshAccessToken.bind(au
 router.delete("/logout", authControllers.logout.bind(authControllers));
 
 export default router;
-

@@ -9,52 +9,51 @@ import useMailSetter from "@/hooks/store/auth/useMailSetter";
 import useLoading from "@/hooks/store/useLoading";
 import { useRouter } from "next/navigation";
 
-
 interface ForgotPasswordData {
-    email: string;
-    otp: number;
+  email: string;
+  otp: number;
 }
 
 interface Response extends MessageResponse {
-    accessToken: string;
-    user: {
-        name: string;
-        id: string;
-    };
+  accessToken: string;
+  user: {
+    name: string;
+    id: string;
+  };
 }
 
 const useVerifyOtpUser = () => {
-    const { setToken, setUser } = useAuthUser();
-    const { clear } = useMailSetter();
-    const { setLoading } = useLoading();
-    const router = useRouter();
-    return useMutation({
-        mutationFn: async (data: ForgotPasswordData) => {
-            setLoading(true);
-            const response = await POST<Response>({
-                route: PostRoutes.VerifyOtpUser,
-                body: data,
-            });
-            return response;
-        },
-        onSuccess: ({ accessToken, user, message }: Response) => {
-            toast.success(message, { icon: '🎉' });
-            setToken(accessToken);
-            setUser(user);
-            clear();
-            setTimeout(() => {
-                router.push("/");
-                setLoading(false);
-            }, 1000);
-        },
-        onError: (e) => {
-            // for making the ui loading better
-            setTimeout(() => {
-                onError(e);
-                setLoading(false);
-            }, 400);
-        }
-    });
+  const { setToken, setUser } = useAuthUser();
+  const { clear } = useMailSetter();
+  const { setLoading } = useLoading();
+  const router = useRouter();
+  return useMutation({
+    mutationFn: async (data: ForgotPasswordData) => {
+      setLoading(true);
+      const response = await POST<Response>({
+        route: PostRoutes.VerifyOtpUser,
+        body: data,
+      });
+      return response;
+    },
+    onSuccess: ({ accessToken, user, message }: Response) => {
+      toast.success(message, { icon: "🎉" });
+      setToken(accessToken);
+      setUser(user);
+      clear();
+      setTimeout(() => {
+        router.push("/");
+        setLoading(false);
+      }, 1000);
+    },
+    onError: (e) => {
+      // for making the ui loading better
+      setTimeout(() => {
+        onError(e);
+        setLoading(false);
+      }, 400);
+    },
+  });
 };
 
 export default useVerifyOtpUser;

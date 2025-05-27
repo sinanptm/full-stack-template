@@ -68,7 +68,7 @@ export default class OtpUseCase {
       refreshToken,
       user: {
         id: user._id,
-        name: user.name
+        name: user.name,
       },
     };
   }

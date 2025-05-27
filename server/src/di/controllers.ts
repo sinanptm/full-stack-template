@@ -4,7 +4,7 @@ import ProfileController from "@/presentation/controllers/user/ProfileController
 
 export enum Controllers {
   AuthControllers = "AuthControllers",
-  ProfileController = "ProfileController"
+  ProfileController = "ProfileController",
 }
 
 container.bind<AuthControllers>(Controllers.AuthControllers).to(AuthControllers);

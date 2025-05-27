@@ -33,15 +33,12 @@ const Signin = () => {
             onForgotPassword={handleOpenForgotPassword}
             defaultValues={{
               email: "muhammedsinan0549@gmail.com",
-              password: "fjfjfj"
+              password: "fjfjfj",
             }}
           />
         </CardContent>
       </Card>
-      <ForgotPasswordDialog
-        open={showForgotPasswordDialog}
-        onOpenChange={setShowForgotPasswordDialog}
-      />
+      <ForgotPasswordDialog open={showForgotPasswordDialog} onOpenChange={setShowForgotPasswordDialog} />
     </div>
   );
 };

@@ -3,8 +3,8 @@ import { CLIENT_URL, PORT } from "./config";
 import { initConfig } from "./config/initConfig";
 import router from "./presentation/routes";
 import logger from "./utils/logger";
-import cors from 'cors';
-import cookieParser from 'cookie-parser'
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 

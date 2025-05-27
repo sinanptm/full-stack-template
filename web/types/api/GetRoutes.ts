@@ -1,9 +1,9 @@
 export enum GetRoutes {
-    RefreshToken = "/auth/refresh-token",
+  RefreshToken = "/auth/refresh-token",
 
-    GetProfile = "/profile"
+  GetProfile = "/profile",
 }
 
 export enum GetRoutesWithParams {
-    test = "/test/:id",
+  test = "/test/:id",
 }

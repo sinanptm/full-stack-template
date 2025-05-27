@@ -25,7 +25,8 @@ const VerifyOtp = () => {
           </div>
           <CardTitle className="text-2xl">Verify Your Email</CardTitle>
           <CardDescription className="text-center">
-            We've sent a verification code to your email address. Please enter the 6-digit code below to continue.
+            We've sent a verification code to your email address. Please enter the 6-digit code below to
+            continue.
           </CardDescription>
         </CardHeader>
         <CardContent>

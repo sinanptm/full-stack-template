@@ -5,31 +5,31 @@ import { getItemLocalStorage, setItemLocalStorage } from "@/lib/utils";
 import { Tokens } from "@/types";
 
 interface AdminAuthState {
-    isAuthenticated: boolean;
+  isAuthenticated: boolean;
 
-    token: string | null;
+  token: string | null;
 
-    setToken: (token: string) => void;
-    logout: () => void;
+  setToken: (token: string) => void;
+  logout: () => void;
 }
 
 const useAuthAdmin = create<AdminAuthState>((set) => {
-    const token = getItemLocalStorage(Tokens.Admin);
+  const token = getItemLocalStorage(Tokens.Admin);
 
-    return {
-        isAuthenticated: !!token,
-        token: token || null,
+  return {
+    isAuthenticated: !!token,
+    token: token || null,
 
-        setToken: (token) => {
-            set({ token, isAuthenticated: true });
-            setItemLocalStorage(Tokens.Admin, token);
-        },
+    setToken: (token) => {
+      set({ token, isAuthenticated: true });
+      setItemLocalStorage(Tokens.Admin, token);
+    },
 
-        logout: () => {
-            set({ token: null, isAuthenticated: false });
-            localStorage.removeItem(Tokens.Admin);
-        },
-    };
+    logout: () => {
+      set({ token: null, isAuthenticated: false });
+      localStorage.removeItem(Tokens.Admin);
+    },
+  };
 });
 
 export default useAuthAdmin;

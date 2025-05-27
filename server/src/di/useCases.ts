@@ -11,7 +11,7 @@ export enum UseCases {
   LogoutUseCase = "LogoutUseCase",
   OtpUseCase = "OtpUseCase",
   ResetPasswordUseCase = "ResetPasswordUseCase",
-  ProfileUseCase = "ProfileUseCase"
+  ProfileUseCase = "ProfileUseCase",
 }
 
 container.bind<SigninUseCase>(UseCases.SigninUseCase).to(SigninUseCase);

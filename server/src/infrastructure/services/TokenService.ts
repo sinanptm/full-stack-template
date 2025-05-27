@@ -1,4 +1,7 @@
-import ITokenService, { AccessTokenPayload, RefreshTokenPayload } from "@/domain/interfaces/services/ITokenService";
+import ITokenService, {
+  AccessTokenPayload,
+  RefreshTokenPayload,
+} from "@/domain/interfaces/services/ITokenService";
 import { JwtPayload, TokenExpiredError, sign, verify, SignOptions } from "jsonwebtoken";
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "@/config";
 import { CustomError, ForbiddenError } from "@/domain/entities/CustomErrors";
@@ -15,7 +18,7 @@ export default class TokenService implements ITokenService {
       return verify(token, secret) as JwtPayload;
     } catch (error) {
       if (error instanceof TokenExpiredError) {
-        if (type == 'refresh') {
+        if (type == "refresh") {
           throw new CustomError("Token expired", StatusCode.Forbidden);
         } else {
           throw new CustomError("Token expired", StatusCode.TokenExpired);
@@ -32,13 +35,13 @@ export default class TokenService implements ITokenService {
   }
 
   verifyRefreshToken(token: string): RefreshTokenPayload {
-    const decoded = this.verifyToken(token, REFRESH_TOKEN_SECRET!, 'refresh');
+    const decoded = this.verifyToken(token, REFRESH_TOKEN_SECRET!, "refresh");
     return { email: decoded.email, id: decoded.id };
   }
 
   createAccessToken({ email, id, role }: AccessTokenPayload): string {
     return this.signToken({ email, id, role }, ACCESS_TOKEN_SECRET!, {
-      expiresIn: "15m"
+      expiresIn: "15m",
     });
   }
 

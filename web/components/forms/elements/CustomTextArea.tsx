@@ -5,24 +5,24 @@ import FormFieldWrapper from "./FormFieldWrapper";
 import { BaseFormFieldProps } from "@/types";
 
 interface CustomTextAreaProps extends BaseFormFieldProps, React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    resize?: boolean;
+  resize?: boolean;
 }
 
 const CustomTextArea = ({ resize = true, ...props }: CustomTextAreaProps) => {
-    const { error, showHint, ...textAreaProps } = props;
-    return (
-        <FormFieldWrapper {...props}>
-            {(id, describedBy) => (
-                <Textarea
-                    id={id}
-                    className={cn(!resize && "resize-none", props.error && "border-destructive", props.className)}
-                    aria-describedby={describedBy}
-                    aria-invalid={!!props.error}
-                    {...textAreaProps}
-                />
-            )}
-        </FormFieldWrapper>
-    );
+  const { error, showHint, ...textAreaProps } = props;
+  return (
+    <FormFieldWrapper {...props}>
+      {(id, describedBy) => (
+        <Textarea
+          id={id}
+          className={cn(!resize && "resize-none", props.error && "border-destructive", props.className)}
+          aria-describedby={describedBy}
+          aria-invalid={!!props.error}
+          {...textAreaProps}
+        />
+      )}
+    </FormFieldWrapper>
+  );
 };
 
 export default memo(CustomTextArea);

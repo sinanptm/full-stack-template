@@ -6,25 +6,25 @@ import { MessageResponse } from "@/types";
 import { onError } from "@/lib/utils";
 
 interface SignupData {
-    name: string;
-    email: string;
-    password: string;
+  name: string;
+  email: string;
+  password: string;
 }
 
 const useSignUpUser = () => {
-    return useMutation({
-        mutationFn: async (data: SignupData) => {
-            const response = await POST<MessageResponse>({
-                route: PostRoutes.SignupUser,
-                body: data,
-            });
-            return response;
-        },
-        onSuccess: ({ message }: MessageResponse) => {
-            toast.success(message);
-        },
-        onError
-    });
+  return useMutation({
+    mutationFn: async (data: SignupData) => {
+      const response = await POST<MessageResponse>({
+        route: PostRoutes.SignupUser,
+        body: data,
+      });
+      return response;
+    },
+    onSuccess: ({ message }: MessageResponse) => {
+      toast.success(message);
+    },
+    onError,
+  });
 };
 
 export default useSignUpUser;

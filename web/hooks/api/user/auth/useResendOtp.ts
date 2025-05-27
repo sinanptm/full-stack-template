@@ -6,23 +6,23 @@ import { MessageResponse } from "@/types";
 import { onError } from "@/lib/utils";
 
 interface ResendOtpUser {
-    email: string;
+  email: string;
 }
 
 const useResendOtpUser = () => {
-    return useMutation({
-        mutationFn: async (data: ResendOtpUser) => {
-            const response = await POST<MessageResponse>({
-                route: PostRoutes.ResendOtpUser,
-                body: data,
-            });
-            return response;
-        },
-        onSuccess: ({ message }: MessageResponse) => {
-            toast.success(message);
-        },
-        onError
-    });
+  return useMutation({
+    mutationFn: async (data: ResendOtpUser) => {
+      const response = await POST<MessageResponse>({
+        route: PostRoutes.ResendOtpUser,
+        body: data,
+      });
+      return response;
+    },
+    onSuccess: ({ message }: MessageResponse) => {
+      toast.success(message);
+    },
+    onError,
+  });
 };
 
 export default useResendOtpUser;

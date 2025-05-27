@@ -1,5 +1,11 @@
 import { ReactNode } from "react";
-import { forgotPasswordSchema, otpVerificationSchema, resetPasswordSchema, signinSchema, signupSchema } from "@/lib/schema";
+import {
+  forgotPasswordSchema,
+  otpVerificationSchema,
+  resetPasswordSchema,
+  signinSchema,
+  signupSchema,
+} from "@/lib/schema";
 import { z } from "zod";
 
 export interface WrapperProps {

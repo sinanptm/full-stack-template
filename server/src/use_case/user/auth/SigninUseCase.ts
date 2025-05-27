@@ -24,7 +24,7 @@ export default class SigninUseCase {
     @inject(Repositories.OtpRepository) private readonly otpRepository: IOtpRepository,
     @inject(Services.MailService) private readonly mailService: IMailService,
     @inject(Services.HashService) private readonly hashService: IHashService,
-    @inject(Services.TokenService) private readonly tokenService: ITokenService
+    @inject(Services.TokenService) private readonly tokenService: ITokenService,
   ) {}
 
   async exec({ email, password }: Payload) {
@@ -44,7 +44,7 @@ export default class SigninUseCase {
 
     await this.sendMail(email, user.name!);
 
-    return { email }
+    return { email };
   }
 
   private async sendMail(email: string, name: string) {
@@ -61,7 +61,7 @@ export default class SigninUseCase {
     });
   }
 
-  async refreshAccessToken(token: string): Promise<{ accessToken: string; }> {
+  async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
     if (!token) {
       throw new ForbiddenError("Unauthenticated");
     }

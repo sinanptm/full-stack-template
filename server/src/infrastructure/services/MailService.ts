@@ -1,4 +1,7 @@
-import IMailService, { SendOtpMailProps, SendPasswordResetLinkProps } from "@/domain/interfaces/services/IMailService";
+import IMailService, {
+  SendOtpMailProps,
+  SendPasswordResetLinkProps,
+} from "@/domain/interfaces/services/IMailService";
 import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";

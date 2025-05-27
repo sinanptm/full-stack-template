@@ -171,16 +171,13 @@ export default class ValidatorService implements IValidatorService {
       .min(6)
       .max(70)
       /**
-      * To include one uppercase letter, one number, and one special character requirement,
-      */
+       * To include one uppercase letter, one number, and one special character requirement,
+       */
       // .pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)
       .required();
     const { error } = schema.validate(password);
     if (error) {
-      this.throwError(
-        `Invalid password: must be 6-70 characters`,
-        "validatePassword",
-      );
+      this.throwError(`Invalid password: must be 6-70 characters`, "validatePassword");
     }
     return true;
   }
