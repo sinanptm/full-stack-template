@@ -3,9 +3,9 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 import { SERVER_URL } from "@/config";
 import { UserRole } from "@/types";
 import { StatusCode } from "@/types/api";
-import { GetRoutes } from "@/types/api/GetRoutes";
 import { clearAuthData, getTokenKey } from "../utils";
 import { toast } from "sonner";
+import { PostRoutes } from "@/types/api/PostRoutes";
 
 const createApiInstance = (role: UserRole): AxiosInstance => {
   const tokenKey = getTokenKey(role);
@@ -29,7 +29,7 @@ const createApiInstance = (role: UserRole): AxiosInstance => {
   // eslint-disable-next-line
   const refreshAuthLogic = async (failedRequest: any) => {
     try {
-      const response = await axios.get(`${SERVER_URL}/api${GetRoutes.RefreshToken}`, {
+      const response = await axios.post(`${SERVER_URL}/api${PostRoutes.RefreshToken}`, {}, {
         withCredentials: true,
       });
 
