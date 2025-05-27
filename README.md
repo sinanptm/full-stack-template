@@ -54,10 +54,10 @@ graph TB
     V --> W[🔢 OTP Reset]
     W --> D
     
-    style A fill:#e3f2fd
-    style P fill:#e8f5e8
-    style N fill:#fff3e0
-    style T fill:#fce4ec
+    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#000000
+    style P fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#000000
+    style N fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style T fill:#fce7f3,stroke:#ec4899,stroke-width:2px,color:#000000
 ```
 
 ## 🛠️ Tech Stack
