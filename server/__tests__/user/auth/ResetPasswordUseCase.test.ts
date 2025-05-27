@@ -57,7 +57,7 @@ describe("ResetPasswordUseCase", () => {
             expect(mockOtpRepository.create).toHaveBeenCalledWith("123456", validPayload.email);
             expect(mockMailService.sendPasswordResetLink).toHaveBeenCalledWith({
                 email: validPayload.email,
-                resetLink: expect.stringContaining(`${CLIENT_URL}/forgot-password/?token=123456X_X`),
+                resetLink: expect.stringContaining(`${CLIENT_URL}/auth/forgot-password/?token=123456X_X`),
                 name: "John",
             });
         });
@@ -80,7 +80,7 @@ describe("ResetPasswordUseCase", () => {
             await resetPasswordUseCase.forgotPassword({ email: validPayload.email });
 
             const expectedResetLinkPattern = new RegExp(
-                `${CLIENT_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/forgot-password/\\?token=123456X_X.+`
+                `${CLIENT_URL.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}/auth/forgot-password/\\?token=123456X_X.+`
             );
             expect(mockMailService.sendPasswordResetLink).toHaveBeenCalledWith(
                 expect.objectContaining({
