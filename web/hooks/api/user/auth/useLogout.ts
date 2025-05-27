@@ -15,9 +15,9 @@ const useLogout = () => {
             });
             return response;
         },
-        onSuccess: () => {
+        onSuccess: ({ message }) => {
             logout();
-            toast.success("Logout Successful");
+            toast.success(message);
         },
     });
 };

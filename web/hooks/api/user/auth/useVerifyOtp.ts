@@ -28,9 +28,9 @@ const useVerifyOtpUser = () => {
     const { clear } = useMailSetter();
     const { setLoading } = useLoading();
     const router = useRouter();
-    setLoading(true);
     return useMutation({
         mutationFn: async (data: ForgotPasswordData) => {
+            setLoading(true);
             const response = await POST<Response>({
                 route: PostRoutes.VerifyOtpUser,
                 body: data,
@@ -42,7 +42,9 @@ const useVerifyOtpUser = () => {
             setToken(accessToken);
             setUser(user);
             clear();
-            router.push("/");
+            setTimeout(() => {
+                router.push("/");
+            }, 100);
             setLoading(false);
         },
         onError,
