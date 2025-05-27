@@ -101,6 +101,8 @@ NODEMAILER_PASSKEY=your-email-app-password
 SENDER_EMAIL=your-email@gmail.com
 PORT=8000
 CLIENT_URL=http://localhost:3000
+ADMIN_MAIL=admin@gmail.com
+ADMIN_PASSWORD=fjfj
 ```
 
 **Client** (`.env.local` in `web/` directory):

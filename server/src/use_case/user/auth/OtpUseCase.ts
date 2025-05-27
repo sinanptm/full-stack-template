@@ -63,7 +63,7 @@ export default class OtpUseCase {
     };
   }
 
-  async createToken(user: IUserProfile) {
+  private async createToken(user: IUserProfile) {
     const accessToken = this.tokenService.createAccessToken({
       email: user.email!,
       id: user._id!.toString(),

@@ -61,11 +61,11 @@ export default class SigninUseCase {
     });
   }
 
-  async refreshAccessToken(token: string): Promise<{ accessToken: string }> {
-    if (!token) {
+  async refreshAccessToken(refreshToken: string): Promise<{ accessToken: string; }> {
+    if (!refreshToken) {
       throw new ForbiddenError("Unauthenticated");
     }
-    const { id, email } = this.tokenService.verifyRefreshToken(token);
+    const { id, email } = this.tokenService.verifyRefreshToken(refreshToken);
 
     const user = await this.userRepository.findById(id);
     if (!user) throw new UnauthorizedError("Unauthorized");
