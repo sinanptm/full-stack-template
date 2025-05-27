@@ -16,7 +16,7 @@
 - 🔐 **Complete Authentication** - Signup → Signin → OTP → JWT Session with auto-refresh
 - 🏗️ **Clean Architecture** - Domain-driven design with dependency injection
 - 🛡️ **Security First** - JWT tokens, HTTP-only cookies, rate limiting, bcrypt
-- 🎨 **Modern UI** - Radix UI, Tailwind CSS, dark/light themes, responsive
+- 🎨 **Modern UI** - Shadcn UI, Tailwind CSS, dark/light themes, responsive
 - ⚡ **Developer Experience** - TypeScript, hot reload, testing ready
 - 📧 **Email Integration** - OTP verification and password reset via Nodemailer
 
@@ -197,7 +197,7 @@ pnpm --prefix web start
 - **UI Components**: Modify `web/components/ui/` with Radix primitives
 - **Business Logic**: Update use cases in `server/src/use_case/`
 - **Database Models**: Edit entities in `server/src/domain/entities/`
-- **Themes**: Configure in `web/tailwind.config.js`
+- **Themes**: Configure in `web/styles/globals.css`
 
 ## 🤝 Contributing
 
