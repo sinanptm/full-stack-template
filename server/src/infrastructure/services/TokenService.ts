@@ -16,9 +16,9 @@ export default class TokenService implements ITokenService {
     } catch (error) {
       if (error instanceof TokenExpiredError) {
         if (type == 'refresh') {
-          throw new CustomError("Token Expired", StatusCode.Forbidden);
+          throw new CustomError("Token expired", StatusCode.Forbidden);
         } else {
-          throw new CustomError("Token Expired", StatusCode.TokenExpired);
+          throw new CustomError("Token expired", StatusCode.TokenExpired);
         }
       }
       throw new ForbiddenError("Invalid token");

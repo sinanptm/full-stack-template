@@ -20,3 +20,4 @@ router.get("/refresh-token", limiter, authControllers.refreshAccessToken.bind(au
 router.delete("/logout", authControllers.logout.bind(authControllers));
 
 export default router;
+

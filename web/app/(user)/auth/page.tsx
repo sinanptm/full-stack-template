@@ -5,10 +5,12 @@ import LoginForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninUser from "@/hooks/api/user/auth/useSignin";
 import ForgotPasswordDialog from "@/components/dialogs/ForgotPasswordDialog";
+import useAuthRedirectToast from "@/hooks/store/auth/useAuthRedirectToast";
 
 const Signin = () => {
   const { mutate: handleSignin, isPending: isSigninPending } = useSigninUser();
   const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false);
+  useAuthRedirectToast();
 
   const handleOpenForgotPassword = useCallback(() => {
     setShowForgotPasswordDialog(true);

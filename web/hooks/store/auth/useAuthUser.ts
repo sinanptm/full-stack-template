@@ -1,8 +1,8 @@
 "use client";
 
 import { create } from "zustand";
-import { getItemLocalStorage, setItemLocalStorage } from "@/lib/utils";
-import { Tokens } from "@/types";
+import { clearAuthData, getItemLocalStorage, setItemLocalStorage } from "@/lib/utils";
+import { Tokens, UserRole } from "@/types";
 
 type User = {
     name: string;
@@ -40,8 +40,7 @@ const useAuthUser = create<UserAuthState>((set) => {
 
         logout: () => {
             set({ token: null, user: null, isAuthenticated: false });
-            localStorage.removeItem(Tokens.User);
-            localStorage.removeItem("user");
+            clearAuthData(UserRole.User)
         },
     };
 });

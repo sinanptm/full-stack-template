@@ -15,7 +15,7 @@ export default class UserAuthMiddleware {
         try {
             const authHeader = req.headers.authorization;
             if (!authHeader || !authHeader.startsWith("Bearer ")) {
-                res.status(StatusCode.Unauthorized).json({
+                res.status(StatusCode.Forbidden).json({
                     message: "Authentication failed: Missing or invalid Bearer token",
                 });
                 return;
@@ -41,11 +41,7 @@ export default class UserAuthMiddleware {
             req.user = { email, id };
             next();
         } catch (error: any) {
-            let message = "Authentication failed: Invalid access token";
-            if (error.message === "Token Expired") {
-                message = "Authentication failed: Access token has expired";
-            }
-            res.status(StatusCode.Unauthorized).json({ message });
+            res.status(error.statusCode).json({ message: error.message });
         }
     }
 }
