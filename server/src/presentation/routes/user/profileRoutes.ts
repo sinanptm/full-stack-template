@@ -1,12 +1,16 @@
 import { resolve } from "@/di";
+import { Controllers } from "@/di/controllers";
 import { MiddleWares } from "@/di/middlewares";
+import ProfileController from "@/presentation/controllers/user/ProfileController";
 import UserAuthMiddleware from "@/presentation/middlewares/UserAuthMiddleware";
 import { Router } from "express";
 
 const router = Router();
 
 const authMiddleware = resolve<UserAuthMiddleware>(MiddleWares.UserAuthMiddleware);
+const profileController = resolve<ProfileController>(Controllers.ProfileController);
 
-router.get("/", authMiddleware.exec, (req, res) => { res.send("SUccess"); });
+router.use(authMiddleware.exec);
+router.get("/", profileController.getProfile.bind(profileController));
 
 export default router;
