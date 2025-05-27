@@ -14,24 +14,20 @@ const SigninForm = ({
     isLoading = false,
     className = "",
     submitButtonText = "Sign In",
-
     showForgotPassword = true,
     forgotPasswordText = "Forgot your password?",
     forgotPasswordLink,
     onForgotPassword,
-
     showSignUp = true,
     signUpText = "Don't have an account?",
     signUpLinkText = "Sign up",
     signUpLink,
-
     defaultValues
-
 }: SigninFormProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting }
+        formState: { errors }
     } = useForm<SigninFormData>({
         resolver: zodResolver(signinSchema),
         mode: "onBlur",
@@ -39,18 +35,11 @@ const SigninForm = ({
     });
 
     const handleFormSubmit = async (data: SigninFormData) => {
-        try {
-            await onSubmit(data);
-        } catch (error) {
-            console.error("Login form submission error:", error);
-        }
+        onSubmit(data);
     };
-
-    const isFormLoading = isLoading || isSubmitting;
 
     return (
         <div className={`space-y-6 ${className}`}>
-
             <form
                 onSubmit={handleSubmit(handleFormSubmit)}
                 className="space-y-4"
@@ -96,7 +85,7 @@ const SigninForm = ({
 
                 <SubmitButton
                     type="submit"
-                    isLoading={isFormLoading}
+                    isLoading={isLoading}
                     className="w-full h-11"
                 >
                     {submitButtonText}

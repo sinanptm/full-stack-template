@@ -3,48 +3,36 @@
 import { memo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import CustomInput from "@/components/forms/elements/CustomInput";
 import SubmitButton from "@/components/forms/elements/SubmitButton";
 import { signupSchema } from "@/lib/schema";
-import { SignupFormProps } from "@/types";
+import { SignupFormData, SignupFormProps } from "@/types";
 import Link from "next/link";
-
-export type SignupFormData = z.infer<typeof signupSchema>;
+import useSignUpUser from "@/hooks/api/user/auth/useSignup";
 
 const SignupForm = ({
-    onSubmit,
-    isLoading = false,
     className = "",
     submitButtonText = "Sign Up",
-
     showSignIn = true,
     signInText = "Already have an account?",
     signInLinkText = "Sign in",
     signInLink,
-
     defaultValues
-
 }: SignupFormProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting }
+        formState: { errors }
     } = useForm<SignupFormData>({
         resolver: zodResolver(signupSchema),
-        mode: "onBlur",
+        mode: "all",
         defaultValues,
     });
+    const { mutate, isPending } = useSignUpUser();
 
     const handleFormSubmit = async (data: SignupFormData) => {
-        try {
-            await onSubmit(data);
-        } catch (error) {
-            console.error("Signup form submission error:", error);
-        }
+        mutate(data);
     };
-
-    const isFormLoading = isLoading || isSubmitting;
 
     return (
         <div className={`space-y-6 ${className}`}>
@@ -91,7 +79,7 @@ const SignupForm = ({
 
                 <SubmitButton
                     type="submit"
-                    isLoading={isFormLoading}
+                    isLoading={isPending}
                     className="w-full h-11"
                 >
                     {submitButtonText}

@@ -10,10 +10,10 @@ export type SigninFormData = z.infer<typeof signinSchema>;
 export type SignupFormData = z.infer<typeof signupSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 export type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
-export type OtpVerificationFormData = z.infer<typeof otpVerificationSchema>
+export type OtpVerificationFormData = z.infer<typeof otpVerificationSchema>;
 
 export interface SigninFormProps {
-  onSubmit: (data: SigninFormData) => Promise<void> | void;
+  onSubmit: (data: SigninFormData) => void;
   isLoading?: boolean;
   className?: string;
   submitButtonText?: string;
@@ -45,19 +45,13 @@ export interface ForgotPasswordDialogProps {
   className?: string;
   onSubmit?: () => void;
 }
-
-
 export interface SignupFormProps {
-  onSubmit: (data: SignupFormData) => void | Promise<void>;
-  isLoading?: boolean;
   className?: string;
   submitButtonText?: string;
-
   showSignIn?: boolean;
   signInText?: string;
   signInLinkText?: string;
   signInLink?: string;
-
   defaultValues?: {
     name?: string;
     email?: string;
@@ -65,7 +59,6 @@ export interface SignupFormProps {
     confirmPassword?: string;
   };
 }
-
 export interface BaseFormFieldProps {
   label?: string;
   hint?: string;
@@ -79,20 +72,16 @@ export interface BaseFormFieldProps {
 export interface FormFieldWrapperProps extends BaseFormFieldProps {
   children: (id: string, describedBy: string | undefined) => React.ReactNode;
 }
-
-
 export interface ForgotPasswordTokenData {
   otp: string;
   createdDate: string;
 }
-
 export interface ResetPasswordFormProps {
   email: string;
   tokenData: ForgotPasswordTokenData;
   onBackToLogin: () => void;
   onSuccess: () => void;
 }
-
 export interface OtpVerificationFormProps {
   onSubmit: (otp: number) => void;
   onResendOtp: () => void;

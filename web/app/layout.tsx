@@ -5,6 +5,7 @@ import ThemeProvider from "@/components/layout/ThemeProvider";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import QueryProvider from "@/components/layout/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 export { metadata } from "./metadata";
 
@@ -22,6 +23,7 @@ const RootLayout = ({ children }: WrapperProps) => {
             >
               {children}
               <Toaster />
+              <LoadingOverlay />
             </ThemeProvider>
           </NuqsAdapter>
         </QueryProvider>

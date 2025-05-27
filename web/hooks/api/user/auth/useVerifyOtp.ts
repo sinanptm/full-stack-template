@@ -3,9 +3,11 @@ import { POST } from "@/lib/api";
 import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import useAuthUser from "@/hooks/store/auth/useAuthUser";
-import { useRouter } from "next/navigation";
 import { onError } from "@/lib/utils";
 import { MessageResponse } from "@/types";
+import useMailSetter from "@/hooks/store/auth/useMailSetter";
+import useLoading from "@/hooks/store/useLoading";
+import { useRouter } from "next/navigation";
 
 
 interface ForgotPasswordData {
@@ -23,7 +25,10 @@ interface Response extends MessageResponse {
 
 const useVerifyOtpUser = () => {
     const { setToken, setUser } = useAuthUser();
+    const { clear } = useMailSetter();
+    const { setLoading } = useLoading();
     const router = useRouter();
+    setLoading(true);
     return useMutation({
         mutationFn: async (data: ForgotPasswordData) => {
             const response = await POST<Response>({
@@ -33,12 +38,17 @@ const useVerifyOtpUser = () => {
             return response;
         },
         onSuccess: ({ accessToken, user, message }: Response) => {
+            toast.success(message, { icon: '🎉' });
             setToken(accessToken);
             setUser(user);
+            clear();
             router.push("/");
-            toast.success(message, { icon: '🎉' });
+            setLoading(false);
         },
-        onError
+        onError,
+        onSettled: () => {
+            setLoading(false);
+        }
     });
 };
 

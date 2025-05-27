@@ -1,5 +1,5 @@
 export enum GetRoutes {
-    RefreshToken = "/refresh-token",
+    RefreshToken = "/auth/refresh-token",
 }
 
 export enum GetRoutesWithParams {

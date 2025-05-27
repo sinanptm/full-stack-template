@@ -1,13 +1,12 @@
-"use client";
-
 import { memo } from "react";
 import SignupForm from "@/components/forms/SignupForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import useSignupUser from "@/hooks/api/user/auth/useSignup";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: "SIgnup"
+};
 const Signup = () => {
-    const { mutate, isPending } = useSignupUser();
-
     return (
         <div className="min-h-screen flex items-center justify-center">
             <Card className="w-full max-w-sm">
@@ -16,10 +15,8 @@ const Signup = () => {
                 </CardHeader>
                 <CardContent>
                     <SignupForm
-                        onSubmit={mutate}
-                        isLoading={isPending}
                         showSignIn={true}
-                        signInLink="/signin"
+                        signInLink="/auth"
                     />
                 </CardContent>
             </Card>

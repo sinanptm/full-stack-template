@@ -14,4 +14,5 @@ export const CLIENT_URL = process.env.CLIENT_URL ?? "http://localhost:3000";
 // Company Name for Email Sending
 export const COMPANY_NAME = "Mern stack template project";
 export const COMPANY_DOMAIN = "dev.com";
+export const RESET_LINK_EXPIRATION_MINUTES = 5;
 export const OTP_EXPIRATION_MINUTES = 15;

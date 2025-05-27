@@ -6,7 +6,7 @@ import { DeleteRoutes } from "@/types/api/DeleteRoutes";
 import useAuthUser from "@/hooks/store/auth/useAuthUser";
 
 
-const useVerifyOtpUser = () => {
+const useLogout = () => {
     const { logout } = useAuthUser();
     return useMutation({
         mutationFn: async () => {
@@ -22,4 +22,4 @@ const useVerifyOtpUser = () => {
     });
 };
 
-export default useVerifyOtpUser;
+export default useLogout;

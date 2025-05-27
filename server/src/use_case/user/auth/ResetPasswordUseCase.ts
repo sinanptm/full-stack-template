@@ -9,9 +9,8 @@ import { NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors
 import { inject, injectable } from "inversify";
 import { generateOtp } from "@/utils";
 import { differenceInMinutes } from "date-fns";
-import { CLIENT_URL } from "@/config";
+import { CLIENT_URL, RESET_LINK_EXPIRATION_MINUTES } from "@/config";
 
-const RESET_LINK_EXPIRATION_MINUTES = 5;
 
 interface ResetPasswordPayload {
     email: string;
@@ -41,7 +40,7 @@ export default class ResetPasswordUseCase {
         await this.otpRepository.deleteMany(email);
         await this.otpRepository.create(otp, email);
 
-        const resetLink = `${CLIENT_URL}/forgot-password/?token=${otp}X_X${encodeURIComponent(createdDate)}`;
+        const resetLink = `${CLIENT_URL}/auth/forgot-password/?token=${otp}X_X${encodeURIComponent(createdDate)}`;
         await this.mailService.sendPasswordResetLink({
             email,
             resetLink,

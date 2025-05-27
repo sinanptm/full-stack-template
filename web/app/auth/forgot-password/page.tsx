@@ -1,7 +1,8 @@
 "use client";
-import { memo, useEffect, useState } from "react";
+
+import { memo, useCallback, useEffect, useState } from "react";
 import { useQueryState } from "nuqs";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { differenceInMinutes } from "date-fns";
 import useMailSetter from "@/hooks/store/auth/useMailSetter";
 import LoadingState from "@/components/user/forgot-password/LoadingState";
@@ -15,12 +16,6 @@ const ForgotPasswordPage = () => {
   const { email: storedEmail, clear } = useMailSetter();
   const [tokenData, setTokenData] = useState<ForgotPasswordTokenData | null>(null);
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    if (!storedEmail) {
-      router.push("/signin");
-    }
-  }, [storedEmail, router]);
 
   useEffect(() => {
     if (!token) {
@@ -49,10 +44,10 @@ const ForgotPasswordPage = () => {
     }
   }, [token]);
 
-  const handleBackToLogin = () => {
+  const handleBackToLogin = useCallback(() => {
     clear();
-    router.push("/signin");
-  };
+    router.push("/auth/signin");
+  }, [clear, router]);
 
   if (isTokenValid === null) {
     return <LoadingState />;
@@ -62,6 +57,10 @@ const ForgotPasswordPage = () => {
     return <InvalidTokenState onBackToLogin={handleBackToLogin} />;
   }
 
+  if (!storedEmail) {
+    notFound();
+  }
+
   return (
     <ResetPasswordForm
       email={storedEmail}
@@ -69,7 +68,7 @@ const ForgotPasswordPage = () => {
       onBackToLogin={handleBackToLogin}
       onSuccess={() => {
         clear();
-        router.push("/signin");
+        router.push("/auth");
       }}
     />
   );

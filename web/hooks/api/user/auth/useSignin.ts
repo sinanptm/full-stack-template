@@ -31,7 +31,7 @@ const useSigninUser = () => {
             setEmail(email);
             toast.success(message);
             setTimeout(() => {
-                router.push("/otp-verification");
+                router.push("/auth/otp-verification");
             }, 1000);
         },
         onError

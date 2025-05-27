@@ -10,12 +10,10 @@ import dynamic from "next/dynamic";
 const OtpVerificationForm = dynamic(() => import("@/components/forms/OtpVerificationForm"), { ssr: false });
 
 const VerifyOtp = () => {
+  const { email } = useMailSetter();
   const { mutate: handleVerifyOtp, isPending: isVerifying } = useVerifyOtpUser();
   const { mutate: handleResendOtp, isPending: isResending } = useResendOtpUser();
-  const { email } = useMailSetter();
-
   const handleSubmit = useCallback((otp: number) => handleVerifyOtp({ otp, email }), [handleVerifyOtp]);
-
   const handleResend = useCallback(() => handleResendOtp({ email }), [handleResendOtp]);
 
   return (

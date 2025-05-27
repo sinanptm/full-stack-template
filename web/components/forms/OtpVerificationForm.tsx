@@ -8,7 +8,7 @@ import CustomOTPInput from "@/components/forms/elements/OtpInput";
 import SubmitButton from "@/components/forms/elements/SubmitButton";
 import { Button } from "@/components/ui/button";
 import { otpVerificationSchema } from "@/lib/schema";
-import { RefreshCw, Mail } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { OtpVerificationFormData, OtpVerificationFormProps } from "@/types";
 
@@ -22,12 +22,11 @@ const OtpVerificationForm = ({
     resendTimerDuration = 30,
     email
 }: OtpVerificationFormProps) => {
-
     const {
         handleSubmit,
         register,
         setValue,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<OtpVerificationFormData>({
         resolver: zodResolver(otpVerificationSchema),
         mode: "onBlur",
@@ -35,14 +34,12 @@ const OtpVerificationForm = ({
             otp: "",
         },
     });
-
     const expiryTimestamp = new Date();
     expiryTimestamp.setSeconds(expiryTimestamp.getSeconds() + resendTimerDuration);
 
     const { seconds, minutes, isRunning, restart } = useTimer({
         expiryTimestamp,
-        onExpire: () => console.log("Timer expired - can resend OTP now"),
-        autoStart: true,
+        autoStart: true
     });
 
     const handleFormSubmit = ({ otp }: OtpVerificationFormData) => {
@@ -58,21 +55,9 @@ const OtpVerificationForm = ({
         }
     }, [email, isRunning, isResending, onResendOtp, restart, resendTimerDuration]);
 
-    const isFormLoading = isLoading || isSubmitting;
     const canResend = !isRunning && !isResending && email;
 
     const formatTime = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-    if (!email) {
-        return (
-            <div className="text-center space-y-4">
-                <div className="text-muted-foreground">
-                    <Mail className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                    <p>No email found. Please go back and enter your email first.</p>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className={`space-y-6 ${className}`}>
@@ -83,7 +68,7 @@ const OtpVerificationForm = ({
                         description="Enter the 6-digit code sent to your email"
                         maxLength={6}
                         error={errors.otp?.message}
-                        disabled={isFormLoading}
+                        disabled={isLoading}
                         className="space-y-3"
                         {...register("otp")}
                         onChange={(value) => setValue("otp", value)}
@@ -118,7 +103,7 @@ const OtpVerificationForm = ({
                     </div>
                 </div>
 
-                <SubmitButton isLoading={isFormLoading} className="w-full h-12 text-base">
+                <SubmitButton isLoading={isLoading} className="w-full h-12 text-base">
                     {submitButtonText}
                 </SubmitButton>
             </form>
