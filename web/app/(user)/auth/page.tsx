@@ -31,10 +31,6 @@ const Signin = () => {
             forgotPasswordLink="/auth/forgot-password"
             showSignUp={true}
             onForgotPassword={handleOpenForgotPassword}
-            defaultValues={{
-              email: "muhammedsinan0549@gmail.com",
-              password: "fjfjfj",
-            }}
           />
         </CardContent>
       </Card>

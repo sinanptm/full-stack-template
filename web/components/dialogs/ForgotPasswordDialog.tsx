@@ -30,10 +30,7 @@ const ForgotPasswordDialog = ({
     reset,
   } = useForm<ForgotPasswordData>({
     resolver: zodResolver(forgotPasswordSchema),
-    mode: "onBlur",
-    defaultValues: {
-      email: "muhammedsinan0549@gmail.com",
-    },
+    mode: "onBlur"
   });
   const { mutate, isPending } = useForgotPasswordUser();
 
