@@ -83,7 +83,7 @@ graph TB
 
 ```bash
 # Clone repository
-git clone git@github.com:sinanptm/full-stack-template.git
+git clone git@github.com:sinanptm/fullstack-clean-auth-template.git
 cd full-stack-template
 
 # Install dependencies
