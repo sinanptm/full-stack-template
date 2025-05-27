@@ -29,7 +29,7 @@ const OtpVerificationForm = ({
         formState: { errors },
     } = useForm<OtpVerificationFormData>({
         resolver: zodResolver(otpVerificationSchema),
-        mode: "onBlur",
+        mode: "all",
         defaultValues: {
             otp: "",
         },

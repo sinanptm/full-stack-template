@@ -44,12 +44,15 @@ const useVerifyOtpUser = () => {
             clear();
             setTimeout(() => {
                 router.push("/");
-            }, 100);
-            setLoading(false);
+                setLoading(false);
+            }, 1000);
         },
-        onError,
-        onSettled: () => {
-            setLoading(false);
+        onError: (e) => {
+            // for making the ui loading better
+            setTimeout(() => {
+                onError(e);
+                setLoading(false);
+            }, 400);
         }
     });
 };

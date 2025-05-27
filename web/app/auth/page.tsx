@@ -25,8 +25,8 @@ const Signin = () => {
             onSubmit={handleSignin}
             isLoading={isSigninPending}
             showForgotPassword={true}
-            signUpLink="/signup"
-            forgotPasswordLink="/forgot-password"
+            signUpLink="/auth/signup"
+            forgotPasswordLink="/auth/forgot-password"
             showSignUp={true}
             onForgotPassword={handleOpenForgotPassword}
             defaultValues={{

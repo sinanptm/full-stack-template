@@ -1,12 +1,11 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { memo, useEffect } from "react";
 import useIsLoading from "@/hooks/store/useLoading";
+import { motion, AnimatePresence } from "framer-motion";
 
-const LoadingOverlay = ({ className }: { className?: string; }) => {
-    const isLoading = useIsLoading((state) => state.isLoading);
+const LoadingOverlay = () => {
+    const isLoading = useIsLoading(state => state.isLoading);
 
     useEffect(() => {
         if (isLoading) {
@@ -20,23 +19,51 @@ const LoadingOverlay = ({ className }: { className?: string; }) => {
         };
     }, [isLoading]);
 
-    if (!isLoading) return null;
+    if (!isLoading) return null
 
     return (
-        <div
-            className={cn(
-                "fixed inset-0 z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm",
-                className,
+        <AnimatePresence>
+            {isLoading && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className={"fixed inset-0 z-[9999] flex items-center justify-center bg-black/75 backdrop-blur-sm"}
+                >
+                    <motion.div
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0.8 }}
+                        className="flex flex-col items-center space-y-6 "
+                        aria-disabled={true}
+                        aria-hidden={true}
+                        aria-busy={true}
+                        aria-live="polite"
+                        aria-label="Loading..."
+                    >
+                        <div className="flex space-x-3">
+                            {[0, 1, 2, 3, 4].map((index) => (
+                                <motion.div
+                                    key={index}
+                                    className="w-4 h-4 bg-white rounded-full"
+                                    animate={{
+                                        scale: [1, 1.5, 1],
+                                        opacity: [0.3, 1, 0.3],
+                                    }}
+                                    transition={{
+                                        duration: 1.2,
+                                        repeat: Number.POSITIVE_INFINITY,
+                                        delay: index * 0.1,
+                                        ease: "easeInOut",
+                                    }}
+                                />
+                            ))}
+                        </div>
+                    </motion.div>
+                </motion.div>
             )}
-            aria-disabled={true}
-            aria-hidden={true}
-            aria-busy={true}
-            aria-live="polite"
-            aria-label="Loading..."
-        >
-            <Loader2 className="h-10 w-10 animate-spin text-white" />
-        </div>
+        </AnimatePresence>
     );
 };
 
-export default memo(LoadingOverlay); 
+export default memo(LoadingOverlay);
