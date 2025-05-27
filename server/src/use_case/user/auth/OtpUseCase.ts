@@ -11,6 +11,7 @@ import { generateOtp } from "@/utils";
 import { differenceInMinutes } from "date-fns";
 import { OTP_EXPIRATION_MINUTES } from "@/config";
 import IMailService from "@/domain/interfaces/services/IMailService";
+import { IUserProfile } from "@/domain/entities/IUser";
 
 interface Payload {
   email: string;
@@ -25,7 +26,7 @@ export default class OtpUseCase {
     @inject(Services.ValidatorService) private readonly validatorService: IValidatorService,
     @inject(Repositories.OtpRepository) private readonly otpRepository: IOtpRepository,
     @inject(Services.MailService) private readonly mailService: IMailService,
-  ) {}
+  ) { }
 
   async exec({ email, otp }: Payload) {
     this.validatorService.validateRequiredFields({ email, otp });
@@ -50,6 +51,19 @@ export default class OtpUseCase {
 
     await this.otpRepository.deleteMany(email);
 
+    const { accessToken, refreshToken } = await this.createToken(user);
+
+    return {
+      accessToken,
+      refreshToken,
+      user: {
+        id: user._id,
+        name: user.name,
+      },
+    };
+  }
+
+  async createToken(user: IUserProfile) {
     const accessToken = this.tokenService.createAccessToken({
       email: user.email!,
       id: user._id!.toString(),
@@ -62,18 +76,10 @@ export default class OtpUseCase {
     });
 
     await this.userRepository.update(user._id!, { token: refreshToken });
-
-    return {
-      accessToken,
-      refreshToken,
-      user: {
-        id: user._id,
-        name: user.name,
-      },
-    };
+    return { refreshToken, accessToken };
   }
 
-  async resendOtp({ email }: { email: string }) {
+  async resendOtp({ email }: { email: string; }) {
     this.validatorService.validateEmailFormat(email);
 
     const user = await this.userRepository.findByEmail(email);

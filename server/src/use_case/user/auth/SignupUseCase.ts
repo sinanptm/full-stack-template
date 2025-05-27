@@ -15,12 +15,8 @@ export default class SignupUseCase {
     @inject(Services.HashService) private readonly hashService: IHashService,
   ) {}
 
-  async exec({ email, name, password }: IUser) {
-    this.validatorService.validateRequiredFields({ email, name, password });
-    this.validatorService.validateEmailFormat(email!);
-    this.validatorService.validatePassword(password!);
-    this.validatorService.validateLength(name!, 2, 50);
-
+  async exec(data: IUser) {
+    const { email, name, password } = this.validate(data)
     const existingUser = await this.userRepository.findByEmail(email!);
     if (existingUser) {
       throw new ConflictError("User with this email already exists");
@@ -33,5 +29,14 @@ export default class SignupUseCase {
       email,
       name,
     });
+  }
+
+  private validate({ email, name, password }: IUser) {
+    this.validatorService.validateRequiredFields({ email, name, password });
+    this.validatorService.validateEmailFormat(email!);
+    this.validatorService.validatePassword(password!);
+    this.validatorService.validateLength(name!, 2, 50);
+
+    return { email, name, password };
   }
 }
