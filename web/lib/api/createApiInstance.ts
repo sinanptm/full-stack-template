@@ -7,7 +7,7 @@ import { clearAuthData, getTokenKey } from "../utils";
 import { toast } from "sonner";
 import { PostRoutes } from "@/types/api/PostRoutes";
 
-const createApiInstance = (role: UserRole): AxiosInstance => {
+const createApiInstance = (role: UserRole = UserRole.User): AxiosInstance => {
   const tokenKey = getTokenKey(role);
 
   const api = axios.create({
@@ -71,8 +71,4 @@ const createApiInstance = (role: UserRole): AxiosInstance => {
   return api;
 };
 
-export const AdminAPI = createApiInstance(UserRole.Admin);
-export const UserAPI = createApiInstance(UserRole.User);
-
-export const getApiByRole = (role: UserRole = UserRole.User) =>
-  role === UserRole.Admin ? AdminAPI : UserAPI;
+export default createApiInstance;
