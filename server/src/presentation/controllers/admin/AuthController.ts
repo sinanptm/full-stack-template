@@ -31,7 +31,7 @@ export default class AdminAuthController {
             sameSite: "strict",
             secure: true,
         });
-
+        res.status(StatusCode.Success).json({ message: "Successfully logged out." });
     });
 
     refreshAccessToken = tryCatch(async (req, res) => {

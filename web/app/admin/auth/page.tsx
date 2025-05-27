@@ -1,8 +1,11 @@
 'use client';
+
 import SigninForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import useSigninAdmin from "@/hooks/api/admin/auth/useSignin";
 
-const LoginPage = () => {
+const SigninPage = () => {
+    const { mutate, isPending } = useSigninAdmin()
     return (
         <div className="flex items-center justify-center min-h-screen">
             <Card className="w-full max-w-sm">
@@ -11,15 +14,20 @@ const LoginPage = () => {
                 </CardHeader>
                 <CardContent>
                     <SigninForm
-                        onSubmit={() => { }}
+                        onSubmit={mutate}
                         showSignUp
                         signUpLinkText="Login as User"
                         signUpLink="/auth"
+                        isLoading={isPending}
                         signUpText="Not an admin"
+                        defaultValues={{
+                            email: "admin@gmail.com",
+                            password: "fjfjfj"
+                        }}
                     />
                 </CardContent>
             </Card>
         </div>
     );
 };
-export default LoginPage;
+export default SigninPage;

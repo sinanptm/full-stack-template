@@ -1,15 +1,15 @@
 "use client";
 
-import useAuthUser from "@/hooks/store/auth/useAuthUser";
+import useAuthAdmin from "@/hooks/store/auth/useAuthAdmin";
 import { WrapperProps } from "@/types";
 import { notFound } from "next/navigation";
 
 const AuthLayout = ({ children }: WrapperProps) => {
-  const { isAuthenticated } = useAuthUser();
+    const { isAuthenticated } = useAuthAdmin();
 
-  if (isAuthenticated) {
-    notFound();
-  }
-  return children;
+    if (isAuthenticated) {
+        notFound();
+    }
+    return children;
 };
 export default AuthLayout;

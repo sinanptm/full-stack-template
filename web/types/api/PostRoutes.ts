@@ -6,6 +6,8 @@ export enum PostRoutes {
   VerifyOtpUser = "/auth/verify-otp",
   ResendOtpUser = "/auth/resend-otp",
   RefreshToken = "/auth/refresh",
+
+  AdminSignin = "/admin/auth"
 }
 export enum PostRoutesWithParams {
   test = "/test/:id",
