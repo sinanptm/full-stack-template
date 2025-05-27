@@ -10,6 +10,7 @@ interface SubmitButtonProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "submit" | "button" | "reset";
   className?: string;
+  // eslint-disable-next-line
   [key: string]: any;
 }
 

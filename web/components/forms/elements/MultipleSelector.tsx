@@ -3,7 +3,7 @@
 import { Command as CommandPrimitive, useCommandState } from "cmdk";
 import { XIcon } from "lucide-react";
 import * as React from "react";
-import { useEffect, useId, useCallback, useMemo } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import FormFieldWrapper from "./FormFieldWrapper";
@@ -223,7 +223,6 @@ const MultipleSelector = React.forwardRef<HTMLInputElement, MultipleSelectorProp
     },
     ref,
   ) => {
-    const id = useId();
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [open, setOpen] = React.useState(false);
     const [onScrollbar, setOnScrollbar] = React.useState(false);
@@ -645,8 +644,6 @@ const MultipleSelector = React.forwardRef<HTMLInputElement, MultipleSelectorProp
                             className="h-full overflow-auto cursor-pointer"
                           >
                             {dropdowns.map((option) => {
-                              const canSelect =
-                                !isMaxSelected || selected.find((s) => s.value === option.value);
                               return (
                                 <CommandItem
                                   key={option.value}

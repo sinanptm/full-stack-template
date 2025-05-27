@@ -26,6 +26,7 @@ const createApiInstance = (role: UserRole): AxiosInstance => {
     return config;
   });
 
+  // eslint-disable-next-line
   const refreshAuthLogic = async (failedRequest: any) => {
     try {
       const response = await axios.get(`${SERVER_URL}/api${GetRoutes.RefreshToken}`, {

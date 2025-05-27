@@ -13,8 +13,8 @@ const VerifyOtp = () => {
   const { email } = useMailSetter();
   const { mutate: handleVerifyOtp, isPending: isVerifying } = useVerifyOtpUser();
   const { mutate: handleResendOtp, isPending: isResending } = useResendOtpUser();
-  const handleSubmit = useCallback((otp: number) => handleVerifyOtp({ otp, email }), [handleVerifyOtp]);
-  const handleResend = useCallback(() => handleResendOtp({ email }), [handleResendOtp]);
+  const handleSubmit = useCallback((otp: number) => handleVerifyOtp({ otp, email }), [handleVerifyOtp, email]);
+  const handleResend = useCallback(() => handleResendOtp({ email }), [handleResendOtp, email]);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -25,7 +25,7 @@ const VerifyOtp = () => {
           </div>
           <CardTitle className="text-2xl">Verify Your Email</CardTitle>
           <CardDescription className="text-center">
-            We've sent a verification code to your email address. Please enter the 6-digit code below to
+            We&apos;ve sent a verification code to your email address. Please enter the 6-digit code below to
             continue.
           </CardDescription>
         </CardHeader>

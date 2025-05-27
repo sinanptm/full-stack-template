@@ -9,6 +9,7 @@ interface CustomInputProps extends BaseFormFieldProps, React.InputHTMLAttributes
 
 const CustomInput = ({ type, ...props }: CustomInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
+  // eslint-disable-next-line
   const { error, showHint, ...inputProps } = props;
   const isPassword = type === "password";
   const inputType = isPassword && showPassword ? "text" : type;

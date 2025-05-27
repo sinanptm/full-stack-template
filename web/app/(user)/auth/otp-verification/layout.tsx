@@ -4,7 +4,7 @@ import useMailSetter from "@/hooks/store/auth/useMailSetter";
 import { WrapperProps } from "@/types";
 import { notFound } from "next/navigation";
 
-const layout = ({ children }: WrapperProps) => {
+const OtpVerificationLayout = ({ children }: WrapperProps) => {
   const { email } = useMailSetter();
 
   if (!email) {
@@ -13,4 +13,4 @@ const layout = ({ children }: WrapperProps) => {
     return children;
   }
 };
-export default layout;
+export default OtpVerificationLayout;

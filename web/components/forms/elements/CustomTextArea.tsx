@@ -9,6 +9,7 @@ interface CustomTextAreaProps extends BaseFormFieldProps, React.TextareaHTMLAttr
 }
 
 const CustomTextArea = ({ resize = true, ...props }: CustomTextAreaProps) => {
+  // eslint-disable-next-line
   const { error, showHint, ...textAreaProps } = props;
   return (
     <FormFieldWrapper {...props}>

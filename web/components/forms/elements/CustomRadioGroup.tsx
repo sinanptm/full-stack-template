@@ -19,7 +19,7 @@ interface CustomRadioGroupProps extends BaseFormFieldProps {
   orientation?: "horizontal" | "vertical";
 }
 
-const CustomRadioGroup = memo(({ options, orientation = "vertical", ...props }: CustomRadioGroupProps) => (
+const CustomRadioGroup = ({ options, orientation = "vertical", ...props }: CustomRadioGroupProps) => (
   <FormFieldWrapper {...props}>
     {(id, describedBy) => (
       <RadioGroup
@@ -61,6 +61,6 @@ const CustomRadioGroup = memo(({ options, orientation = "vertical", ...props }: 
       </RadioGroup>
     )}
   </FormFieldWrapper>
-));
+);
 
 export default memo(CustomRadioGroup);

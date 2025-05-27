@@ -23,6 +23,7 @@ const CustomFileInput = ({
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [dragOver, setDragOver] = useState(false);
 
+  // eslint-disable-next-line
   const { error, className, showHint, maxLength, ...inputProps } = props;
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
