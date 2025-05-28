@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import useLogout from "@/hooks/api/user/auth/useLogout";
-import useAuthUser from "@/hooks/store/auth/useAuthUser";
 
-const AuthButton = () => {
-  const { isAuthenticated } = useAuthUser();
+const AuthButton = ({ isAuthenticated }: { isAuthenticated: boolean; }) => {
   const { mutate } = useLogout();
 
   const handleLogout = () => {
@@ -14,7 +12,7 @@ const AuthButton = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen justify-center gap-4">
+    <div>
       {isAuthenticated ? (
         <Button variant={"destructive"} onClick={handleLogout}>
           Logout

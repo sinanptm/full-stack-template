@@ -5,10 +5,12 @@ import { DeleteRoutes } from "@/types/api/DeleteRoutes";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { onError } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 
 const useLogoutAdmin = () => {
     const { logout } = useAuthAdmin();
+    const router = useRouter()
     return useMutation({
         mutationFn: async () => {
             const response = await DELETE<MessageResponse>({
@@ -19,6 +21,9 @@ const useLogoutAdmin = () => {
         onSuccess: ({ message }) => {
             logout();
             toast.success(message);
+            setTimeout(() => {
+                router.push("/admin/auth");
+            }, 20);
         },
         onError
     });
