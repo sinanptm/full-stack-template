@@ -1,13 +1,8 @@
 "use client";
 
 import { getItemLocalStorage, setItemLocalStorage } from "@/lib/utils";
+import { ForgotPasswordState } from "@/types";
 import { create } from "zustand";
-
-interface ForgotPasswordState {
-  email: string;
-  setEmail: (email: string) => void;
-  clear: () => void;
-}
 
 const useMailSetter = create<ForgotPasswordState>((set) => {
   const storedEmail = getItemLocalStorage("mail_sended_email") || "";

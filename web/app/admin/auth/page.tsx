@@ -3,7 +3,7 @@
 import SigninForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninAdmin from "@/hooks/api/admin/auth/useSignin";
-import useAuthRedirectToast from "@/hooks/store/auth/useAuthRedirectToast";
+import useAuthRedirectToast from "@/hooks/store/useAuthRedirectToast";
 
 const SigninPage = () => {
     const { mutate, isPending } = useSigninAdmin();

@@ -2,13 +2,11 @@
 
 import LoadingOverlay from "@/components/LoadingOverlay";
 import useAuthUser from "@/hooks/store/auth/useAuthUser";
-import useHydrated from "@/hooks/useHydrated";
 import { WrapperProps } from "@/types";
 import { notFound } from "next/navigation";
 
 const AuthLayout = ({ children }: WrapperProps) => {
-  const { isAuthenticated } = useAuthUser();
-  const isHydrated = useHydrated();
+  const { isAuthenticated, isHydrated } = useAuthUser();
 
   if (!isHydrated) {
     return <LoadingOverlay loading />;

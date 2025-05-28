@@ -13,10 +13,10 @@ const RootLayout = ({ children }: WrapperProps) => {
     <html lang="en" suppressHydrationWarning>
       <body className={`${mainFont.className} antialiased`}>
         <QueryProvider>
-            <ThemeProvider attribute="class" enableSystem>
-              {children}
-              <Toaster />
-              <LoadingOverlay />
+          <ThemeProvider attribute="class" enableSystem>
+            {children}
+            <Toaster />
+            <LoadingOverlay />
           </ThemeProvider>
         </QueryProvider>
       </body>

@@ -1,27 +1,15 @@
-"use client";
+"use client"
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import useLogout from "@/hooks/api/user/auth/useLogout";
-import useHydrated from "@/hooks/useHydrated";
+import useLogout from "@/hooks/api/user/auth/useLogout"
 
 const AuthButton = ({ isAuthenticated }: { isAuthenticated: boolean; }) => {
-  const { mutate } = useLogout();
-  const isHydrated = useHydrated();
+  const { mutate } = useLogout()
 
   const handleLogout = () => {
-    mutate();
+    mutate()
   };
-
-  if (!isHydrated) {
-    return (
-      <div className="flex gap-4">
-        <Skeleton className="h-10 w-24 rounded-md" />
-        <Skeleton className="h-10 w-24 rounded-md" />
-      </div>
-    );
-  }
 
   return (
     <div>

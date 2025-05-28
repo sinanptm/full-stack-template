@@ -5,7 +5,7 @@ import LoginForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninUser from "@/hooks/api/user/auth/useSignin";
 import ForgotPasswordDialog from "@/components/dialogs/ForgotPasswordDialog";
-import useAuthRedirectToast from "@/hooks/store/auth/useAuthRedirectToast";
+import useAuthRedirectToast from "@/hooks/store/useAuthRedirectToast";
 
 const SigninClient = () => {
     const { mutate: handleSignin, isPending: isSigninPending } = useSigninUser();

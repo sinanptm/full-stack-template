@@ -1,35 +1,51 @@
-"use client";
-
 import { create } from "zustand";
-import { getItemLocalStorage, setItemLocalStorage } from "@/lib/utils";
+import { setItemLocalStorage } from "@/lib/utils";
 import { Tokens } from "@/types";
+import { useEffect, useState } from "react";
+import { getItemLocalStorage } from "@/lib/utils";
+import { AdminAuthState } from "@/types";
 
-interface AdminAuthState {
-  isAuthenticated: boolean;
+const createAdminAuthStore = create<AdminAuthState>((set) => ({
+  isAuthenticated: false,
+  token: null,
 
-  token: string | null;
+  setToken: (token) => {
+    set({ token, isAuthenticated: true });
+    setItemLocalStorage(Tokens.Admin, token);
+  },
 
-  setToken: (token: string) => void;
-  logout: () => void;
-}
+  logout: () => {
+    set({ token: null, isAuthenticated: false });
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(Tokens.Admin);
+    }
+  },
 
-const useAuthAdmin = create<AdminAuthState>((set) => {
-  const token = getItemLocalStorage(Tokens.Admin);
+  initialize: (token) => {
+    set({
+      token,
+      isAuthenticated: !!token,
+    });
+  },
+}));
+
+const useAuthAdmin = () => {
+  const [isHydrated, setIsHydrated] = useState(false);
+  const store = createAdminAuthStore();
+
+  useEffect(() => {
+    if (!isHydrated) {
+      const token = getItemLocalStorage(Tokens.Admin);
+
+      store.initialize(token);
+      setIsHydrated(true);
+    }
+  }, [isHydrated, store]);
 
   return {
-    isAuthenticated: !!token,
-    token: token || null,
-
-    setToken: (token) => {
-      set({ token, isAuthenticated: true });
-      setItemLocalStorage(Tokens.Admin, token);
-    },
-
-    logout: () => {
-      set({ token: null, isAuthenticated: false });
-      localStorage.removeItem(Tokens.Admin);
-    },
+    ...store,
+    isHydrated,
   };
-});
+}
 
 export default useAuthAdmin;
