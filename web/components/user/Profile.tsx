@@ -7,6 +7,7 @@ const Profile = () => {
     const { data, isLoading, error } = useGetProfile();
 
     if (isLoading) return <LoadingOverlay loading />;
+
     if (error || !data) {
         return (
             <div>

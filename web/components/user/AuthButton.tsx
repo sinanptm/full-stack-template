@@ -4,12 +4,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import useLogout from "@/hooks/api/user/auth/useLogout";
-import useAuthUser from "@/hooks/store/auth/useAuthUser";
 import useHydrated from "@/hooks/useHydrated";
 
-const AuthButton = () => {
+const AuthButton = ({ isAuthenticated }: { isAuthenticated: boolean; }) => {
   const { mutate } = useLogout();
-  const { isAuthenticated } = useAuthUser();
   const isHydrated = useHydrated();
 
   const handleLogout = () => {
