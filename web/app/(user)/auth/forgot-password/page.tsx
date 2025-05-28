@@ -1,5 +1,5 @@
 import { differenceInMinutes } from "date-fns";
-import ForgotPasswordClient from "@/components/user/forgot-password/ForgotPasswordClient";
+import ForgotPasswordClient from "@/components/user/auth/forgot-password/ForgotPasswordClient";
 import { ForgotPasswordTokenData } from "@/types";
 
 interface PageProps {
@@ -31,6 +31,7 @@ const ForgotPasswordPage = async ({ searchParams }: PageProps) => {
 
     tokenData = { otp, createdDate };
   } catch (error) {
+    console.error("Error parsing token:", error);
     return <ForgotPasswordClient isTokenValid={false} tokenData={null} />;
   }
 

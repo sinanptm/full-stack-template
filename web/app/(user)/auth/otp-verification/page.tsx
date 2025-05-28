@@ -1,21 +1,9 @@
-"use client";
-
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShieldCheck } from "lucide-react";
-import useVerifyOtpUser from "@/hooks/api/user/auth/useVerifyOtp";
-import useMailSetter from "@/hooks/store/auth/useMailSetter";
-import useResendOtpUser from "@/hooks/api/user/auth/useResendOtp";
-import dynamic from "next/dynamic";
-const OtpVerificationForm = dynamic(() => import("@/components/forms/OtpVerificationForm"), { ssr: false });
+import OtpVerificationClient from "@/components/user/auth/OtpVerificationClient";
 
 const VerifyOtp = () => {
-  const { email } = useMailSetter();
-  const { mutate: handleVerifyOtp, isPending: isVerifying } = useVerifyOtpUser();
-  const { mutate: handleResendOtp, isPending: isResending } = useResendOtpUser();
-  const handleSubmit = useCallback((otp: number) => handleVerifyOtp({ otp, email }), [handleVerifyOtp, email]);
-  const handleResend = useCallback(() => handleResendOtp({ email }), [handleResendOtp, email]);
-
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -30,14 +18,7 @@ const VerifyOtp = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <OtpVerificationForm
-            email={email}
-            onSubmit={handleSubmit}
-            onResendOtp={handleResend}
-            isLoading={isVerifying}
-            isResending={isResending}
-            resendTimerDuration={60}
-          />
+          <OtpVerificationClient />
         </CardContent>
       </Card>
     </div>

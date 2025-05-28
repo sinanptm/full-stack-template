@@ -3,9 +3,9 @@
 import { memo, useCallback } from "react";
 import { notFound, useRouter } from "next/navigation";
 import useMailSetter from "@/hooks/store/auth/useMailSetter";
-import InvalidTokenState from "@/components/user/forgot-password/InvalidTokenState";
-import ResetPasswordForm from "@/components/user/forgot-password/ResetPasswordForm";
 import { ForgotPasswordTokenData } from "@/types";
+import InvalidTokenState from "./InvalidTokenState";
+import ResetPasswordForm from "./ResetPasswordForm";
 
 interface ForgotPasswordClientProps {
     isTokenValid: boolean;
