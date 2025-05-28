@@ -3,9 +3,11 @@
 import SigninForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninAdmin from "@/hooks/api/admin/auth/useSignin";
+import useAuthRedirectToast from "@/hooks/store/auth/useAuthRedirectToast";
 
 const SigninPage = () => {
-    const { mutate, isPending } = useSigninAdmin()
+    const { mutate, isPending } = useSigninAdmin();
+    useAuthRedirectToast()
     return (
         <div className="flex items-center justify-center min-h-screen">
             <Card className="w-full max-w-sm">

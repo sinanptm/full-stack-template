@@ -5,9 +5,10 @@ export enum PostRoutes {
   ResetPasswordUser = "/auth/reset-password",
   VerifyOtpUser = "/auth/verify-otp",
   ResendOtpUser = "/auth/resend-otp",
-  RefreshToken = "/auth/refresh",
+  UserRefresh = "/auth/refresh",
 
-  AdminSignin = "/admin/auth"
+  AdminSignin = "/admin/auth",
+  AdminRefresh = "/admin/auth/refresh"
 }
 export enum PostRoutesWithParams {
   test = "/test/:id",

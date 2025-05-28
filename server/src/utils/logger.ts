@@ -9,22 +9,22 @@ const consoleFormat = format.printf(
   ({ timestamp, level, message, stack, location, statusCode, url, data }) => {
     const logLevel = level.toUpperCase();
     let output = `${timestamp} ${logLevel}`;
-    output += `Message: ${message}`;
+    output += `${message}`;
 
     if (location) {
       output += `\x1b[36mLocation: ${location}\x1b[0m`;
     }
     if (statusCode) {
-      output += `Status Code: ${statusCode}`;
+      output += `${statusCode}`;
     }
     if (url) {
-      output += `URL: ${url}`;
+      output += `${url}`;
     }
     if (data) {
-      output += `Data: ${JSON.stringify(data, null, 2)}`;
+      output += `${JSON.stringify(data, null, 2)}`;
     }
     if (stack) {
-      output += `Stack: ${stack}`;
+      output += `${stack}`;
     }
 
     return output;

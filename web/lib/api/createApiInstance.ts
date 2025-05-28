@@ -29,7 +29,9 @@ const createApiInstance = (role: UserRole = UserRole.User): AxiosInstance => {
   // eslint-disable-next-line
   const refreshAuthLogic = async (failedRequest: any) => {
     try {
-      const response = await axios.post(`${SERVER_URL}/api${PostRoutes.RefreshToken}`, {}, {
+      const route = `${SERVER_URL}/api${role === UserRole.Admin ? PostRoutes.AdminRefresh : PostRoutes.UserRefresh}`;
+
+      const response = await axios.post(route, {}, {
         withCredentials: true,
       });
 

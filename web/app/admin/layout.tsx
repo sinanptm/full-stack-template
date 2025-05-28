@@ -9,7 +9,8 @@ const AdminLayout = ({ children }: WrapperProps) => {
     const path = usePathname();
     if (!isAuthenticated && !path.includes('/admin/auth')) {
         notFound();
+    } else {
+        return children;
     }
-    return children;
 };
 export default AdminLayout;

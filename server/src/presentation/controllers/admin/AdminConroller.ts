@@ -12,7 +12,7 @@ export default class AdminController {
 
     getUsers = tryCatch(async (req, res) => {
         const users = await this.getUsersUseCase.exec();
-        res.status(StatusCode.Success).json(users);
+        res.status(StatusCode.Success).json({ users });
     });
 
 }

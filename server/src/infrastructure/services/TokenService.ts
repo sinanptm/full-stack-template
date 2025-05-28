@@ -41,7 +41,7 @@ export default class TokenService implements ITokenService {
 
   createAccessToken({ email, id, role }: AccessTokenPayload): string {
     return this.signToken({ email, id, role }, ACCESS_TOKEN_SECRET!, {
-      expiresIn: "15m",
+      expiresIn: "5m",
     });
   }
 
