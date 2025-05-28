@@ -11,7 +11,7 @@ const Page = () => {
   return (
     <div className="flex flex-col items-center min-h-screen space-y-5 justify-center gap-4">
       <AuthButton isAuthenticated={isAuthenticated} />
-      <Profile />
+      {isAuthenticated && <Profile />}
     </div>
   );
 };

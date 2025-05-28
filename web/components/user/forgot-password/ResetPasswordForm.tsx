@@ -40,9 +40,7 @@ const ResetPasswordForm = ({ email, tokenData, onBackToLogin, onSuccess }: Reset
       {
         onSuccess: () => {
           toast.success("Password reset successfully!");
-          setTimeout(() => {
-            onSuccess();
-          }, 1000);
+          onSuccess();
         },
       },
     );

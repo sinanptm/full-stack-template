@@ -39,6 +39,7 @@ const ForgotPasswordDialog = ({
       mutate(data);
       reset();
       onSubmit?.();
+      onOpenChange(false)
     } catch (error) {
       console.error("Forgot password submission error:", error);
     }
