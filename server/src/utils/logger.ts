@@ -3,19 +3,57 @@ import { NODE_ENV } from "../config";
 import "winston-daily-rotate-file";
 import path from "path";
 
-// Set up log directory
 const logDirectory = path.resolve(path.join(__dirname, "../../"), "logs");
 
-// Custom log format to include function name, location, and data
 const consoleFormat = format.printf(
   ({ timestamp, level, message, stack, location, statusCode, url, data }) => {
     const logLevel = level.toUpperCase();
-    const locationInfo = location ? ` | Location: ${location}` : "";
-    const statusCodeInfo = statusCode ? ` | Status Code: ${statusCode}` : "";
-    const urlInfo = url ? ` | URL: ${url}` : "";
-    const dataInfo = data ? ` | Data: ${JSON.stringify(data)}` : "";
+    let output = `${timestamp} ${logLevel}`;
+    output += `Message: ${message}`;
 
-    return `${timestamp} ${logLevel} [${message}] \n \x1b[36m${locationInfo}\x1b[0m${statusCodeInfo}  ${stack ? `\nStack: ${stack}` : ""}${urlInfo}${dataInfo}`;
+    if (location) {
+      output += `\x1b[36mLocation: ${location}\x1b[0m`;
+    }
+    if (statusCode) {
+      output += `Status Code: ${statusCode}`;
+    }
+    if (url) {
+      output += `URL: ${url}`;
+    }
+    if (data) {
+      output += `Data: ${JSON.stringify(data, null, 2)}`;
+    }
+    if (stack) {
+      output += `Stack: ${stack}`;
+    }
+
+    return output;
+  },
+);
+
+const fileFormat = format.printf(
+  ({ timestamp, level, message, stack, location, statusCode, url, data }) => {
+    const logLevel = level.toUpperCase();
+    let output = `${timestamp} ${logLevel}\n`;
+    output += `Message: ${message}\n`;
+
+    if (location) {
+      output += `Location: ${location}\n`;
+    }
+    if (statusCode) {
+      output += `Status Code: ${statusCode}\n`;
+    }
+    if (url) {
+      output += `URL: ${url}\n`;
+    }
+    if (data) {
+      output += `Data: ${JSON.stringify(data, null, 2)}\n`;
+    }
+    if (stack) {
+      output += `Stack: ${stack}\n`;
+    }
+
+    return output; 
   },
 );
 
@@ -34,7 +72,6 @@ const logger = createLogger({
     format.timestamp({ format: "DD-MM-YYYY HH:mm" }),
     format.errors({ stack: true }),
     format.splat(),
-    format.json(),
   ),
   transports: [
     new transports.DailyRotateFile({
@@ -44,7 +81,7 @@ const logger = createLogger({
       maxSize: "20m",
       maxFiles: "14d",
       zippedArchive: true,
-      format: format.combine(skipFileLogs(), format.json()),
+      format: format.combine(skipFileLogs(), fileFormat),
     }),
     new transports.DailyRotateFile({
       filename: path.join(logDirectory + "/combined", "%DATE%.log"),
@@ -52,7 +89,7 @@ const logger = createLogger({
       maxSize: "20m",
       maxFiles: "14d",
       zippedArchive: true,
-      format: format.combine(skipFileLogs(), format.json()),
+      format: format.combine(skipFileLogs(), fileFormat),
     }),
   ],
 });
