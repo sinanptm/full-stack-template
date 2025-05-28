@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import useLogoutAdmin from "@/hooks/api/admin/auth/useLogout";
 import useGetsUsersAdmin from "@/hooks/api/admin/useGetUsers";
+import { IUser } from "@/types";
 
 const Page = () => {
     const { mutate } = useLogoutAdmin();
@@ -34,15 +35,15 @@ const Page = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y">
-                            {data?.users?.map((user: any) => (
+                                {data?.users?.map((user: IUser) => (
                                 <tr key={user._id}>
                                     <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{user.email}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        {user.isBlocked === "true" ? "Yes" : "No"}
+                                        {user.isBlocked ? "Yes" : "No"}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        {new Date(user.createdAt).toLocaleDateString()}
+                                        {new Date(user.createdAt!).toLocaleDateString()}
                                     </td>
                                 </tr>
                             ))}

@@ -1,8 +1,7 @@
 "use client";
 
 import { memo, useCallback, useEffect, useState } from "react";
-import { useQueryState } from "nuqs";
-import { notFound, useRouter } from "next/navigation";
+import { notFound, useRouter, useSearchParams } from "next/navigation";
 import { differenceInMinutes } from "date-fns";
 import useMailSetter from "@/hooks/store/auth/useMailSetter";
 import LoadingState from "@/components/user/forgot-password/LoadingState";
@@ -12,7 +11,8 @@ import { ForgotPasswordTokenData } from "@/types";
 
 const ForgotPasswordPage = () => {
   const router = useRouter();
-  const [token] = useQueryState("token");
+  const searchParams = useSearchParams();
+  const token = searchParams?.get("token") ?? null; 
   const { email: storedEmail, clear } = useMailSetter();
   const [tokenData, setTokenData] = useState<ForgotPasswordTokenData | null>(null);
   const [isTokenValid, setIsTokenValid] = useState<boolean | null>(null);
