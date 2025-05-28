@@ -6,6 +6,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Signup",
 };
+
 const Signup = () => {
   return (
     <div className="min-h-screen flex items-center justify-center">

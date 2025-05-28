@@ -1,18 +1,20 @@
 "use client";
 
 import useGetProfile from "@/hooks/api/user/useGetProfile";
+import LoadingOverlay from "../LoadingOverlay";
 
 const Profile = () => {
     const { data, isLoading, error } = useGetProfile();
 
-    if (error)
+    if (isLoading) return <LoadingOverlay loading />;
+    if (error || !data) {
         return (
             <div>
                 Failed to load profile.
-                <span className="text-red-400 ml-2">{error.message}</span>
+                <span className="text-red-400 ml-2">{error?.message}</span>
             </div>
         );
-    if (isLoading || !data) return <div >Loading...</div>;
+    }
 
     return (
         <div className="text-start">
