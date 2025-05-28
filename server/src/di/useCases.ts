@@ -5,6 +5,7 @@ import OtpUseCase from "@/use_case/user/auth/OtpUseCase";
 import ResetPasswordUseCase from "@/use_case/user/auth/ResetPasswordUseCase";
 import ProfileUseCase from "@/use_case/user/ProfileUseCase";
 import AdminSigninUseCase from "@/use_case/admin/SigninUseCase";
+import GetUsersUseCase from "@/use_case/admin/GetUsersUseCase";
 
 export enum UseCases {
   SigninUseCase = "SigninUseCase",
@@ -14,12 +15,15 @@ export enum UseCases {
   ResetPasswordUseCase = "ResetPasswordUseCase",
   ProfileUseCase = "ProfileUseCase",
 
-  AdminSigninUseCase = "AdminSigninUseCase"
+  AdminSigninUseCase = "AdminSigninUseCase",
+  GetUsersUseCase = "GetUsersUseCase"
 }
 
-container.bind<SigninUseCase>(UseCases.SigninUseCase).to(SigninUseCase);
-container.bind<SignupUseCase>(UseCases.SignupUseCase).to(SignupUseCase);
-container.bind<OtpUseCase>(UseCases.OtpUseCase).to(OtpUseCase);
-container.bind<ResetPasswordUseCase>(UseCases.ResetPasswordUseCase).to(ResetPasswordUseCase);
-container.bind<ProfileUseCase>(UseCases.ProfileUseCase).to(ProfileUseCase);
-container.bind<AdminSigninUseCase>(UseCases.AdminSigninUseCase).to(AdminSigninUseCase);
+container.bind(UseCases.SigninUseCase).to(SigninUseCase);
+container.bind(UseCases.SignupUseCase).to(SignupUseCase);
+container.bind(UseCases.OtpUseCase).to(OtpUseCase);
+container.bind(UseCases.ResetPasswordUseCase).to(ResetPasswordUseCase);
+container.bind(UseCases.ProfileUseCase).to(ProfileUseCase);
+// admin
+container.bind(UseCases.AdminSigninUseCase).to(AdminSigninUseCase);
+container.bind(UseCases.GetUsersUseCase).to(GetUsersUseCase);

@@ -7,5 +7,5 @@ export enum Repositories {
   OtpRepository = "OtpRepository",
 }
 
-container.bind<UserRepository>(Repositories.UserRepository).to(UserRepository).inSingletonScope();
-container.bind<OtpRepository>(Repositories.OtpRepository).to(OtpRepository).inSingletonScope();
+container.bind(Repositories.UserRepository).to(UserRepository).inSingletonScope();
+container.bind(Repositories.OtpRepository).to(OtpRepository).inSingletonScope();

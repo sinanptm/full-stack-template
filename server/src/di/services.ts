@@ -11,7 +11,7 @@ export enum Services {
   HashService = "HashService",
 }
 
-container.bind<ValidatorService>(Services.ValidatorService).to(ValidatorService).inSingletonScope();
-container.bind<TokenService>(Services.TokenService).to(TokenService).inSingletonScope();
-container.bind<MailService>(Services.MailService).to(MailService).inSingletonScope();
-container.bind<HashService>(Services.HashService).to(HashService).inSingletonScope();
+container.bind(Services.ValidatorService).to(ValidatorService).inSingletonScope();
+container.bind(Services.TokenService).to(TokenService).inSingletonScope();
+container.bind(Services.MailService).to(MailService).inSingletonScope();
+container.bind(Services.HashService).to(HashService).inSingletonScope();

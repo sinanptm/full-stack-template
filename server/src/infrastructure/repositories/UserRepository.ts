@@ -8,11 +8,15 @@ export default class UserRepository implements IUserRepository {
   model = UserModel;
 
   async findById(id: string): UserProfilePromise {
-    return await this.model.findById(id).lean().select("-password -token");
+    return await this.model.findById(id).lean().select("-password -token -updateAt");
+  }
+
+  async findAll(): Promise<IUser[]> {
+    return await this.model.find().select("-password -token -updateAt")
   }
 
   async findByEmail(email: string): UserProfilePromise {
-    return await this.model.findOne({ email }).lean().select("-password -token");
+    return await this.model.findOne({ email }).lean().select("-password -token -updateAt");
   }
 
   async findByIdWithCredentials(id: string): UserPromise {

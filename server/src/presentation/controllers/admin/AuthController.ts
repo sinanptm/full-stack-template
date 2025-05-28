@@ -2,8 +2,9 @@ import { UseCases } from "@/di/useCases";
 import { Cookies, StatusCode } from "@/types";
 import AdminSigninUseCase from "@/use_case/admin/SigninUseCase";
 import { tryCatch } from "@/utils";
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export default class AdminAuthController {
     constructor(
         @inject(UseCases.AdminSigninUseCase) private readonly adminSigninUseCase: AdminSigninUseCase
