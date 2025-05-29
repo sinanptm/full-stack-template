@@ -34,7 +34,7 @@ const NotFoundPage = () => {
             <Button>Signin as admin</Button>
           </Link>
         )}
-        <Link href={isAdminPage ? (isAuthenticated ? "/admin" : "/admin/auth") : "/"}>
+        <Link href={isAdminPage ? (isAuthenticated ? "/admin" : "/") : "/"}>
           <Button>Go Back to Home</Button>
         </Link>
       </div>

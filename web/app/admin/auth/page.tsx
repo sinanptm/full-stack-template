@@ -12,7 +12,7 @@ const SigninPage = () => {
         <div className="flex items-center justify-center min-h-screen">
             <Card className="w-full max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-center">Sign In</CardTitle>
+                    <CardTitle className="text-center">Sign In As admin</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <SigninForm
