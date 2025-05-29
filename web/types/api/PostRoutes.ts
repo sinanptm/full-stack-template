@@ -6,6 +6,7 @@ export enum PostRoutes {
   VerifyOtpUser = "/auth/verify-otp",
   ResendOtpUser = "/auth/resend-otp",
   UserRefresh = "/auth/refresh",
+  OAuthSignIn = "/auth/oauth-2",
 
   AdminSignin = "/admin/auth",
   AdminRefresh = "/admin/auth/refresh"

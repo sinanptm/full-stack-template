@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninUser from "@/hooks/api/user/auth/useSignin";
 import ForgotPasswordDialog from "@/components/dialogs/ForgotPasswordDialog";
 import useAuthRedirectToast from "@/hooks/store/useAuthRedirectToast";
+import OAuthButtons from "./OAuthButtons";
 
 const SigninClient = () => {
     const { mutate: handleSignin, isPending: isSigninPending } = useSigninUser();
@@ -23,6 +24,7 @@ const SigninClient = () => {
                     <CardTitle className="text-center">Sign In</CardTitle>
                 </CardHeader>
                 <CardContent>
+                    <OAuthButtons className="mb-4" />
                     <SigninForm
                         onSubmit={handleSignin}
                         isLoading={isSigninPending}

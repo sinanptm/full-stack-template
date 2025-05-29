@@ -69,3 +69,12 @@ export interface PatchParams extends Role {
 export interface MessageResponse {
   message: string;
 }
+
+export interface TokenUserResponse extends MessageResponse {
+  accessToken: string;
+  user: {
+    name: string;
+    id: string;
+    profile: string;
+  };
+}

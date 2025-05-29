@@ -4,7 +4,7 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import useAuthUser from "@/hooks/store/auth/useAuthUser";
 import { onError } from "@/lib/utils";
-import { MessageResponse } from "@/types";
+import { TokenUserResponse } from "@/types";
 import useMailSetter from "@/hooks/store/auth/useMailSetter";
 import useLoading from "@/hooks/store/useLoading";
 import { useRouter } from "next/navigation";
@@ -12,14 +12,6 @@ import { useRouter } from "next/navigation";
 interface ForgotPasswordData {
   email: string;
   otp: number;
-}
-
-interface Response extends MessageResponse {
-  accessToken: string;
-  user: {
-    name: string;
-    id: string;
-  };
 }
 
 const useVerifyOtpUser = () => {
@@ -30,13 +22,13 @@ const useVerifyOtpUser = () => {
   return useMutation({
     mutationFn: async (data: ForgotPasswordData) => {
       setLoading(true);
-      const response = await POST<Response>({
+      const response = await POST<TokenUserResponse>({
         route: PostRoutes.VerifyOtpUser,
         body: data,
       });
       return response;
     },
-    onSuccess: ({ accessToken, user, message }: Response) => {
+    onSuccess: ({ accessToken, user, message }: TokenUserResponse) => {
       toast.success(message, { icon: "🎉" });
       setToken(accessToken);
       setUser(user);
