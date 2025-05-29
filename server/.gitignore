@@ -2,3 +2,4 @@
 .env
 logs
 dist/
+firebase.json

@@ -1,35 +1,60 @@
 import IFirebaseService, { FirebaseUser } from "@/domain/interfaces/services/IFirebaseService";
 import { injectable } from "inversify";
-import { FIREBASE_PROJECT_ID } from "@/config";
+import * as admin from 'firebase-admin';
+import { InternalServerError, UnauthorizedError } from "@/domain/entities/CustomErrors";
+import { FIRE_BASE_CLIENT_EMAIL, FIRE_BASE_PRIVATE_KEY, FIRE_BASE_PROJECT_ID } from "@/config";
 
 @injectable()
 export default class FirebaseService implements IFirebaseService {
+    private firebaseAdminApp: admin.app.App;
+    private firebaseAuth: admin.auth.Auth;
+
+    constructor() {
+        if (!admin.apps.length) {
+            try {
+                this.firebaseAdminApp = admin.initializeApp({
+                    credential: admin.credential.cert({
+                        clientEmail: FIRE_BASE_CLIENT_EMAIL,
+                        privateKey: FIRE_BASE_PRIVATE_KEY,
+                        projectId: FIRE_BASE_PROJECT_ID
+                    })
+                });
+            } catch (error) {
+                throw new InternalServerError(`Firebase Admin SDK initialization failed: ${error}`);
+            }
+        } else {
+            this.firebaseAdminApp = admin.app();
+        }
+        this.firebaseAuth = this.firebaseAdminApp.auth();
+    }
+
     async verifyAccessToken(accessToken: string): Promise<FirebaseUser | null> {
         try {
-            const response = await fetch(
-                `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${accessToken}`
-            );
 
-            if (!response.ok) {
-                return null;
-            }
+            const decodedToken = await this.firebaseAuth.verifyIdToken(accessToken);
 
-            const data = await response.json();
-
-            if (data.aud !== FIREBASE_PROJECT_ID) {
-                return null;
-            }
 
             return {
-                uid: data.sub,
-                email: data.email || null,
-                name: data.name || null,
-                picture: data.picture || null,
-                email_verified: data.email_verified
+                uid: decodedToken.uid,
+                email: decodedToken.email || null,
+                name: decodedToken.name || null,
+                picture: decodedToken.picture || null,
+                email_verified: decodedToken.email_verified || false
             };
-        } catch (error) {
-            console.error("Firebase token verification via API failed:", error);
-            return null;
+        } catch (error: any) {
+            if (error.code === 'auth/id-token-expired') {
+                throw new UnauthorizedError("Firebase token verification failed: Token expired.");
+            } else if (error.code === 'auth/id-token-revoked') {
+                throw new UnauthorizedError("Firebase token verification failed: Token revoked.");
+            } else if (error.code === 'auth/invalid-id-token') {
+                throw new UnauthorizedError("Firebase token verification failed: Invalid token format or signature.");
+            } else if (error.code === 'auth/user-disabled') {
+                throw new UnauthorizedError("Firebase token verification failed: User account disabled.");
+            } else if (error.code === 'auth/user-not-found') {
+                throw new UnauthorizedError("Firebase token verification failed: User not found.");
+            } else {
+                throw new UnauthorizedError("Firebase token verification via Admin SDK failed:", error.message || error);
+            }
         }
     }
 }
