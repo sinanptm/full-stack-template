@@ -6,17 +6,22 @@ import { injectable } from "inversify";
 @injectable()
 export default class UserRepository implements IUserRepository {
   model = UserModel;
+  credentials: string;
+
+  constructor() {
+    this.credentials = "-password -token -updateAt -isOAuthUser";
+  }
 
   async findById(id: string): UserProfilePromise {
-    return await this.model.findById(id).lean().select("-password -token -updateAt");
+    return await this.model.findById(id).lean().select(this.credentials);
   }
 
   async findAll(): Promise<IUser[]> {
-    return await this.model.find().select("-password -token -updateAt")
+    return await this.model.find().select(this.credentials);
   }
 
   async findByEmail(email: string): UserProfilePromise {
-    return await this.model.findOne({ email }).lean().select("-password -token -updateAt");
+    return await this.model.findOne({ email }).lean().select(this.credentials);
   }
 
   async findByIdWithCredentials(id: string): UserPromise {

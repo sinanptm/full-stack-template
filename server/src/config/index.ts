@@ -18,3 +18,5 @@ export const COMPANY_NAME = "Mern stack template project";
 export const COMPANY_DOMAIN = "dev.com";
 export const RESET_LINK_EXPIRATION_MINUTES = 5;
 export const OTP_EXPIRATION_MINUTES = 15;
+
+export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;

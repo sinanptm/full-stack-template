@@ -5,11 +5,13 @@ export interface IUserProfile {
   readonly name?: string;
   readonly email?: string;
   readonly isBlocked?: boolean;
+  readonly profile?: string
   readonly createdAt?: DateString;
   readonly updatedAt?: DateString;
 }
 
 export default interface IUser extends IUserProfile {
+  readonly isOAuthUser?: boolean;
   readonly password?: string;
   readonly token?: string;
 }

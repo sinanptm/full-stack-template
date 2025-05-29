@@ -8,6 +8,8 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: true },
     token: { type: String },
     isBlocked: { type: String, default: false },
+    isOAuthUser: { type: String, default: false },
+    profile: { type: String }
   },
   {
     timestamps: true,

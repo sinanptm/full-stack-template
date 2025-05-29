@@ -6,6 +6,7 @@ import SignupUseCase from "@/use_case/user/auth/SignupUseCase";
 import { inject, injectable } from "inversify";
 import { tryCatch } from "@/utils";
 import ResetPasswordUseCase from "@/use_case/user/auth/ResetPasswordUseCase";
+import OAuthUseCase from "@/use_case/user/auth/OAuthUseCase";
 
 @injectable()
 export default class AuthControllers {
@@ -14,6 +15,7 @@ export default class AuthControllers {
     @inject(UseCases.SignupUseCase) private readonly signupUseCase: SignupUseCase,
     @inject(UseCases.OtpUseCase) private readonly otpUseCase: OtpUseCase,
     @inject(UseCases.ResetPasswordUseCase) private readonly resetPasswordUseCase: ResetPasswordUseCase,
+    @inject(UseCases.OAuthUseCase) private readonly oauthUseCase: OAuthUseCase
   ) { }
 
   signin = tryCatch(async (req, res) => {
@@ -21,6 +23,21 @@ export default class AuthControllers {
     res
       .status(StatusCode.Success)
       .json({ message: "Sign-in initiated. Please check your email for the OTP.", email });
+  });
+
+  oauthSignin = tryCatch(async (req, res) => {
+    const { accessToken, refreshToken, user } = await this.oauthUseCase.exec(req.body);
+
+    res.cookie(Cookies.User, refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    res
+      .status(StatusCode.Success)
+      .json({ accessToken, user, message: "OAuth Signin Success. You are now signed in." });
   });
 
   signup = tryCatch(async (req, res) => {
