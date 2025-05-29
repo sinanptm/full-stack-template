@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useCallback, useState } from "react";
-import LoginForm from "@/components/forms/SigninForm";
+import SigninForm from "@/components/forms/SigninForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useSigninUser from "@/hooks/api/user/auth/useSignin";
 import ForgotPasswordDialog from "@/components/dialogs/ForgotPasswordDialog";
@@ -23,7 +23,7 @@ const SigninClient = () => {
                     <CardTitle className="text-center">Sign In</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <LoginForm
+                    <SigninForm
                         onSubmit={handleSignin}
                         isLoading={isSigninPending}
                         showForgotPassword
