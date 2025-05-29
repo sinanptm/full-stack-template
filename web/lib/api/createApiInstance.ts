@@ -60,10 +60,6 @@ const createApiInstance = (role: UserRole = UserRole.User): AxiosInstance => {
 
       if (status === StatusCode.Forbidden) {
         clearAuthData(role, { reason: message });
-        setTimeout(() => {
-          toast.error(message);
-          console.log("HERE ");
-        }, 2400);
       }
 
       return Promise.reject({ ...error, status, message });

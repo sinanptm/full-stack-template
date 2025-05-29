@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
@@ -8,22 +8,40 @@ import useAuthUser from "@/hooks/store/auth/useAuthUser";
 import useAuthAdmin from "@/hooks/store/auth/useAuthAdmin";
 import useLogoutUser from "@/hooks/api/user/auth/useLogout";
 import useLogoutAdmin from "@/hooks/api/admin/auth/useLogout";
+import LogoutConfirmDialog from "@/components/dialogs/LogoutConfirmDialog";
+import { APP_NAME } from "@/constants";
+import { UserRole } from "@/types";
 
 const Navbar = () => {
+    const [showLogoutDialog, setShowLogoutDialog] = useState(false);
     const { isAuthenticated: isUserAuthenticated } = useAuthUser();
     const { isAuthenticated: isAdminAuthenticated } = useAuthAdmin();
-    const { mutate: logoutUser } = useLogoutUser();
-    const { mutate: logoutAdmin } = useLogoutAdmin();
+    const { mutate: logoutUser, isPending: isUserLogoutPending } = useLogoutUser();
+    const { mutate: logoutAdmin, isPending: isAdminLogoutPending } = useLogoutAdmin();
     const pathname = usePathname();
     const isAdminArea = pathname?.startsWith("/admin");
 
-    const handleLogout = useCallback(() => {
+    const handleLogoutClick = useCallback(() => {
+        setShowLogoutDialog(true);
+    }, []);
+
+    const handleLogoutConfirm = useCallback(() => {
         if (isAdminArea && isAdminAuthenticated) {
             logoutAdmin();
         } else if (isUserAuthenticated) {
             logoutUser();
         }
+
+        setShowLogoutDialog(false)
     }, [isAdminArea, isAdminAuthenticated, isUserAuthenticated, logoutAdmin, logoutUser]);
+
+    const currentUserType = useMemo(() => {
+        return isAdminArea && isAdminAuthenticated ? UserRole.Admin : UserRole.User;
+    }, [isAdminArea, isAdminAuthenticated]);
+
+    const isLogoutPending = useMemo(() => {
+        return isUserLogoutPending || isAdminLogoutPending;
+    }, [isUserLogoutPending, isAdminLogoutPending]);
 
     const renderAdminNavigation = useMemo(() => (
         <>
@@ -33,7 +51,7 @@ const Navbar = () => {
                 </Button>
             </Link>
             {isAdminAuthenticated ? (
-                <Button variant="outline" size="sm" onClick={handleLogout}>
+                <Button variant="outline" size="sm" onClick={handleLogoutClick}>
                     Admin Logout
                 </Button>
             ) : (
@@ -44,7 +62,7 @@ const Navbar = () => {
                 </Link>
             )}
         </>
-    ), [isAdminAuthenticated, handleLogout]);
+    ), [isAdminAuthenticated, handleLogoutClick]);
 
     const renderUserNavigation = useMemo(() => (
         <>
@@ -54,7 +72,7 @@ const Navbar = () => {
                 </Button>
             </Link>
             {isUserAuthenticated ? (
-                <Button variant="outline" size="sm" onClick={handleLogout}>
+                <Button variant="outline" size="sm" onClick={handleLogoutClick}>
                     User Logout
                 </Button>
             ) : (
@@ -72,22 +90,32 @@ const Navbar = () => {
                 </>
             )}
         </>
-    ), [isAdminAuthenticated, isUserAuthenticated, handleLogout]);
+    ), [isAdminAuthenticated, isUserAuthenticated, handleLogoutClick]);
 
     return (
-        <nav className="h-14 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container mx-auto flex h-full items-center justify-between px-4">
-                <Link
-                    href="/"
-                    className="text-lg font-semibold transition-colors hover:text-primary"
-                >
-                    Your App
-                </Link>
-                <div className="flex items-center space-x-4">
-                    {isAdminArea ? renderAdminNavigation : renderUserNavigation}
+        <>
+            <nav className="h-14 border-b  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="container mx-auto flex h-full items-center justify-between px-4">
+                    <Link
+                        href="/"
+                        className="text-lg font-semibold transition-colors hover:text-primary"
+                    >
+                        {APP_NAME}
+                    </Link>
+                    <div className="flex items-center space-x-4">
+                        {isAdminArea ? renderAdminNavigation : renderUserNavigation}
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+
+            <LogoutConfirmDialog
+                open={showLogoutDialog}
+                onOpenChange={setShowLogoutDialog}
+                onConfirm={handleLogoutConfirm}
+                userType={currentUserType}
+                isLoading={isLogoutPending}
+            />
+        </>
     );
 };
 
