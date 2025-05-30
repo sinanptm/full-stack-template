@@ -1,9 +1,7 @@
 import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import UserModel from "../models/User";
 import IUser, { UserProfilePromise, UserPromise } from "@/domain/entities/IUser";
-import { injectable } from "inversify";
 
-@injectable()
 export default class UserRepository implements IUserRepository {
   model = UserModel;
   credentials: string;

@@ -5,10 +5,9 @@ import ITokenService, {
 import { JwtPayload, TokenExpiredError, sign, verify, SignOptions } from "jsonwebtoken";
 import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "@/config";
 import { CustomError, ForbiddenError } from "@/domain/entities/CustomErrors";
-import { injectable } from "inversify";
+
 import { StatusCode } from "@/types";
 
-@injectable()
 export default class TokenService implements ITokenService {
   private signToken(payload: object, secret: string, options: SignOptions): string {
     return sign(payload, secret, { expiresIn: options.expiresIn });

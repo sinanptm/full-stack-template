@@ -2,9 +2,8 @@ import { UseCases } from "@/di/useCases";
 import { StatusCode } from "@/types";
 import GetUsersUseCase from "@/use_case/admin/GetUsersUseCase";
 import { tryCatch } from "@/utils";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 
-@injectable()
 export default class AdminController {
     constructor(
         @inject(UseCases.GetUsersUseCase) private readonly getUsersUseCase: GetUsersUseCase

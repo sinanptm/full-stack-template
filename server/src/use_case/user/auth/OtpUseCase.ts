@@ -5,7 +5,7 @@ import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import ITokenService from "@/domain/interfaces/services/ITokenService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { UserRole } from "@/types";
 import { generateOtp } from "@/utils";
 import { differenceInMinutes } from "date-fns";
@@ -18,7 +18,6 @@ interface Payload {
   otp: string;
 }
 
-@injectable()
 export default class OtpUseCase {
   constructor(
     @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,

@@ -1,8 +1,6 @@
 import IHashService from "@/domain/interfaces/services/IHashService";
 import bcrypt from "bcryptjs";
-import { injectable } from "inversify";
 
-@injectable()
 export default class HashService implements IHashService {
   async hash(password: string): Promise<string> {
     return await bcrypt.hash(password, 10);

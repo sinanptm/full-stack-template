@@ -3,12 +3,11 @@ import { Cookies, StatusCode } from "@/types";
 import OtpUseCase from "@/use_case/user/auth/OtpUseCase";
 import SigninUseCase from "@/use_case/user/auth/SigninUseCase";
 import SignupUseCase from "@/use_case/user/auth/SignupUseCase";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { tryCatch } from "@/utils";
 import ResetPasswordUseCase from "@/use_case/user/auth/ResetPasswordUseCase";
 import OAuthUseCase from "@/use_case/user/auth/OAuthUseCase";
 
-@injectable()
 export default class AuthControllers {
   constructor(
     @inject(UseCases.SigninUseCase) private readonly signinUseCase: SigninUseCase,

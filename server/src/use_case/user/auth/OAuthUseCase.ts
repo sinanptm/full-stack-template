@@ -5,7 +5,7 @@ import ITokenService from "@/domain/interfaces/services/ITokenService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import IFirebaseService from "@/domain/interfaces/services/IFirebaseService";
 import { UnauthorizedError } from "@/domain/entities/CustomErrors";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { UserRole } from "@/types";
 import { IUserProfile } from "@/domain/entities/IUser";
 
@@ -16,7 +16,6 @@ interface OAuthPayload {
     profile: string | null;
 }
 
-@injectable()
 export default class OAuthUseCase {
     constructor(
         @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,

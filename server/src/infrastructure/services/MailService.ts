@@ -6,12 +6,10 @@ import nodemailer from "nodemailer";
 import { promisify } from "util";
 import fs from "fs";
 import path from "path";
-import { COMPANY_NAME, NODEMAILER_PASSKEY, SENDER_EMAIL, CLIENT_URL } from "@/config";
-import { injectable } from "inversify";
+import { COMPANY_NAME, NODEMAILER_PASSKEY, SENDER_EMAIL } from "@/config";
 
 const readFileAsync = promisify(fs.readFile);
 
-@injectable()
 export default class MailService implements IMailService {
   private async loadTemplate(filePath: string): Promise<string> {
     const fullPath = path.resolve(__dirname, filePath);

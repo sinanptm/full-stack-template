@@ -5,9 +5,8 @@ import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import IHashService from "@/domain/interfaces/services/IHashService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { ConflictError } from "@/domain/entities/CustomErrors";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 
-@injectable()
 export default class SignupUseCase {
   constructor(
     @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,

@@ -6,7 +6,7 @@ import IHashService from "@/domain/interfaces/services/IHashService";
 import IMailService from "@/domain/interfaces/services/IMailService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { ForbiddenError, NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { generateOtp } from "@/utils";
 import ITokenService from "@/domain/interfaces/services/ITokenService";
 import { UserRole } from "@/types";
@@ -16,7 +16,6 @@ interface Payload {
   password: string;
 }
 
-@injectable()
 export default class SigninUseCase {
   constructor(
     @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,

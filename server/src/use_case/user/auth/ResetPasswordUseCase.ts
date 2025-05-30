@@ -6,7 +6,7 @@ import IHashService from "@/domain/interfaces/services/IHashService";
 import IMailService from "@/domain/interfaces/services/IMailService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { NotFoundError, UnauthorizedError } from "@/domain/entities/CustomErrors";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 import { generateOtp } from "@/utils";
 import { differenceInMinutes } from "date-fns";
 import { CLIENT_URL, RESET_LINK_EXPIRATION_MINUTES } from "@/config";
@@ -18,7 +18,6 @@ interface ResetPasswordPayload {
   createdDate: string;
 }
 
-@injectable()
 export default class ResetPasswordUseCase {
   constructor(
     @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,

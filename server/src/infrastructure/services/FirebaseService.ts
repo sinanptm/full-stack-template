@@ -1,10 +1,8 @@
 import IFirebaseService, { FirebaseUser } from "@/domain/interfaces/services/IFirebaseService";
-import { injectable } from "inversify";
 import * as admin from 'firebase-admin';
 import { InternalServerError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { FIRE_BASE_CLIENT_EMAIL, FIRE_BASE_PRIVATE_KEY, FIRE_BASE_PROJECT_ID } from "@/config";
 
-@injectable()
 export default class FirebaseService implements IFirebaseService {
     private firebaseAdminApp: admin.app.App;
     private firebaseAuth: admin.auth.Auth;

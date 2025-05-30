@@ -3,7 +3,7 @@ import { Services } from "@/di/services";
 import { ForbiddenError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import ITokenService from "@/domain/interfaces/services/ITokenService";
 import { UserRole } from "@/types";
-import { inject, injectable } from "inversify";
+import { inject } from "inversify";
 
 // TODO: Need Store the admin details in db
 
@@ -12,7 +12,6 @@ interface Payload {
     password: string;
 }
 
-@injectable()
 export default class AdminSigninUseCase {
     constructor(
         @inject(Services.TokenService) private readonly tokenService: ITokenService

@@ -1,9 +1,7 @@
 import Joi from "joi";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { ValidationError } from "@/domain/entities/CustomErrors";
-import { injectable } from "inversify";
 
-@injectable()
 export default class ValidatorService implements IValidatorService {
   /**
    * Validates that all fields in the input object are present and non-empty
