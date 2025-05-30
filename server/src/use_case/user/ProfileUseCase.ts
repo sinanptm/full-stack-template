@@ -12,7 +12,7 @@ export default class ProfileUseCase {
   constructor(
     @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,
     @inject(Services.ValidatorService) private readonly validatorService: IValidatorService,
-  ) {}
+  ) { }
 
   async exec({ userId }: Params) {
     this.validatorService.validateIdFormat(userId);
