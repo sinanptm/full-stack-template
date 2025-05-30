@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin';
 import { InternalServerError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { FIRE_BASE_CLIENT_EMAIL, FIRE_BASE_PRIVATE_KEY, FIRE_BASE_PROJECT_ID } from "@/config";
 
-export default class FirebaseService implements IOAuthService {
+export default class OAuhService implements IOAuthService {
     private firebaseAdminApp: admin.app.App;
     private firebaseAuth: admin.auth.Auth;
 
@@ -31,28 +31,13 @@ export default class FirebaseService implements IOAuthService {
 
             const decodedToken = await this.firebaseAuth.verifyIdToken(accessToken);
 
-
             return {
-                uid: decodedToken.uid,
                 email: decodedToken.email || null,
                 name: decodedToken.name || null,
-                picture: decodedToken.picture || null,
-                email_verified: decodedToken.email_verified || false
+                profile: decodedToken.picture || null,
             };
         } catch (error: any) {
-            if (error.code === 'auth/id-token-expired') {
-                throw new UnauthorizedError("Firebase token verification failed: Token expired.");
-            } else if (error.code === 'auth/id-token-revoked') {
-                throw new UnauthorizedError("Firebase token verification failed: Token revoked.");
-            } else if (error.code === 'auth/invalid-id-token') {
-                throw new UnauthorizedError("Firebase token verification failed: Invalid token format or signature.");
-            } else if (error.code === 'auth/user-disabled') {
-                throw new UnauthorizedError("Firebase token verification failed: User account disabled.");
-            } else if (error.code === 'auth/user-not-found') {
-                throw new UnauthorizedError("Firebase token verification failed: User not found.");
-            } else {
-                throw new UnauthorizedError("Firebase token verification via Admin SDK failed:", error.message || error);
-            }
+            throw new UnauthorizedError("Firebase token verification via Admin SDK failed:", error.message || error);
         }
     }
 }

@@ -1,9 +1,7 @@
 export interface OAuthUser {
-    uid: string;
     email: string | null;
     name: string | null;
-    picture: string | null;
-    email_verified: boolean;
+    profile: string | null;
 }
 
 export default interface IOAuthService {
