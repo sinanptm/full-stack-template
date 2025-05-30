@@ -29,88 +29,101 @@
 
 ```mermaid
 graph TB
-    A[👤 Sign Up] --> B[📧 Email, Password, Name]
-    B --> C[✅ Create Account]
-    C --> D[🔑 Sign In Page]
+    A["👤 Sign Up"] --> B["📧 Email, Password, Name"]
+    B --> C["✅ Create Account"]
+    C --> D["🔑 Sign In Page"]
     
-    D --> E[🔐 Enter Credentials]
-    E --> F{Valid?}
-    F -->|❌| G[Error Message]
+    D --> E["🔐 Enter Credentials"]
+    E --> F{"Valid?"}
+    F -->|"❌"| G["Error Message"]
     G --> E
-    F -->|✅| H[🔢 Generate OTP]
-    H --> I[📧 Send Email]
-    I --> J[🔢 OTP Page]
+    F -->|"✅"| H["🔢 Generate OTP"]
+    H --> I["📧 Send Email"]
+    I --> J["🔢 OTP Page"]
     
-    J --> K[Enter OTP Code]
-    K --> L{Valid & Fresh?}
-    L -->|❌| M[Try Again]
+    J --> K["Enter OTP Code"]
+    K --> L{"Valid & Fresh?"}
+    L -->|"❌"| M["Try Again"]
     M --> K
-    L -->|✅| N[🎯 Generate JWT]
-    N --> O[🍪 Set Cookies]
-    O --> P[✨ Authenticated User]
+    L -->|"✅"| N["🎯 Generate JWT"]
+    N --> O["🍪 Set Cookies"]
+    O --> P["✨ Authenticated User"]
     
-    P --> Q[🛡️ User Routes]
-    Q --> R[👤 Profile Access]
+    P --> Q["🛡️ User Routes"]
+    Q --> R["👤 Profile Access"]
     
-    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#000000
-    style P fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#000000
-    style N fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    S["🔄 Token Expiry"] --> T["Auto Refresh"]
+    T --> P
+    
+    U["🔒 Forgot Password"] --> V["📧 Reset Email"]
+    V --> W["🔢 OTP Reset"]
+    W --> D
+    
+    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style P fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style N fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style T fill:#fce7f3,stroke:#ec4899,stroke-width:2px
 ```
 
 ### OAuth Authentication (Firebase)
 
 ```mermaid
 graph TB
-    A[🔑 Sign In/Up Page] --> B[🔥 OAuth Buttons]
-    B --> C[Google | GitHub | LinkedIn]
-    C --> D[🔥 Firebase Popup]
-    D --> E[👤 Select Provider]
-    E --> F[🔐 Provider Auth]
-    F --> G{Auth Success?}
-    G -->|❌| H[Error Handle]
+    A["🔑 Sign In/Up Page"] --> B["🔥 OAuth Buttons"]
+    B --> C["Google | GitHub | LinkedIn"]
+    C --> D["🔥 Firebase Popup"]
+    D --> E["👤 Select Provider"]
+    E --> F["🔐 Provider Auth"]
+    F --> G{"Auth Success?"}
+    G -->|"❌"| H["Error Handle"]
     H --> A
-    G -->|✅| I[🎯 Get Firebase Token]
-    I --> J[📧 Extract User Info]
-    J --> K[🔗 API Call to Backend]
-    K --> L[🔍 Validate Firebase Token]
-    L --> M{Token Valid?}
-    M -->|❌| N[Auth Failed]
+    G -->|"✅"| I["🎯 Get Firebase Token"]
+    I --> J["📧 Extract User Info"]
+    J --> K["🔗 API Call to Backend"]
+    K --> L["🔍 Validate Firebase Token"]
+    L --> M{"Token Valid?"}
+    M -->|"❌"| N["Auth Failed"]
     N --> A
-    M -->|✅| O{User Exists?}
-    O -->|❌| P[👤 Create User]
-    O -->|✅| Q[📝 Update User]
-    P --> R[🎯 Generate JWT]
+    M -->|"✅"| O{"User Exists?"}
+    O -->|"❌"| P["👤 Create User"]
+    O -->|"✅"| Q["📝 Update User"]
+    P --> R["🎯 Generate JWT"]
     Q --> R
-    R --> S[🍪 Set Cookies]
-    S --> T[✨ Authenticated User]
+    R --> S["🍪 Set Cookies"]
+    S --> T["✨ Authenticated User"]
+    T --> U["🛡️ User Dashboard"]
     
-    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,color:#000000
-    style T fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#000000
-    style I fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
-    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#000000
+    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style T fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style I fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px
 ```
 
 ### Admin Authentication
 
 ```mermaid
 graph TB
-    A[🔒 Admin Login] --> B[📧 Email & Password]
-    B --> C[🔍 Validate Credentials]
-    C --> D{Match .env?}
-    D -->|❌| E[❌ Access Denied]
+    A["🔒 Admin Login"] --> B["📧 Email & Password"]
+    B --> C["🔍 Validate Credentials"]
+    C --> D{"Match .env?"}
+    D -->|"❌"| E["❌ Access Denied"]
     E --> A
-    D -->|✅| F[🎯 Generate Admin JWT]
-    F --> G[🏷️ Set Admin Role]
-    G --> H[🍪 Set Cookies]
-    H --> I[✨ Authenticated Admin]
-    I --> J[🛡️ Admin Routes]
-    J --> K[👥 User Management]
-    J --> L[📊 Analytics]
-    J --> M[⚙️ System Config]
+    D -->|"✅"| F["🎯 Generate Admin JWT"]
+    F --> G["🏷️ Set Admin Role"]
+    G --> H["🍪 Set Cookies"]
+    H --> I["✨ Authenticated Admin"]
+    I --> J["🛡️ Admin Routes"]
+    J --> K["👥 User Management"]
+    J --> L["📊 Analytics Dashboard"]
+    J --> M["⚙️ System Configuration"]
     
-    style A fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
-    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px,color:#000000
-    style F fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#000000
+    N["🔄 Admin Token Expiry"] --> O["Admin Auto Refresh"]
+    O --> I
+    
+    style A fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style F fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style J fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
 ```
 
 ## 🛠️ Tech Stack
@@ -150,28 +163,32 @@ pnpm install
 **Server** (`.env` in `server/` directory):
 ```env
 # Database
-MONGODB_URI=mongodb://localhost:27017/your-database
-
-# JWT Secrets
-ACCESS_TOKEN_SECRET=your-secure-access-token-secret
-REFRESH_TOKEN_SECRET=your-secure-refresh-token-secret
-
-# Email Configuration
-NODEMAILER_PASSKEY=your-email-app-password
-SENDER_EMAIL=your-email@gmail.com
+MONGO_URI=mongodb+srv://mur0
 
 # Server Configuration
 PORT=8000
-CLIENT_URL=http://localhost:3000
+NODE_ENV=development
+
+# JWT Secrets
+ACCESS_TOKEN_SECRET=your-secure-access-token-secret-1234567890
+REFRESH_TOKEN_SECRET=your-secure-refresh-token-secret-0987654321
+
+# Nodemailer Email Configuration
+NODEMAILER_PASSKEY=jdd
+SENDER_EMAIL=felistob@gmail.com
+
+# Company Information
+COMPANY_NAME=Expense Tracker
+COMPANY_DOMAIN=ex-tracker.dev.com
 
 # Admin Credentials
 ADMIN_MAIL=admin@gmail.com
-ADMIN_PASSWORD=your-secure-admin-password
+ADMIN_PASSWORD=fjfjfj
 
-# Firebase Configuration
-FIREBASE_PROJECT_ID=your-firebase-project-id
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nyour-private-key\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
+# Firebase Configuration (Server-side)
+FIREBASE_PROJECT_ID=full-stack-
+FIREBASE_CLIENT_EMAIL=firebase@full-stack-.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nyour-private-key-here\n-----END PRIVATE KEY-----\n"
 ```
 
 **Client** (`.env.local` in `web/` directory):
@@ -179,13 +196,13 @@ FIREBASE_CLIENT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
 # Server URL
 NEXT_PUBLIC_SERVER_URL=http://localhost:8000
 
-# Firebase Configuration
-NEXT_PUBLIC_FIREBASE_API_KEY=your-api-key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-firebase-project-id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
-NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
+# Firebase Configuration (Client-side)
+NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDrf-
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=full-stackm
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=full-stack-
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=full-stack-
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=7
+NEXT_PUBLIC_FIREBASE_APP_ID=1:7984738348
 ```
 
 ### Firebase Setup
@@ -289,9 +306,43 @@ full-stack-template/
 - `GET /api/admin/analytics` - System analytics
 - `POST /api/admin/refresh` - Admin token refresh
 
-## 👥 Role-Based Access Control
+### Role-Based Access Control Flow
 
-### User Roles
+```mermaid
+graph TB
+    A["🌐 Incoming Request"] --> B["🔍 Extract JWT Token"]
+    B --> C{"Token Present?"}
+    C -->|"❌"| D["❌ Unauthorized"]
+    C -->|"✅"| E["🔐 Verify JWT Signature"]
+    E --> F{"Valid Signature?"}
+    F -->|"❌"| G["❌ Invalid Token"]
+    F -->|"✅"| H["📋 Extract User Role"]
+    H --> I{"Check Role"}
+    
+    I -->|"👤 USER"| J["🛡️ User Middleware"]
+    I -->|"👑 ADMIN"| K["🛡️ Admin Middleware"]
+    
+    J --> L{"User Route?"}
+    L -->|"✅"| M["✅ Access Granted"]
+    L -->|"❌"| N["❌ Forbidden"]
+    
+    K --> O{"Admin Route?"}
+    O -->|"✅"| P["✅ Admin Access"]
+    O -->|"❌"| Q["❌ Forbidden"]
+    
+    M --> R["👤 User Dashboard"]
+    P --> S["👑 Admin Panel"]
+    
+    style A fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style M fill:#dcfce7,stroke:#22c55e,stroke-width:2px
+    style P fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style G fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style N fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style Q fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+```
+
+## 👥 Role-Based Access Control
 ```typescript
 enum UserRole {
   USER = 'user',
