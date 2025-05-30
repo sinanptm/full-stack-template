@@ -25,78 +25,89 @@
 
 ## 🔐 Authentication Flows
 
-### User Authentication (Email/Password + OTP)
+# 🔐 Complete Authentication System Flow
+
+## Combined User Authentication (Email/Password + OAuth)
 
 ```mermaid
 graph TB
-    A["👤 Sign Up"] --> B["📧 Email, Password, Name"]
-    B --> C["✅ Create Account"]
-    C --> D["🔑 Sign In Page"]
+    %% Entry Point
+    A["🔑 Sign In/Up Page"] --> B{"Authentication Method"}
     
-    D --> E["🔐 Enter Credentials"]
-    E --> F{"Valid?"}
-    F -->|"❌"| G["Error Message"]
-    G --> E
-    F -->|"✅"| H["🔢 Generate OTP"]
-    H --> I["📧 Send Email"]
-    I --> J["🔢 OTP Page"]
+    %% Email/Password Flow
+    B -->|"📧 Email/Password"| C["📝 Enter Credentials"]
+    C --> D{"Valid Credentials?"}
+    D -->|"❌"| E["❌ Error Message"]
+    E --> C
+    D -->|"✅"| F["🔢 Generate OTP"]
+    F --> G["📧 Send OTP Email"]
+    G --> H["🔢 OTP Verification Page"]
+    H --> I["Enter OTP Code"]
+    I --> J{"Valid & Fresh OTP?"}
+    J -->|"❌"| K["Try Again"]
+    K --> I
+    J -->|"✅"| L["🎯 Generate JWT"]
     
-    J --> K["Enter OTP Code"]
-    K --> L{"Valid & Fresh?"}
-    L -->|"❌"| M["Try Again"]
-    M --> K
-    L -->|"✅"| N["🎯 Generate JWT"]
-    N --> O["🍪 Set Cookies"]
-    O --> P["✨ Authenticated User"]
+    %% OAuth Flow
+    B -->|"🔥 OAuth (Google/GitHub/LinkedIn)"| M["🔥 Firebase OAuth Popup"]
+    M --> N["👤 Select Provider"]
+    N --> O["🔐 Provider Authentication"]
+    O --> P{"Auth Success?"}
+    P -->|"❌"| Q["❌ OAuth Error"]
+    Q --> A
+    P -->|"✅"| R["🎯 Get Firebase Token"]
+    R --> S["📧 Extract User Info"]
+    S --> T["🔗 Send Token to Backend"]
+    T --> U["🔍 Validate Firebase Token"]
+    U --> V{"Token Valid?"}
+    V -->|"❌"| W["❌ Token Invalid"]
+    W --> A
+    V -->|"✅"| X{"User Exists?"}
+    X -->|"❌"| Y["👤 Create New User"]
+    X -->|"✅"| Z["📝 Update User Info"]
+    Y --> L
+    Z --> L
     
-    P --> Q["🛡️ User Routes"]
-    Q --> R["👤 Profile Access"]
+    %% Common Final Steps
+    L --> AA["🍪 Set HTTP-Only Cookies"]
+    AA --> BB["✨ Authenticated User"]
+    BB --> CC["🛡️ User Dashboard Access"]
     
-    S["🔄 Token Expiry"] --> T["Auto Refresh"]
-    T --> P
+    %% Additional Flows
+    DD["🔄 Token Expiry"] --> EE["🔄 Auto Refresh"]
+    EE --> BB
     
-    U["🔒 Forgot Password"] --> V["📧 Reset Email"]
-    V --> W["🔢 OTP Reset"]
-    W --> D
+    FF["🔒 Forgot Password"] --> GG["📧 Reset Email with OTP"]
+    GG --> HH["🔢 OTP Verification"]
+    HH --> II["🔑 New Password"]
+    II --> A
     
-    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
-    style P fill:#dcfce7,stroke:#22c55e,stroke-width:2px
-    style N fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style T fill:#fce7f3,stroke:#ec4899,stroke-width:2px
-```
-
-### OAuth Authentication (Firebase)
-
-```mermaid
-graph TB
-    A["🔑 Sign In/Up Page"] --> B["🔥 OAuth Buttons"]
-    B --> C["Google | GitHub | LinkedIn"]
-    C --> D["🔥 Firebase Popup"]
-    D --> E["👤 Select Provider"]
-    E --> F["🔐 Provider Auth"]
-    F --> G{"Auth Success?"}
-    G -->|"❌"| H["Error Handle"]
-    H --> A
-    G -->|"✅"| I["🎯 Get Firebase Token"]
-    I --> J["📧 Extract User Info"]
-    J --> K["🔗 API Call to Backend"]
-    K --> L["🔍 Validate Firebase Token"]
-    L --> M{"Token Valid?"}
-    M -->|"❌"| N["Auth Failed"]
-    N --> A
-    M -->|"✅"| O{"User Exists?"}
-    O -->|"❌"| P["👤 Create User"]
-    O -->|"✅"| Q["📝 Update User"]
-    P --> R["🎯 Generate JWT"]
-    Q --> R
-    R --> S["🍪 Set Cookies"]
-    S --> T["✨ Authenticated User"]
-    T --> U["🛡️ User Dashboard"]
+    %% Admin Flow (Separate)
+    JJ["🔒 Admin Login"] --> KK["📧 Admin Credentials"]
+    KK --> LL["🔍 Validate with .env"]
+    LL --> MM{"Match Admin Config?"}
+    MM -->|"❌"| NN["❌ Access Denied"]
+    NN --> JJ
+    MM -->|"✅"| OO["🎯 Generate Admin JWT"]
+    OO --> PP["🏷️ Set Admin Role"]
+    PP --> QQ["🍪 Set Admin Cookies"]
+    QQ --> RR["✨ Authenticated Admin"]
+    RR --> SS["👑 Admin Panel Access"]
     
-    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
-    style T fill:#dcfce7,stroke:#22c55e,stroke-width:2px
-    style I fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    %% Styling
+    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:3px
+    style BB fill:#dcfce7,stroke:#22c55e,stroke-width:3px
+    style RR fill:#fef3c7,stroke:#f59e0b,stroke-width:3px
+    style L fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+    style M fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+    style CC fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
+    style SS fill:#fef7ff,stroke:#a855f7,stroke-width:2px
+    
+    %% Error States
+    style E fill:#fecaca,stroke:#dc2626,stroke-width:1px
+    style Q fill:#fecaca,stroke:#dc2626,stroke-width:1px
+    style W fill:#fecaca,stroke:#dc2626,stroke-width:1px
+    style NN fill:#fecaca,stroke:#dc2626,stroke-width:1px
 ```
 
 ### Admin Authentication
