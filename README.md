@@ -246,40 +246,42 @@ pnpm --prefix web dev       # Frontend: http://localhost:3000
 
 ```
 full-stack-template/
-├── 📁 server/                 # Backend (Clean Architecture)
+├── 📁 server/                       # Backend (Clean Architecture)
 │   ├── 📁 src/
-│   │   ├── 📁 domain/         # Business entities & interfaces
-│   │   │   ├── 📁 entities/   # User, Admin entities
-│   │   │   └── 📁 enums/      # UserRole enum
-│   │   ├── 📁 use_case/       # Application logic
-│   │   │   ├── 📁 auth/       # Authentication use cases
-│   │   │   ├── 📁 admin/      # Admin-specific use cases
-│   │   │   └── 📁 oauth/      # OAuth use cases
-│   │   ├── 📁 infrastructure/ # Database & external services
-│   │   │   ├── 📁 database/   # MongoDB repositories
-│   │   │   ├── 📁 firebase/   # Firebase admin SDK
-│   │   │   └── 📁 middleware/ # Auth & RBAC middleware
-│   │   ├── 📁 presentation/   # Controllers & routes
-│   │   │   ├── 📁 routes/     # API routes
-│   │   │   ├── 📁 controllers/# Request handlers
-│   │   │   └── 📁 middleware/ # Route-specific middleware
-│   │   └── 📁 di/             # Dependency injection
-│   └── 📁 __tests__/          # Test files
-├── 📁 web/                    # Frontend (Next.js)
-│   ├── 📁 app/                # App router
-│   │   ├── 📁 (auth)/         # Auth pages
-│   │   ├── 📁 (user)/         # User dashboard
-│   │   └── 📁 (admin)/        # Admin dashboard
-│   ├── 📁 components/         # React components
-│   │   ├── 📁 ui/             # Base UI components
-│   │   ├── 📁 auth/           # Auth-specific components
-│   │   └── 📁 oauth/          # OAuth buttons & handlers
-│   ├── 📁 hooks/              # Custom hooks
-│   ├── 📁 lib/                # Utilities
-│   │   ├── 📁 firebase/       # Firebase client config
-│   │   └── 📁 auth/           # Auth utilities
-│   └── 📁 types/              # TypeScript definitions
-└── 📄 package.json            # Root configuration
+│   │   ├── 📁 domain/               # Enterprise business logic
+│   │   │   ├── 📁 entities/         # Core domain models 
+│   │   │   └── 📁 interfaces/       # Abstractions for services and repositories
+│   │   │       ├── 📁 services/     # Service interfaces
+│   │   │       └── 📁 repositories/ # Repository interfaces 
+│   │   ├── 📁 use_case/             # Application-specific business rules
+│   │   │   ├── 📁 auth/             # Auth-related use cases
+│   │   │   ├── 📁 admin/            # Admin operations
+│   │   │   └── 📁 oauth/            # OAuth login/registration flows
+│   │   ├── 📁 infrastructure/       # Implementation details
+│   │   │   ├── 📁 database/         # MongoDB implementations of repositories
+│   │   │   ├── 📁 firebase/         # Firebase SDK integrations
+│   │   │   └── 📁 middleware/       # General backend middleware 
+│   │   ├── 📁 presentation/         # Framework adapters (input/output handlers)
+│   │   │   ├── 📁 routes/           # Express/Router API definitions
+│   │   │   ├── 📁 controllers/      # Request handlers / controllers
+│   │   │   └── 📁 middleware/       # Middleware for route-level logic
+│   │   └── 📁 di/                   # Dependency injection container setup
+│   └── 📁 __tests__/                # Unit and integration tests
+├── 📁 web/                          # Frontend (Next.js)
+│   ├── 📁 app/                      # App router structure 
+│   │   ├── 📁 (auth)/               # Auth-related pages (login, signup)
+│   │   ├── 📁 (user)/               # User dashboard and features
+│   │   └── 📁 (admin)/              # Admin dashboard and tools
+│   ├── 📁 components/               # Reusable React components
+│   │   ├── 📁 ui/                   # Low-level UI components 
+│   │   ├── 📁 forms/                # Composable form elements
+│   ├── 📁 hooks/                    # Custom React hooks
+│   ├── 📁 lib/                      # Utility functions and helpers
+│   ├── 📁 public/                   # Static assets 
+│   ├── 📁 constants/                # Constant values and enums
+│   ├── 📁 styles/                   # Tailwind and global CSS files
+│   └── 📁 types/                    # Global TypeScript types and interfaces
+└── 📄 package.json                  # Root configuration and dependencies
 ```
 
 ## 🔐 API Endpoints
@@ -288,13 +290,12 @@ full-stack-template/
 - `POST /api/auth/signup` - User registration
 - `POST /api/auth/signin` - Login (sends OTP)
 - `POST /api/auth/verify-otp` - OTP verification
-- `POST /api/auth/oauth` - OAuth authentication
+- `POST /api/auth/oauth-2` - OAuth authentication
 - `POST /api/auth/forgot-password` - Password reset request
 - `POST /api/auth/reset-password` - Reset with OTP
 
 ### 🛡️ User Protected Routes
 - `GET /api/user/profile` - User profile data
-- `PUT /api/user/profile` - Update user profile
 - `POST /api/auth/refresh` - Token refresh (automatic)
 
 ### 👑 Admin Protected Routes
@@ -342,30 +343,6 @@ graph TB
     style Q fill:#fee2e2,stroke:#ef4444,stroke-width:2px
 ```
 
-## 👥 Role-Based Access Control
-```typescript
-enum UserRole {
-  USER = 'user',
-  ADMIN = 'admin'
-}
-```
-
-### Middleware Implementation
-```typescript
-// User routes protection
-app.use('/api/user/*', authenticateUser);
-
-// Admin routes protection  
-app.use('/api/admin/*', authenticateAdmin);
-
-// Role-based middleware
-const authenticateAdmin = (req, res, next) => {
-  // Validate JWT token
-  // Check if role === 'admin'
-  // Grant/deny access
-};
-```
-
 ### Access Control Matrix
 
 | Route Type | User Role | Admin Role | Public |
@@ -376,64 +353,7 @@ const authenticateAdmin = (req, res, next) => {
 
 ## 🔥 Firebase OAuth Implementation
 
-### Frontend Integration
-
-```typescript
-// OAuth button component
-const OAuthButtons = () => {
-  const handleGoogleSignIn = async () => {
-    const result = await signInWithPopup(auth, googleProvider);
-    const token = await result.user.getIdToken();
-    
-    // Send to backend
-    await fetch('/api/auth/oauth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        token,
-        provider: 'google',
-        userInfo: {
-          email: result.user.email,
-          name: result.user.displayName,
-          photoURL: result.user.photoURL
-        }
-      })
-    });
-  };
-};
-```
-
 ### Backend Validation
-
-```typescript
-// OAuth use case
-class OAuthUseCase {
-  async authenticateWithFirebase(token: string, userInfo: any) {
-    // Validate Firebase token
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    
-    // Check if user exists
-    let user = await this.userRepository.findByEmail(userInfo.email);
-    
-    if (!user) {
-      // Create new user
-      user = await this.userRepository.create({
-        email: userInfo.email,
-        name: userInfo.name,
-        profilePicture: userInfo.photoURL,
-        role: UserRole.USER,
-        isEmailVerified: true, // OAuth emails are pre-verified
-        authProvider: 'oauth'
-      });
-    }
-    
-    // Generate JWT tokens
-    const { accessToken, refreshToken } = this.jwtService.generateTokens(user);
-    
-    return { user, accessToken, refreshToken };
-  }
-}
-```
 
 ## 🏗️ Architecture Highlights
 
@@ -490,25 +410,7 @@ pnpm --prefix web start
 ### Adding New OAuth Providers
 1. Enable provider in Firebase Console
 2. Add provider configuration to frontend
-3. Update OAuth use case to handle new provider
 4. Test authentication flow
-
-### Extending Admin Features
-```typescript
-// Add new admin routes
-router.get('/api/admin/reports', authenticateAdmin, getReports);
-router.post('/api/admin/broadcast', authenticateAdmin, sendBroadcast);
-```
-
-### Custom User Roles
-```typescript
-enum UserRole {
-  USER = 'user',
-  MODERATOR = 'moderator',
-  ADMIN = 'admin',
-  SUPER_ADMIN = 'super_admin'
-}
-```
 
 ## 🔒 Security Best Practices
 
