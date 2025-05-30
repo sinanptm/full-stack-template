@@ -203,36 +203,42 @@ pnpm --prefix web dev       # Frontend: http://localhost:3000
 
 ```
 full-stack-template/
-├── server/                          # Backend (Clean Architecture)
-│   ├── src/
-│   │   ├── domain/                  # Core business logic
-│   │   │   ├── entities/            # Domain models
-│   │   │   └── interfaces/          # Service and repository contracts
-│   │   ├── use_case/                # Application business rules
-│   │   │   ├── auth/                # Authentication use cases
-│   │   │   ├── admin/               # Admin operations
-│   │   │   └── oauth/               # OAuth flows
-│   │   ├── infrastructure/          # External integrations
-│   │   │   ├── database/            # MongoDB implementations
-│   │   │   └── firebase/            # Firebase services
-│   │   ├── presentation/            # API layer
-│   │   │   ├── routes/              # Express routes
-│   │   │   ├── controllers/         # Request handlers
-│   │   │   └── middleware/          # Route middleware
-│   │   └── di/                      # Dependency injection
-│   └── __tests__/                   # Tests
-├── web/                             # Frontend (Next.js)
-│   ├── app/                         # App router
-│   │   ├── (auth)/                  # Authentication pages
-│   │   ├── (user)/                  # User dashboard
-│   │   └── (admin)/                 # Admin panel
-│   ├── components/                  # React components
-│   │   ├── ui/                      # Base UI components
-│   │   └── forms/                   # Form components
-│   ├── hooks/                       # Custom hooks
-│   ├── lib/                         # Utilities
-│   └── types/                       # TypeScript types
-└── package.json
+├── 📁 server/                       # Backend (Clean Architecture)
+│   ├── 📁 src/
+│   │   ├── 📁 domain/               # Enterprise business logic
+│   │   │   ├── 📁 entities/         # Core domain models 
+│   │   │   └── 📁 interfaces/       # Abstractions for services and repositories
+│   │   │       ├── 📁 services/     # Service interfaces
+│   │   │       └── 📁 repositories/ # Repository interfaces 
+│   │   ├── 📁 use_case/             # Application-specific business rules
+│   │   │   ├── 📁 auth/             # Auth-related use cases
+│   │   │   ├── 📁 admin/            # Admin operations
+│   │   │   └── 📁 oauth/            # OAuth login/registration flows
+│   │   ├── 📁 infrastructure/       # Implementation details
+│   │   │   ├── 📁 database/         # MongoDB implementations of repositories
+│   │   │   ├── 📁 firebase/         # Firebase SDK integrations
+│   │   │   └── 📁 middleware/       # General backend middleware 
+│   │   ├── 📁 presentation/         # Framework adapters (input/output handlers)
+│   │   │   ├── 📁 routes/           # Express/Router API definitions
+│   │   │   ├── 📁 controllers/      # Request handlers / controllers
+│   │   │   └── 📁 middleware/       # Middleware for route-level logic
+│   │   └── 📁 di/                   # Dependency injection container setup
+│   └── 📁 __tests__/                # Unit and integration tests
+├── 📁 web/                          # Frontend (Next.js)
+│   ├── 📁 app/                      # App router structure 
+│   │   ├── 📁 (auth)/               # Auth-related pages (login, signup)
+│   │   ├── 📁 (user)/               # User dashboard and features
+│   │   └── 📁 (admin)/              # Admin dashboard and tools
+│   ├── 📁 components/               # Reusable React components
+│   │   ├── 📁 ui/                   # Low-level UI components 
+│   │   ├── 📁 forms/                # Composable form elements
+│   ├── 📁 hooks/                    # Custom React hooks
+│   ├── 📁 lib/                      # Utility functions and helpers
+│   ├── 📁 public/                   # Static assets 
+│   ├── 📁 constants/                # Constant values and enums
+│   ├── 📁 styles/                   # Tailwind and global CSS files
+│   └── 📁 types/                    # Global TypeScript types and interfaces
+└── 📄 package.json                  # Root configuration and dependencies
 ```
 
 ## 🔐 API Routes
