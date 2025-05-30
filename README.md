@@ -1,4 +1,4 @@
-# 🚀 Full-Stack Template
+# 🚀 Full-Stack Authentication Template
 
 <div align="center">
   
@@ -8,28 +8,20 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 
-*Production-ready full-stack template with clean architecture, complete authentication, OAuth integration, and role-based access control*
+*Production-ready full-stack template with clean architecture and complete authentication system*
 
 </div>
 
-## ✨ Features
+## ✨ Key Features
 
-- 🔐 **Multi-Auth System** - Email/Password, OAuth (Google, GitHub, LinkedIn), Admin authentication
-- 👥 **Role-Based Access Control** - User and Admin roles with protected endpoints
-- 🔥 **Firebase OAuth** - Seamless social login integration with token validation
-- 🏗️ **Clean Architecture** - Domain-driven design with dependency injection
-- 🛡️ **Security First** - JWT tokens, HTTP-only cookies, rate limiting, bcrypt
-- 🎨 **Modern UI** - Shadcn UI, Tailwind CSS, dark/light themes, responsive
-- ⚡ **Developer Experience** - TypeScript, hot reload, testing ready
-- 📧 **Email Integration** - OTP verification and password reset via Nodemailer
-
-## 🔐 Authentication Flows
+- **Complete Authentication System** - Email/Password with OTP verification, OAuth (Google, GitHub), and Admin authentication
+- **Role-Based Access Control** - Secure user and admin roles with protected routes
+- **Clean Architecture** - Domain-driven design with dependency injection and separation of concerns
+- **Modern Tech Stack** - Next.js 15, Express.js 5, MongoDB, TypeScript, Firebase OAuth
+- **Security-First Design** - JWT tokens, HTTP-only cookies, rate limiting, bcrypt hashing
+- **Developer Experience** - Hot reload, TypeScript support, comprehensive testing setup
 
 # 🔐 Complete Authentication System Flow
-
-## Combined User Authentication (Email/Password + OAuth)
-
-
 
 ```mermaid
 graph TB
@@ -126,14 +118,12 @@ graph TB
 
 | Layer | Technology |
 |-------|-----------|
-| **Frontend** | Next.js 15, React 19, Tailwind CSS, Radix UI |
-| **Backend** | Express.js 5, Node.js, JWT Authentication |
+| **Frontend** | Next.js 15, React 19, Tailwind CSS, Shadcn UI |
+| **Backend** | Express.js 5, Node.js, TypeScript |
 | **Database** | MongoDB with Mongoose ODM |
-| **Language** | TypeScript (Full Stack) |
-| **OAuth** | Firebase Authentication |
-| **State** | Zustand + React Query |
-| **Email** | Nodemailer |
-| **Security** | bcrypt, CORS, Rate Limiting, Role-based Access |
+| **Authentication** | JWT, Firebase OAuth, Nodemailer |
+| **State Management** | Zustand + React Query |
+| **Security** | bcrypt, CORS, Rate Limiting, RBAC |
 
 ## 🚀 Quick Start
 
@@ -146,11 +136,8 @@ graph TB
 ### Installation
 
 ```bash
-# Clone repository
 git clone git@github.com:sinanptm/fullstack-clean-auth-template.git
 cd full-stack-template
-
-# Install dependencies
 pnpm install
 ```
 
@@ -159,32 +146,32 @@ pnpm install
 **Server** (`.env` in `server/` directory):
 ```env
 # Database
-MONGO_URI=mongodb+srv://mur0
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
 
 # Server Configuration
 PORT=8000
 NODE_ENV=development
 
 # JWT Secrets
-ACCESS_TOKEN_SECRET=your-secure-access-token-secret-1234567890
-REFRESH_TOKEN_SECRET=your-secure-refresh-token-secret-0987654321
+ACCESS_TOKEN_SECRET=your-access-token-secret
+REFRESH_TOKEN_SECRET=your-refresh-token-secret
 
-# Nodemailer Email Configuration
-NODEMAILER_PASSKEY=jdd
-SENDER_EMAIL=felistob@gmail.com
+# Email Configuration
+SENDER_EMAIL=your-email@example.com
+NODEMAILER_PASSKEY=your-email-app-password
 
-# Company Information
-COMPANY_NAME=Expense Tracker
-COMPANY_DOMAIN=ex-tracker.dev.com
+# Company Info
+COMPANY_NAME=Your Company
+COMPANY_DOMAIN=yourcompany.com
 
 # Admin Credentials
-ADMIN_MAIL=admin@gmail.com
-ADMIN_PASSWORD=fjfjfj
+ADMIN_MAIL=admin@example.com
+ADMIN_PASSWORD=your-secure-admin-password
 
-# Firebase Configuration (Server-side)
-FIREBASE_PROJECT_ID=full-stack-
-FIREBASE_CLIENT_EMAIL=firebase@full-stack-.iam.gserviceaccount.com
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nyour-private-key-here\n-----END PRIVATE KEY-----\n"
+# Firebase (Server-side)
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk@example.iam.gserviceaccount.com
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n<your-private-key>\n-----END PRIVATE KEY-----\n"
 ```
 
 **Client** (`.env.local` in `web/` directory):
@@ -192,40 +179,14 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nyour-private-key-here\n-----E
 # Server URL
 NEXT_PUBLIC_SERVER_URL=http://localhost:8000
 
-# Firebase Configuration (Client-side)
-NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDrf-
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=full-stackm
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=full-stack-
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=full-stack-
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=7
-NEXT_PUBLIC_FIREBASE_APP_ID=1:7984738348
+# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=your-firebase-api-key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+NEXT_PUBLIC_FIREBASE_APP_ID=your-firebase-app-id
 ```
-
-### Firebase Setup
-
-1. **Create Firebase Project**
-   - Go to [Firebase Console](https://console.firebase.google.com)
-   - Create new project
-   - Enable Authentication
-
-2. **Configure OAuth Providers**
-   ```bash
-   # Enable in Firebase Console > Authentication > Sign-in method:
-   - Google ✅
-   - GitHub ✅  
-   - LinkedIn ✅ (if available)
-   ```
-
-3. **Generate Service Account**
-   - Go to Project Settings > Service Accounts
-   - Generate private key (JSON)
-   - Extract credentials for server `.env`
-
-4. **Configure Authorized Domains**
-   ```
-   localhost (for development)
-   your-production-domain.com
-   ```
 
 ### Start Development
 
@@ -233,7 +194,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=1:7984738348
 # Start both frontend and backend
 pnpm dev
 
-# Or individually
+# Or start individually
 pnpm --prefix server dev    # Backend: http://localhost:8000
 pnpm --prefix web dev       # Frontend: http://localhost:3000
 ```
@@ -242,236 +203,112 @@ pnpm --prefix web dev       # Frontend: http://localhost:3000
 
 ```
 full-stack-template/
-├── 📁 server/                       # Backend (Clean Architecture)
-│   ├── 📁 src/
-│   │   ├── 📁 domain/               # Enterprise business logic
-│   │   │   ├── 📁 entities/         # Core domain models 
-│   │   │   └── 📁 interfaces/       # Abstractions for services and repositories
-│   │   │       ├── 📁 services/     # Service interfaces
-│   │   │       └── 📁 repositories/ # Repository interfaces 
-│   │   ├── 📁 use_case/             # Application-specific business rules
-│   │   │   ├── 📁 auth/             # Auth-related use cases
-│   │   │   ├── 📁 admin/            # Admin operations
-│   │   │   └── 📁 oauth/            # OAuth login/registration flows
-│   │   ├── 📁 infrastructure/       # Implementation details
-│   │   │   ├── 📁 database/         # MongoDB implementations of repositories
-│   │   │   ├── 📁 firebase/         # Firebase SDK integrations
-│   │   │   └── 📁 middleware/       # General backend middleware 
-│   │   ├── 📁 presentation/         # Framework adapters (input/output handlers)
-│   │   │   ├── 📁 routes/           # Express/Router API definitions
-│   │   │   ├── 📁 controllers/      # Request handlers / controllers
-│   │   │   └── 📁 middleware/       # Middleware for route-level logic
-│   │   └── 📁 di/                   # Dependency injection container setup
-│   └── 📁 __tests__/                # Unit and integration tests
-├── 📁 web/                          # Frontend (Next.js)
-│   ├── 📁 app/                      # App router structure 
-│   │   ├── 📁 (auth)/               # Auth-related pages (login, signup)
-│   │   ├── 📁 (user)/               # User dashboard and features
-│   │   └── 📁 (admin)/              # Admin dashboard and tools
-│   ├── 📁 components/               # Reusable React components
-│   │   ├── 📁 ui/                   # Low-level UI components 
-│   │   ├── 📁 forms/                # Composable form elements
-│   ├── 📁 hooks/                    # Custom React hooks
-│   ├── 📁 lib/                      # Utility functions and helpers
-│   ├── 📁 public/                   # Static assets 
-│   ├── 📁 constants/                # Constant values and enums
-│   ├── 📁 styles/                   # Tailwind and global CSS files
-│   └── 📁 types/                    # Global TypeScript types and interfaces
-└── 📄 package.json                  # Root configuration and dependencies
+├── server/                          # Backend (Clean Architecture)
+│   ├── src/
+│   │   ├── domain/                  # Core business logic
+│   │   │   ├── entities/            # Domain models
+│   │   │   └── interfaces/          # Service and repository contracts
+│   │   ├── use_case/                # Application business rules
+│   │   │   ├── auth/                # Authentication use cases
+│   │   │   ├── admin/               # Admin operations
+│   │   │   └── oauth/               # OAuth flows
+│   │   ├── infrastructure/          # External integrations
+│   │   │   ├── database/            # MongoDB implementations
+│   │   │   └── firebase/            # Firebase services
+│   │   ├── presentation/            # API layer
+│   │   │   ├── routes/              # Express routes
+│   │   │   ├── controllers/         # Request handlers
+│   │   │   └── middleware/          # Route middleware
+│   │   └── di/                      # Dependency injection
+│   └── __tests__/                   # Tests
+├── web/                             # Frontend (Next.js)
+│   ├── app/                         # App router
+│   │   ├── (auth)/                  # Authentication pages
+│   │   ├── (user)/                  # User dashboard
+│   │   └── (admin)/                 # Admin panel
+│   ├── components/                  # React components
+│   │   ├── ui/                      # Base UI components
+│   │   └── forms/                   # Form components
+│   ├── hooks/                       # Custom hooks
+│   ├── lib/                         # Utilities
+│   └── types/                       # TypeScript types
+└── package.json
 ```
 
-## 🔐 API Endpoints
+## 🔐 API Routes
 
-### 🔓 Public Routes
-- `POST /api/auth/signup` - User registration
-- `POST /api/auth/signin` - Login (sends OTP)
-- `POST /api/auth/verify-otp` - OTP verification
-- `POST /api/auth/oauth-2` - OAuth authentication
-- `POST /api/auth/forgot-password` - Password reset request
-- `POST /api/auth/reset-password` - Reset with OTP
-
-### 🛡️ User Protected Routes
-- `GET /api/user/profile` - User profile data
-- `POST /api/auth/refresh` - Token refresh (automatic)
-
-### 👑 Admin Protected Routes
-- `POST /api/admin/signin` - Admin login
-- `GET /api/admin/users` - Get all users
-- `GET /api/admin/users/:id` - Get specific user
-- `PUT /api/admin/users/:id` - Update user
-- `DELETE /api/admin/users/:id` - Delete user
-- `GET /api/admin/analytics` - System analytics
-- `POST /api/admin/refresh` - Admin token refresh
-
-### Role-Based Access Control Flow
-
-```mermaid
-graph TB
-    A["🌐 Incoming Request"] --> B["🔍 Extract JWT Token"]
-    B --> C{"Token Present?"}
-    C -->|"❌"| D["❌ Unauthorized"]
-    C -->|"✅"| E["🔐 Verify JWT Signature"]
-    E --> F{"Valid Signature?"}
-    F -->|"❌"| G["❌ Invalid Token"]
-    F -->|"✅"| H["📋 Extract User Role"]
-    H --> I{"Check Role"}
-    
-    I -->|"👤 USER"| J["🛡️ User Middleware"]
-    I -->|"👑 ADMIN"| K["🛡️ Admin Middleware"]
-    
-    J --> L{"User Route?"}
-    L -->|"✅"| M["✅ Access Granted"]
-    L -->|"❌"| N["❌ Forbidden"]
-    
-    K --> O{"Admin Route?"}
-    O -->|"✅"| P["✅ Admin Access"]
-    O -->|"❌"| Q["❌ Forbidden"]
-    
-    M --> R["👤 User Dashboard"]
-    P --> S["👑 Admin Panel"]
-    
-    style A fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
-    style M fill:#dcfce7,stroke:#22c55e,stroke-width:2px
-    style P fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style D fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style G fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style N fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style Q fill:#fee2e2,stroke:#ef4444,stroke-width:2px
+### Authentication Routes
+```
+POST /api/auth/signup         - User registration
+POST /api/auth/signin         - Login with OTP
+POST /api/auth/verify-otp     - OTP verification
+POST /api/auth/oauth-2        - OAuth authentication
+POST /api/auth/forgot-password - Password reset
+POST /api/auth/reset-password  - Reset with OTP
 ```
 
-### Access Control Matrix
+### Protected Routes
+```
+# User Routes
+GET  /api/user/profile        - User profile
+POST /api/auth/refresh        - Token refresh
 
-| Route Type | User Role | Admin Role | Public |
-|------------|-----------|------------|--------|
-| `/api/auth/*` | ✅ | ✅ | ✅ |
-| `/api/user/*` | ✅ | ❌ | ❌ |
-| `/api/admin/*` | ❌ | ✅ | ❌ |
+# Admin Routes  
+POST /api/admin/signin        - Admin login
+GET  /api/admin/users         - All users
+GET  /api/admin/users/:id     - Specific user
+PUT  /api/admin/users/:id     - Update user
+DELETE /api/admin/users/:id   - Delete user
+GET  /api/admin/analytics     - System analytics
+```
 
-## 🔥 Firebase OAuth Implementation
-
-### Backend Validation
-
-## 🏗️ Architecture Highlights
-
-### Clean Architecture Layers
-1. **Domain** - Core business logic and entities (User, Admin roles)
-2. **Use Cases** - Application-specific operations (Auth, OAuth, Admin)
-3. **Infrastructure** - Database, Firebase, and external integrations
-4. **Presentation** - API controllers and routes with RBAC
-5. **DI Container** - Dependency injection with Inversify
-
-### Security Features
-- JWT with automatic refresh tokens
-- Role-based access control (RBAC)
-- Firebase token validation
-- HTTP-only cookies prevent XSS
-- bcrypt password hashing for admin
-- Rate limiting and CORS protection
-- Input validation with Joi schemas
-
-### OAuth Security Flow
-1. **Client-side**: Firebase handles OAuth popup
-2. **Token Exchange**: Client receives Firebase ID token
-3. **Backend Validation**: Server validates token with Firebase Admin SDK
-4. **User Management**: Create/update user in database
-5. **JWT Generation**: Issue application-specific tokens
-6. **Session Management**: Same JWT flow as email/password auth
-
-## 🧪 Development
+## 🔧 Development Commands
 
 ```bash
-# Testing
-pnpm --prefix server test
+# Development
+pnpm dev                      # Start both servers
+pnpm --prefix server dev      # Backend only
+pnpm --prefix web dev         # Frontend only
 
-# Production build
-pnpm --prefix server build
-pnpm --prefix web build
+# Testing & Quality
+pnpm --prefix server test     # Run backend tests
+pnpm --prefix web lint        # Lint frontend
+pnpm format                   # Format code
 
-# Production start
-pnpm --prefix server start
-pnpm --prefix web start
+# Production
+pnpm --prefix server build    # Build backend
+pnpm --prefix web build       # Build frontend
+pnpm --prefix server start    # Start production server
 ```
 
-## 📚 Key Scripts
+## 🔒 Security Features
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development servers |
-| `pnpm format` | Format code with Prettier |
-| `pnpm --prefix server test` | Run backend tests |
-| `pnpm --prefix web lint` | Lint frontend code |
-
-## 🎨 Customization
-
-### Adding New OAuth Providers
-1. Enable provider in Firebase Console
-2. Add provider configuration to frontend
-4. Test authentication flow
-
-## 🔒 Security Best Practices
-
-### Environment Variables
-- Never commit `.env` files
-- Use different secrets for each environment
-- Rotate tokens regularly
-- Use strong admin passwords
-
-### Firebase Security
-- Enable App Check in production
-- Configure security rules
-- Monitor authentication usage
-- Set up billing alerts
-
-### JWT Security
-- Short-lived access tokens (15 minutes)
-- Longer refresh tokens (7 days)
-- HTTP-only cookies for refresh tokens
-- Token rotation on refresh
+- **JWT Authentication** with automatic token refresh
+- **Role-Based Access Control** (User/Admin roles)
+- **Firebase OAuth Integration** with server-side token validation
+- **HTTP-Only Cookies** prevent XSS attacks
+- **Password Hashing** with bcrypt
+- **Rate Limiting** and CORS protection
+- **Input Validation** with comprehensive schemas
 
 ## 🚀 Deployment
 
-### Environment-Specific Configurations
+### Firebase Setup
+1. Create Firebase project
+2. Enable Authentication providers (Google, GitHub)
+3. Generate service account key
+4. Configure authorized domains
 
-**Development**
-```env
-CLIENT_URL=http://localhost:3000
-FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-```
-
-**Production**
-```env
-CLIENT_URL=https://your-domain.com
-FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
-```
-
-### Deployment Checklist
-- [ ] Firebase project configured for production domain
-- [ ] Environment variables set in hosting platform
-- [ ] MongoDB connection string updated
+### Production Checklist
+- [ ] Environment variables configured
+- [ ] MongoDB Atlas connection
+- [ ] Firebase production settings
 - [ ] Admin credentials secured
-- [ ] CORS origins configured
-- [ ] Rate limiting configured for production traffic
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/name`)
-3. Implement changes following clean architecture
-4. Add tests for new functionality
-5. Update documentation
-6. Commit changes (`git commit -m 'Add feature'`)
-7. Push branch (`git push origin feature/name`)
-8. Open Pull Request
-
-## 📖 Additional Resources
-
-- [Firebase Authentication Docs](https://firebase.google.com/docs/auth)
-- [JWT Best Practices](https://tools.ietf.org/html/rfc8725)
-- [Clean Architecture Guide](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-- [RBAC Implementation Patterns](https://en.wikipedia.org/wiki/Role-based_access_control)
+- [ ] CORS origins updated
+- [ ] Rate limiting configured
 
 ---
 
 <div align="center">
-  Made with ❤️ for developers • Full-stack template with OAuth, RBAC, and Admin panel ready for production
+  Production-ready full-stack template • Built with modern technologies and best practices
 </div>
