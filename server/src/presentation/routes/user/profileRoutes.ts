@@ -11,6 +11,9 @@ const authMiddleware = resolve<UserAuthMiddleware>(MiddleWares.UserAuthMiddlewar
 const profileController = resolve<ProfileController>(Controllers.ProfileController);
 
 router.use(authMiddleware.exec);
-router.get("/", profileController.getProfile.bind(profileController));
+
+router.route('/')
+    .get(profileController.getProfile.bind(profileController))
+    .put(profileController.updateProfile.bind(profileController));
 
 export default router;

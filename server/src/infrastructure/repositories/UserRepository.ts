@@ -7,7 +7,7 @@ export default class UserRepository implements IUserRepository {
   credentials: string;
 
   constructor() {
-    this.credentials = "-password -token -updateAt -isOAuthUser";
+    this.credentials = "-password -token -updateAt -isOAuthUser -createdAt";
   }
 
   async findById(id: string): UserProfilePromise {

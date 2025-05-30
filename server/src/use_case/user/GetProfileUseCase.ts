@@ -8,7 +8,7 @@ interface Params {
   userId: string;
 }
 
-export default class ProfileUseCase {
+export default class GetProfileUseCase {
   constructor(
     @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,
     @inject(Services.ValidatorService) private readonly validatorService: IValidatorService,
