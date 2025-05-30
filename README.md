@@ -29,6 +29,8 @@
 
 ## Combined User Authentication (Email/Password + OAuth)
 
+
+
 ```mermaid
 graph TB
     %% Entry Point
@@ -94,47 +96,30 @@ graph TB
     QQ --> RR["✨ Authenticated Admin"]
     RR --> SS["👑 Admin Panel Access"]
     
-    %% Styling
-    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:3px
-    style BB fill:#dcfce7,stroke:#22c55e,stroke-width:3px
-    style RR fill:#fef3c7,stroke:#f59e0b,stroke-width:3px
-    style L fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
-    style M fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style CC fill:#f0fdf4,stroke:#16a34a,stroke-width:2px
-    style SS fill:#fef7ff,stroke:#a855f7,stroke-width:2px
+    %% Styling with Black Text
+    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:3px,color:#000000
+    style BB fill:#dcfce7,stroke:#22c55e,stroke-width:3px,color:#000000
+    style RR fill:#fef3c7,stroke:#f59e0b,stroke-width:3px,color:#000000
+    style L fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#000000
+    style M fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#000000
+    style CC fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#000000
+    style SS fill:#fef7ff,stroke:#a855f7,stroke-width:2px,color:#000000
     
-    %% Error States
-    style E fill:#fecaca,stroke:#dc2626,stroke-width:1px
-    style Q fill:#fecaca,stroke:#dc2626,stroke-width:1px
-    style W fill:#fecaca,stroke:#dc2626,stroke-width:1px
-    style NN fill:#fecaca,stroke:#dc2626,stroke-width:1px
-```
-
-### Admin Authentication
-
-```mermaid
-graph TB
-    A["🔒 Admin Login"] --> B["📧 Email & Password"]
-    B --> C["🔍 Validate Credentials"]
-    C --> D{"Match .env?"}
-    D -->|"❌"| E["❌ Access Denied"]
-    E --> A
-    D -->|"✅"| F["🎯 Generate Admin JWT"]
-    F --> G["🏷️ Set Admin Role"]
-    G --> H["🍪 Set Cookies"]
-    H --> I["✨ Authenticated Admin"]
-    I --> J["🛡️ Admin Routes"]
-    J --> K["👥 User Management"]
-    J --> L["📊 Analytics Dashboard"]
-    J --> M["⚙️ System Configuration"]
+    %% Error States with Black Text
+    style E fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
+    style Q fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
+    style W fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
+    style NN fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
     
-    N["🔄 Admin Token Expiry"] --> O["Admin Auto Refresh"]
-    O --> I
-    
-    style A fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
-    style I fill:#dcfce7,stroke:#22c55e,stroke-width:2px
-    style F fill:#fee2e2,stroke:#ef4444,stroke-width:2px
-    style J fill:#f3e8ff,stroke:#8b5cf6,stroke-width:2px
+    %% Additional Key Nodes with Black Text
+    style B fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#000000
+    style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style J fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style P fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style V fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style X fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style MM fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
+    style AA fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px,color:#000000
 ```
 
 ## 🛠️ Tech Stack
