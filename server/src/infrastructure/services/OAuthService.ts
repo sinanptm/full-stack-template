@@ -1,9 +1,9 @@
-import IFirebaseService, { FirebaseUser } from "@/domain/interfaces/services/IFirebaseService";
+import IOAuthService, { OAuthUser } from "@/domain/interfaces/services/IOAuthService";
 import * as admin from 'firebase-admin';
 import { InternalServerError, UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { FIRE_BASE_CLIENT_EMAIL, FIRE_BASE_PRIVATE_KEY, FIRE_BASE_PROJECT_ID } from "@/config";
 
-export default class FirebaseService implements IFirebaseService {
+export default class FirebaseService implements IOAuthService {
     private firebaseAdminApp: admin.app.App;
     private firebaseAuth: admin.auth.Auth;
 
@@ -26,7 +26,7 @@ export default class FirebaseService implements IFirebaseService {
         this.firebaseAuth = this.firebaseAdminApp.auth();
     }
 
-    async verifyAccessToken(accessToken: string): Promise<FirebaseUser | null> {
+    async verifyAccessToken(accessToken: string): Promise<OAuthUser | null> {
         try {
 
             const decodedToken = await this.firebaseAuth.verifyIdToken(accessToken);

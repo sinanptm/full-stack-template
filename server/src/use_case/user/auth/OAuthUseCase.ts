@@ -3,7 +3,7 @@ import { Services } from "@/di/services";
 import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import ITokenService from "@/domain/interfaces/services/ITokenService";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
-import IFirebaseService from "@/domain/interfaces/services/IFirebaseService";
+import IOAuthService from "@/domain/interfaces/services/IOAuthService";
 import { UnauthorizedError } from "@/domain/entities/CustomErrors";
 import { inject } from "inversify";
 import { UserRole } from "@/types";
@@ -21,14 +21,14 @@ export default class OAuthUseCase {
         @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,
         @inject(Services.TokenService) private readonly tokenService: ITokenService,
         @inject(Services.ValidatorService) private readonly validatorService: IValidatorService,
-        @inject(Services.FirebaseService) private readonly firebaseService: IFirebaseService,
+        @inject(Services.OAuthService) private readonly oAuthService: IOAuthService,
     ) { }
 
     async exec({ name, email, accessToken, profile }: OAuthPayload) {
         this.validatorService.validateRequiredFields({ name, email, accessToken });
         this.validatorService.validateEmailFormat(email);
 
-        const firebaseUser = await this.firebaseService.verifyAccessToken(accessToken);
+        const firebaseUser = await this.oAuthService.verifyAccessToken(accessToken);
 
         if (!firebaseUser || firebaseUser.email !== email) {
             throw new UnauthorizedError("Invalid Firebase token");
