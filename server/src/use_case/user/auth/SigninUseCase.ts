@@ -66,7 +66,7 @@ export default class SigninUseCase {
     }
     const { id, email } = this.tokenService.verifyRefreshToken(refreshToken);
 
-    const user = await this.userRepository.findById(id);
+    const user = await this.userRepository.findByIdWithCredentials(id);
     if (!user) throw new UnauthorizedError("Unauthorized");
 
     if (user.isBlocked) throw new ForbiddenError("Account is blocked");

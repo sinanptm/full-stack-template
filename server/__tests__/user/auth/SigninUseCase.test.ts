@@ -13,7 +13,7 @@ jest.mock("@/utils", () => ({
   generateOtp: jest.fn(() => 123456),
 }));
 
-describe("SigninUseCase - Minimal Tests", () => {
+describe("SigninUseCase", () => {
   let signinUseCase: SigninUseCase;
 
   const validCredentials = {
@@ -91,14 +91,14 @@ describe("SigninUseCase - Minimal Tests", () => {
 
     it("should refresh access token successfully", async () => {
       mockTokenService.verifyRefreshToken.mockReturnValue(mockTokenPayload);
-      mockUserRepository.findById.mockResolvedValue(mockUser);
+      mockUserRepository.findByIdWithCredentials.mockResolvedValue(mockUser);
       mockTokenService.createAccessToken.mockReturnValue("new-access-token");
 
       const result = await signinUseCase.refreshAccessToken(mockToken);
 
       expect(result).toEqual({ accessToken: "new-access-token" });
       expect(mockTokenService.verifyRefreshToken).toHaveBeenCalledWith(mockToken);
-      expect(mockUserRepository.findById).toHaveBeenCalledWith(mockTokenPayload.id);
+      expect(mockUserRepository.findByIdWithCredentials).toHaveBeenCalledWith(mockTokenPayload.id);
       expect(mockTokenService.createAccessToken).toHaveBeenCalledWith({
         email: mockTokenPayload.email,
         id: mockTokenPayload.id,
@@ -113,7 +113,7 @@ describe("SigninUseCase - Minimal Tests", () => {
 
     it("should throw UnauthorizedError when user not found", async () => {
       mockTokenService.verifyRefreshToken.mockReturnValue(mockTokenPayload);
-      mockUserRepository.findById.mockResolvedValue(null);
+      mockUserRepository.findByIdWithCredentials.mockResolvedValue(null);
 
       await expect(signinUseCase.refreshAccessToken(mockToken)).rejects.toThrow(UnauthorizedError);
     });
@@ -121,7 +121,7 @@ describe("SigninUseCase - Minimal Tests", () => {
     it("should throw ForbiddenError when user is blocked", async () => {
       const blockedUser = { ...mockUser, isBlocked: true };
       mockTokenService.verifyRefreshToken.mockReturnValue(mockTokenPayload);
-      mockUserRepository.findById.mockResolvedValue(blockedUser);
+      mockUserRepository.findByIdWithCredentials.mockResolvedValue(blockedUser);
 
       await expect(signinUseCase.refreshAccessToken(mockToken)).rejects.toThrow(ForbiddenError);
       await expect(signinUseCase.refreshAccessToken(mockToken)).rejects.toThrow("Account is blocked");

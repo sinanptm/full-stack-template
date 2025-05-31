@@ -34,7 +34,7 @@ export default class OAuthUseCase {
             throw new UnauthorizedError("Invalid Firebase token");
         }
 
-        let user = await this.userRepository.findByEmail(email);
+        let user = await this.userRepository.findByEmailWithCredentials(email);
 
         if (!user) {
             user = await this.userRepository.create({

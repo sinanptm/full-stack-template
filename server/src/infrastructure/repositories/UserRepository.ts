@@ -7,7 +7,7 @@ export default class UserRepository implements IUserRepository {
   credentials: string;
 
   constructor() {
-    this.credentials = "-password -token -updateAt -isOAuthUser -createdAt";
+    this.credentials = "-password -token -isOAuthUser -updatedAt -createdAt -isBlocked";
   }
 
   async findById(id: string): UserProfilePromise {
@@ -15,7 +15,7 @@ export default class UserRepository implements IUserRepository {
   }
 
   async findAll(): Promise<IUser[]> {
-    return await this.model.find().select(this.credentials);
+    return await this.model.find().lean();
   }
 
   async findByEmail(email: string): UserProfilePromise {

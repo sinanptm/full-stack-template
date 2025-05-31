@@ -8,7 +8,14 @@ export default class GetUsersUseCase {
     ) { }
 
     async exec() {
-        const users = await this.userRepository.findAll();
+        const users = await this.getUsers();
         return users;
     }
+
+    private async getUsers() {
+        const users = await this.userRepository.findAll();
+
+        return users.map(({ password, token, updatedAt, isOAuthUser, ...rest }) => rest);
+    }
+
 }

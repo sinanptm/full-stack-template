@@ -50,7 +50,7 @@ describe("OAuthUseCase", () => {
             });
             expect(mockValidatorService.validateEmailFormat).toHaveBeenCalledWith(validPayload.email);
             expect(mockOAuthService.verifyAccessToken).toHaveBeenCalledWith(validPayload.accessToken);
-            expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(validPayload.email);
+            expect(mockUserRepository.findByEmailWithCredentials).toHaveBeenCalledWith(validPayload.email);
             expect(mockUserRepository.create).toHaveBeenCalledWith({
                 name: validPayload.name,
                 email: validPayload.email,
@@ -86,14 +86,14 @@ describe("OAuthUseCase", () => {
             const refreshToken = "refreshToken";
 
             mockOAuthService.verifyAccessToken.mockResolvedValue(oauthUser);
-            mockUserRepository.findByEmail.mockResolvedValue(user);
+            mockUserRepository.findByEmailWithCredentials.mockResolvedValue(user);
             mockTokenService.createAccessToken.mockReturnValue(accessToken);
             mockTokenService.createRefreshToken.mockReturnValue(refreshToken);
             mockUserRepository.update.mockResolvedValue({});
 
             const result = await oAuthUseCase.exec(validPayload);
 
-            expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(validPayload.email);
+            expect(mockUserRepository.findByEmailWithCredentials).toHaveBeenCalledWith(validPayload.email);
             expect(mockUserRepository.create).not.toHaveBeenCalled();
             expect(mockTokenService.createAccessToken).toHaveBeenCalled();
             expect(mockTokenService.createRefreshToken).toHaveBeenCalled();
@@ -152,10 +152,10 @@ describe("OAuthUseCase", () => {
             const blockedUser = { _id: "user123", email: validPayload.email, name: validPayload.name, profile: validPayload.profile, isOAuthUser: true, isBlocked: true };
 
             mockOAuthService.verifyAccessToken.mockResolvedValue(oauthUser);
-            mockUserRepository.findByEmail.mockResolvedValue(blockedUser);
+            mockUserRepository.findByEmailWithCredentials.mockResolvedValue(blockedUser);
 
             await expect(oAuthUseCase.exec(validPayload)).rejects.toThrow(UnauthorizedError);
-            expect(mockUserRepository.findByEmail).toHaveBeenCalledWith(validPayload.email);
+            expect(mockUserRepository.findByEmailWithCredentials).toHaveBeenCalledWith(validPayload.email);
         });
     });
 });
