@@ -3,5 +3,5 @@ export enum PutRoutes {
 }
 
 export enum PutRoutesWithParams {
-  test = "/test/:id",
+  UpdateUser = "/admin/user/:id"
 }

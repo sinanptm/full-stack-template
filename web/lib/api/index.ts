@@ -31,6 +31,36 @@ export const PATCH = async <T>({ route, params, url, role }: PatchParams) => {
   return response.data;
 };
 
-const getRequestUrl = (route: string, params?: Params, url?: string) => {
-  return url ? url : params ? `${route}/${params.id}` : route;
+/**
+ * Constructs a final request URL based on the provided route and parameters.
+ * 
+ * @param route - A route string possibly containing parameter placeholders (e.g., "/users/:id").
+ * @param params - An optional object mapping parameter names to their values.
+ * @param url - An optional fully qualified custom URL to override route and params.
+ * @returns The final request URL with placeholders replaced, or the custom URL if provided.
+ */
+const getRequestUrl = (route: string, params?: Params, url?: string): string => {
+  if (url) {
+    return url;
+  }
+
+  if (!params) {
+    return route;
+  }
+
+  let finalUrl = route;
+
+  Object.entries(params).forEach(([key, value]) => {
+    const placeholder = `:${key}`;
+    if (finalUrl.includes(placeholder)) {
+      finalUrl = finalUrl.replace(placeholder, value);
+    }
+  });
+
+  const unreplacedParams = finalUrl.match(/:\w+/g);
+  if (unreplacedParams) {
+    console.error(`Warning: Unreplaced parameters found in URL: ${unreplacedParams.join(', ')}`);
+  }
+
+  return finalUrl;
 };

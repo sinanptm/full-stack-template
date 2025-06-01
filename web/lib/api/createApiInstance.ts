@@ -4,7 +4,6 @@ import { SERVER_URL } from "@/config";
 import { UserRole } from "@/types";
 import { StatusCode } from "@/types/api";
 import { clearAuthData, getTokenKey } from "../utils";
-import { toast } from "sonner";
 import { PostRoutes } from "@/types/api/PostRoutes";
 
 const createApiInstance = (role: UserRole = UserRole.User): AxiosInstance => {
