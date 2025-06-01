@@ -32,7 +32,7 @@ const OAuthButtons = ({ className = "" }: { className?: string; }) => {
 
             mutate(serverPayload);
         } catch (error: any) {
-            toast.error(error.message || "OAuth sign-in failed");
+            console.log(error);
         }
     };
 

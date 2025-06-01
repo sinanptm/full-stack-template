@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useGetProfile from "@/hooks/api/user/useGetProfile";
 import useUpdateProfile from "@/hooks/api/user/useUpdateProfile";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,6 +17,23 @@ const Profile = () => {
     const { data, isLoading, error, refetch } = useGetProfile();
     const { mutate, isPending } = useUpdateProfile();
     const [editName, setEditName] = useState("");
+
+    const handleEditClick = useCallback(() => {
+        setEditName(name!);
+    }, []);
+
+    const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setEditName(e.target.value);
+    }, []);
+
+    const handleNameSubmit = useCallback(() => {
+        mutate({ name: editName }, {
+            onSuccess: () => {
+                setEditName("");
+                refetch();
+            },
+        });
+    }, [refetch, mutate]);
 
     if (isLoading) {
         return (
@@ -39,22 +56,6 @@ const Profile = () => {
 
     const { name, email, profile } = data.user;
 
-    const handleEditClick = () => {
-        setEditName(name!);
-    };
-
-    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEditName(e.target.value);
-    };
-
-    const handleNameSubmit = () => {
-        mutate({ name: editName }, {
-            onSuccess: () => {
-                setEditName("");
-                refetch();
-            },
-        });
-    };
 
     return (
         <div className="text-start flex items-center space-x-4">

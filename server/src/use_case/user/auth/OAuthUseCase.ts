@@ -46,7 +46,7 @@ export default class OAuthUseCase {
         }
 
         if (user.isBlocked) {
-            throw new UnauthorizedError("Account is blocked");
+            throw new UnauthorizedError("Your account has been blocked. Please contact support for assistance.");
         }
 
         const { accessToken: jwtAccessToken, refreshToken } = await this.createTokens(user);

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import useGetsUsersAdmin from "@/hooks/api/admin/useGetUsers";
 import useUpdateUser from "@/hooks/api/admin/useUpdateUser";
 import UsersTable from "@/components/admin/UserTable";
 import { IUser } from "@/types";
+import useToggleBlock from "@/hooks/api/admin/useToggleBlock";
 
 interface EditingState {
     userId: string | null;
@@ -15,16 +16,17 @@ const Page = () => {
     const { data, isLoading, error, refetch } = useGetsUsersAdmin();
     const { mutate, isPending } = useUpdateUser();
     const [editing, setEditing] = useState<EditingState>({ userId: null, name: "" });
+    const { mutate: toggleBlock } = useToggleBlock();
 
-    const handleEditClick = (user: IUser) => {
+    const handleEditClick = useCallback((user: IUser) => {
         setEditing({ userId: user._id!, name: user.name! });
-    };
+    }, []);
 
-    const handleInputChange = (field: 'name' | 'email', value: string) => {
+    const handleInputChange = useCallback((field: 'name', value: string) => {
         setEditing(prev => ({ ...prev, [field]: value }));
-    };
+    }, []);
 
-    const handleSave = () => {
+    const handleSave = useCallback(() => {
         if (!editing.userId) return;
 
         mutate(
@@ -36,11 +38,19 @@ const Page = () => {
                 }
             }
         );
-    };
+    }, [editing, mutate, refetch]);
 
-    const handleCancel = () => {
+    const handleCancel = useCallback(() => {
         setEditing({ userId: null, name: "" });
-    };
+    }, []);
+
+    const toggleBlockStatus = useCallback((user: IUser) => {
+        toggleBlock(user._id!, {
+            onSuccess: () => {
+                refetch();
+            }
+        });
+    }, [toggleBlock, refetch]);
 
     return (
         <UsersTable
@@ -53,7 +63,7 @@ const Page = () => {
             onInputChange={handleInputChange}
             onSave={handleSave}
             onCancel={handleCancel}
-            onToggleBlockStatus={() => { }}
+            onToggleBlockStatus={toggleBlockStatus}
         />
     );
 };
