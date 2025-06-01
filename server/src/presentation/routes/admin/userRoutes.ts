@@ -8,5 +8,6 @@ const router = Router();
 const adminController = resolve<AdminController>(Controllers.AdminController);
 
 router.get('/', adminController.getUsers.bind(adminController));
+router.put('/:id', adminController.updateUser.bind(adminController));
 
 export default router;

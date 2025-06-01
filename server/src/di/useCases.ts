@@ -8,6 +8,7 @@ import AdminSigninUseCase from "@/use_case/admin/SigninUseCase";
 import GetUsersUseCase from "@/use_case/admin/GetUsersUseCase";
 import OAuthUseCase from "@/use_case/user/auth/OAuthUseCase";
 import UpdateProfileUseCase from "@/use_case/user/UpdateProfileUseCase";
+import UpdateUserUseCase from "@/use_case/admin/UpdateUserUseCase";
 
 export enum UseCases {
   SigninUseCase = "SigninUseCase",
@@ -21,7 +22,8 @@ export enum UseCases {
   UpdateProfileUseCase = "UpdateProfileUseCase",
 
   AdminSigninUseCase = "AdminSigninUseCase",
-  GetUsersUseCase = "GetUsersUseCase"
+  GetUsersUseCase = "GetUsersUseCase",
+  UpdateUserUseCase = "UpdateUserUseCase"
 }
 
 container.bind(UseCases.SigninUseCase).to(SigninUseCase);
@@ -37,3 +39,4 @@ container.bind(UseCases.UpdateProfileUseCase).to(UpdateProfileUseCase);
 // admin
 container.bind(UseCases.AdminSigninUseCase).to(AdminSigninUseCase);
 container.bind(UseCases.GetUsersUseCase).to(GetUsersUseCase);
+container.bind(UseCases.UpdateUserUseCase).to(UpdateUserUseCase);

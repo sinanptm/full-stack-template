@@ -6,14 +6,14 @@ import IUserRepository from "@/domain/interfaces/repositories/IUserRepository";
 import IValidatorService from "@/domain/interfaces/services/IValidatorService";
 import { inject } from "inversify";
 
-export default class UpdateProfileUseCase {
+export default class UpdateUserUseCase {
     constructor(
         @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,
         @inject(Services.ValidatorService) private readonly validatorService: IValidatorService
     ) { }
 
     async exec({ name, _id }: IUserProfile) {
-        this.validate(name!, _id!)
+        this.validate(name!, _id!);
 
         const user = await this.userRepository.update(_id!, { name });
 
