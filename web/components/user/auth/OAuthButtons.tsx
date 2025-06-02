@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import { signInWithPopup, GithubAuthProvider, GoogleAuthProvider, getAuth } from "firebase/auth";
@@ -12,7 +12,7 @@ const OAuthButtons = ({ className = "" }: { className?: string; }) => {
     const auth = getAuth();
     const { mutate } = useOAuthSignIn();
 
-    const handleOAuthSignIn = async (provider: GithubAuthProvider | GoogleAuthProvider) => {
+    const handleOAuthSignIn = useCallback(async (provider: GithubAuthProvider | GoogleAuthProvider) => {
         try {
             const result = await signInWithPopup(auth, provider);
 
@@ -34,7 +34,7 @@ const OAuthButtons = ({ className = "" }: { className?: string; }) => {
         } catch (error: any) {
             console.log(error);
         }
-    };
+    }, [mutate,]);
 
     return (
         <div className={`flex flex-col gap-3 ${className}`}>

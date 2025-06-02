@@ -17,10 +17,12 @@ const Profile = () => {
     const { data, isLoading, error, refetch } = useGetProfile();
     const { mutate, isPending } = useUpdateProfile();
     const [editName, setEditName] = useState("");
+    const { name, email, profile } = data?.user || {};
+
 
     const handleEditClick = useCallback(() => {
         setEditName(name!);
-    }, []);
+    }, [name]);
 
     const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         setEditName(e.target.value);
@@ -33,7 +35,7 @@ const Profile = () => {
                 refetch();
             },
         });
-    }, [refetch, mutate]);
+    }, [refetch, mutate, editName]);
 
     if (isLoading) {
         return (
@@ -53,9 +55,6 @@ const Profile = () => {
             </div>
         );
     }
-
-    const { name, email, profile } = data.user;
-
 
     return (
         <div className="text-start flex items-center space-x-4">
