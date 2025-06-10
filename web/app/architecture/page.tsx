@@ -1,15 +1,14 @@
 "use client";
 
 import { memo, useState, useEffect } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Footer } from "./Footer";
-import Overview from "./Overview";
-import Architecture from "./Architecture";
-import Backend from "./Backend";
-import Frontend from "./Frontend";
-import AuthFlow from "./AuthFlow";
-import TechStack from "./TechStack";
+import { Footer } from "@/app/architecture/arch/Footer";
+import Overview from "@/app/architecture/arch/Overview";
+import Backend from "@/app/architecture/arch/Backend";
+import Frontend from "@/app/architecture/arch/Frontend";
+import AuthFlow from "@/app/architecture/arch/AuthFlow";
+import TechStack from "@/app/architecture/arch/TechStack";
 import { ChevronDown } from 'lucide-react';
 import {
     DropdownMenu,
@@ -17,6 +16,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import Testing from "@/app/architecture/arch/Testing";
 
 const ArchitecturePage = () => {
     const [activeTab, setActiveTab] = useState("overview");
@@ -37,18 +37,18 @@ const ArchitecturePage = () => {
 
     const tabItems = [
         { value: "overview", label: "Overview" },
-        { value: "architecture", label: "Architecture" },
         { value: "backend", label: "Backend" },
+        { value: "testing", label: "Testing" },
         { value: "frontend", label: "Frontend" },
         { value: "auth-flow", label: "Auth Flow" },
-        { value: "tech-stack", label: "Tech Stack" }
+        { value: "tech-stack", label: "Tech Stack" },
     ];
 
     const renderTabContent = () => {
         switch (activeTab) {
             case "overview": return <Overview />;
-            case "architecture": return <Architecture />;
             case "backend": return <Backend />;
+            case "testing": return <Testing />
             case "frontend": return <Frontend />;
             case "auth-flow": return <AuthFlow />;
             case "tech-stack": return <TechStack />;
