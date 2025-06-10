@@ -33,14 +33,12 @@
 - **Framework Independence**: Core business logic isn't tied to Express.js or Next.js
 
 ### 🔄 Easy Feature Management
-```
 ✅ Want to add a new user role? → Add entity + use case + controller
 ✅ Need different OAuth provider? → Implement new service following existing interface
 ✅ Switch from MongoDB to PostgreSQL? → Replace repository implementation
 ✅ Add email notifications? → Create new service and inject where needed
 ✅ Implement two-factor authentication? → Extend existing auth use cases
 ✅ Change UI library? → Components are decoupled from business logic
-```
 
 ### 🎯 Modular Structure for Rapid Development
 - **Frontend**: Component-based architecture with reusable UI elements
