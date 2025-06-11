@@ -5,9 +5,11 @@ import router from "./presentation/routes";
 import logger from "./utils/logger";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 const app = express();
 
+app.use(helmet());
 app.use(cors({ origin: CLIENT_URL, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
