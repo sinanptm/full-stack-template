@@ -10,7 +10,7 @@
 
 *Production-ready full-stack template with clean architecture and complete authentication system*
 
-**🎯 Built for Easy Customization & Rapid Development**
+**🎯 Built for Easy Customization & Rapid Development** <br />
 **📚 Documentation: https://full-stack-clean-auth-template.vercel.app/**
 
 </div>
