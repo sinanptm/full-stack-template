@@ -34,12 +34,12 @@
 - **Framework Independence**: Core business logic isn't tied to Express.js or Next.js
 
 ### 🔄 Easy Feature Management
-✅ Want to add a new user role? → Add entity + use case + controller
-✅ Need different OAuth provider? → Implement new service following existing interface
-✅ Switch from MongoDB to PostgreSQL? → Replace repository implementation
-✅ Add email notifications? → Create new service and inject where needed
-✅ Implement two-factor authentication? → Extend existing auth use cases
-✅ Change UI library? → Components are decoupled from business logic
+✅ Want to add a new user role? → Add entity + use case + controller <br/>
+✅ Need different OAuth provider? → Implement new service following existing interface<br/>
+✅ Switch from MongoDB to PostgreSQL? → Replace repository implementation<br/>
+✅ Add email notifications? → Create new service and inject where needed<br/>
+✅ Implement two-factor authentication? → Extend existing auth use cases<br/>
+✅ Change UI library? → Components are decoupled from business logic<br/>
 
 ### 🎯 Modular Structure for Rapid Development
 - **Frontend**: Component-based architecture with reusable UI elements
@@ -151,50 +151,6 @@ graph TB
 | **State Management** | Zustand + React Query | Simple, performant, server state sync |
 | **Security** | bcrypt, CORS, Rate Limiting, RBAC | Industry-standard security practices |
 
-## 🏗️ Clean Architecture Breakdown
-
-### Backend Architecture Layers
-
-```
-🏛️ Domain Layer (Core Business Logic)
-├── 📁 entities/          - Pure business objects (User, Admin, OTP)
-└── 📁 interfaces/        - Contracts for external dependencies
-    ├── services/         - External service contracts
-    └── repositories/     - Data access contracts
-
-⚙️ Use Case Layer (Application Logic)  
-├── 📁 admin/            - Admin management operations
-└── 📁 user/             - User useCases (Authentication, profile)
-
-🔧 Infrastructure Layer (Implementation Details)
-├── 📁 database/         - MongoDB implementations
-├── 📁 firebase/         - Firebase service implementations
-└── 📁 firebase/         - Firebase service implementations
-
-🌐 Presentation Layer (External Interface)
-├── 📁 routes/           - API route definitions  
-├── 📁 controllers/      - Request/response handling
-└── 📁 middleware/       - HTTP-specific middleware
-```
-
-### Frontend Architecture
-
-```
-🎨 Component Architecture
-├── 📁 app/                      # App router structure 
-│   ├── 📁 (user)/               # User dashboard and features
-│   └── 📁 (admin)/              # Admin dashboard and tools
-├── 📁 components/               # Reusable React components
-│   ├── 📁 ui/                   # Low-level UI components 
-│   ├── 📁 forms/                # Composable form elements
-├── 📁 hooks/                    # Custom React hooks
-├── 📁 lib/                      # Utility functions and helpers
-├── 📁 public/                   # Static assets 
-├── 📁 constants/                # Constant values and enums
-├── 📁 styles/                   # Tailwind and global CSS files
-└── 📁 types/                    # Global TypeScript types and interfaces
-```
-
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -268,65 +224,6 @@ pnpm dev
 pnpm --prefix server dev    # Backend: http://localhost:8000
 pnpm --prefix web dev       # Frontend: http://localhost:3000
 ```
-
-## 🔧 Customization Examples
-
-### Adding a New Feature: User Profile Picture Upload
-
-**1. Domain Layer** - Add to User entity:
-```typescript
-// server/src/domain/entities/User.ts
-export interface User {
-  // ... existing fields
-  profilePicture?: string;
-  profilePictureUploadedAt?: Date;
-}
-```
-
-**2. Use Case Layer** - Create upload use case:
-```typescript
-// server/src/use_case/user/UploadProfilePicture.ts
-export class UploadProfilePictureUseCase {
-  constructor(
-    @inject(Repositories.UserRepository) private readonly userRepository: IUserRepository,
-    @inject(Repositories.FileStorageService) private readonly fileStorageService: IFileStorageService,
-    private fileStorageService: IFileStorageService
-  ) {}
-  
-  async exec(userId: string, file: Express.Multer.File) {
-    // Business logic here
-  }
-}
-```
-
-**3. Infrastructure Layer** - Implement file storage:
-```typescript
-// server/src/infrastructure/services/CloudinaryService.ts
-export class CloudinaryService implements IFileStorageService {
-  // Implementation
-}
-```
-
-**4. Presentation Layer** - Add API endpoint:
-```typescript
-// server/src/presentation/routes/userRoutes.ts
-router.post('/profile-picture', uploadMiddleware, profilePictureController.upload.exec);
-```
-
-**5. Frontend** - Add upload component:
-```typescript
-// web/components/forms/ProfilePictureUpload.tsx
-export const ProfilePictureUpload = () => {
-  // Component logic
-}
-```
-
-### Switching Authentication Provider
-
-Replace Firebase with Auth0 by:
-1. Implementing `IAuthService` interface with Auth0
-2. Updating dependency injection container
-3. Zero changes to use cases or controllers!
 
 ## 🔐 API Routes
 
