@@ -27,6 +27,7 @@ export default class SignupUseCase {
       password: hashedPassword,
       email,
       name,
+      isOAuthUser: false
     });
   }
 

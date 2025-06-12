@@ -8,7 +8,7 @@ const userSchema = new Schema<IUser>(
     password: { type: String },
     token: { type: String },
     isBlocked: { type: Boolean, default: false },
-    isOAuthUser: { type: String, default: false },
+    isOAuthUser: { type: Boolean, default: false },
     profile: { type: String }
   },
   {

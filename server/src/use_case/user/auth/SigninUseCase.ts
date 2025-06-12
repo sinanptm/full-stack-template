@@ -33,8 +33,10 @@ export default class SigninUseCase {
 
     const user = await this.userRepository.findByEmailWithCredentials(email);
     if (!user) {
-      throw new NotFoundError("User not found");
+      throw new NotFoundError("Invalid Credentials");
     }
+    console.log(user);
+
 
     if (user.isOAuthUser) {
       throw new UnauthorizedError("Please use your OAuth provider to sign in");
