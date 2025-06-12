@@ -19,6 +19,6 @@ export const COMPANY_DOMAIN = "dev.com";
 export const RESET_LINK_EXPIRATION_MINUTES = 5;
 export const OTP_EXPIRATION_MINUTES = 15;
 
-export const FIRE_BASE_CLIENT_EMAIL = process.env.FIRE_BASE_CLIENT_EMAIL;
-export const FIRE_BASE_PROJECT_ID = process.env.FIRE_BASE_PROJECT_ID;
-export const FIRE_BASE_PRIVATE_KEY = process.env.FIRE_BASE_PRIVATE_KEY;
+export const FIREBASE_CLIENT_EMAIL = process.env.FIREBASE_CLIENT_EMAIL;
+export const FIREBASE_PROJECT_ID = process.env.FIREBASE_PROJECT_ID;
+export const FIREBASE_PRIVATE_KEY = process.env.FIREBASE_PRIVATE_KEY;

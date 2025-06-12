@@ -1,7 +1,7 @@
 import IOAuthService, { OAuthUser } from "@/domain/interfaces/services/IOAuthService";
 import * as admin from 'firebase-admin';
 import { InternalServerError, UnauthorizedError } from "@/domain/entities/CustomErrors";
-import { FIRE_BASE_CLIENT_EMAIL, FIRE_BASE_PRIVATE_KEY, FIRE_BASE_PROJECT_ID } from "@/config";
+import { FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY, FIREBASE_PROJECT_ID } from "@/config";
 
 export default class OAuhService implements IOAuthService {
     private firebaseAdminApp: admin.app.App;
@@ -12,9 +12,9 @@ export default class OAuhService implements IOAuthService {
             try {
                 this.firebaseAdminApp = admin.initializeApp({
                     credential: admin.credential.cert({
-                        clientEmail: FIRE_BASE_CLIENT_EMAIL,
-                        privateKey: FIRE_BASE_PRIVATE_KEY,
-                        projectId: FIRE_BASE_PROJECT_ID
+                        clientEmail: FIREBASE_CLIENT_EMAIL,
+                        privateKey: FIREBASE_PRIVATE_KEY,
+                        projectId: FIREBASE_PROJECT_ID
                     })
                 });
             } catch (error) {
