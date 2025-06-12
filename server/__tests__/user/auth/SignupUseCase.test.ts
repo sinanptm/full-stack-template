@@ -50,6 +50,7 @@ describe("SignupUseCase", () => {
         password: hashedPassword,
         email: validUserData.email,
         name: validUserData.name,
+        isOAuthUser: false
       });
     });
   });
