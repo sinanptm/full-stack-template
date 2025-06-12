@@ -4,6 +4,7 @@ import { PostRoutes } from "@/types/api/PostRoutes";
 import { toast } from "sonner";
 import { MessageResponse } from "@/types";
 import { onError } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface SignupData {
   name: string;
@@ -12,6 +13,8 @@ interface SignupData {
 }
 
 const useSignUpUser = () => {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: async (data: SignupData) => {
       const response = await POST<MessageResponse>({
@@ -21,7 +24,8 @@ const useSignUpUser = () => {
       return response;
     },
     onSuccess: ({ message }: MessageResponse) => {
-      toast.success(message);
+      toast.success(message, { duration: 2000 });
+      router.push("/auth");
     },
     onError,
   });

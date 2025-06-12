@@ -78,7 +78,7 @@ const Navbar = () => {
             ) : (
                 <>
                     <Link href="/auth" prefetch={false}>
-                        <Button variant="ghost" size="sm">
+                            <Button variant="default" size="sm">
                             Sign In
                         </Button>
                     </Link>
