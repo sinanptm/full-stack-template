@@ -1,4 +1,4 @@
-# 🚀 Full-Stack Authentication Template
+# 🚀 Open Source Full-Stack Authentication Template
 
 <div align="center">
   
