@@ -8,7 +8,7 @@ const mockUserRepository: jest.Mocked<IUserRepository> = {
   findByEmail: jest.fn(),
   findByEmailWithCredentials: jest.fn(),
   findByIdWithCredentials: jest.fn(),
-  findAll: jest.fn()
+  findAll: jest.fn(),
 };
 
 export default mockUserRepository;

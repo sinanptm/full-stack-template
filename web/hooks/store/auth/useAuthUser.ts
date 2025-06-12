@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { getItemLocalStorage } from "@/lib/utils";
 import { UserAuthState } from "@/types";
 
-
 // This is just the store creation without any hydration logic
 const createAuthStore = create<UserAuthState>((set) => ({
   isAuthenticated: false,
@@ -36,9 +35,9 @@ const createAuthStore = create<UserAuthState>((set) => ({
     set({
       token,
       user,
-      isAuthenticated: !!token
+      isAuthenticated: !!token,
     });
-  }
+  },
 }));
 
 // This hook handles hydration and returns the store
@@ -62,7 +61,6 @@ const useAuthUser = () => {
     ...store,
     isHydrated,
   };
-}
-
+};
 
 export default useAuthUser;

@@ -13,9 +13,9 @@ const RootLayout = ({ children }: WrapperProps) => {
     <html lang="en" suppressHydrationWarning>
       <body className={`${mainFont.className} antialiased `}>
         <QueryProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Toaster />
+          <Navbar />
+          <main>{children}</main>
+          <Toaster />
           <LoadingOverlay />
         </QueryProvider>
       </body>

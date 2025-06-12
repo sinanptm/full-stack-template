@@ -23,7 +23,7 @@ export enum UseCases {
 
   AdminSigninUseCase = "AdminSigninUseCase",
   GetUsersUseCase = "GetUsersUseCase",
-  UpdateUserUseCase = "UpdateUserUseCase"
+  UpdateUserUseCase = "UpdateUserUseCase",
 }
 
 container.bind(UseCases.SigninUseCase).to(SigninUseCase);
@@ -34,7 +34,6 @@ container.bind(UseCases.OAuthUseCase).to(OAuthUseCase);
 
 container.bind(UseCases.GetProfileUseCase).to(GetProfileUseCase);
 container.bind(UseCases.UpdateProfileUseCase).to(UpdateProfileUseCase);
-
 
 // admin
 container.bind(UseCases.AdminSigninUseCase).to(AdminSigninUseCase);

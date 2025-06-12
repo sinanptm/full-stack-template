@@ -9,6 +9,6 @@ router.get("/health", (_, res) => {
 });
 
 router.use("/", userRoutes);
-router.use('/admin', adminRoutes);
+router.use("/admin", adminRoutes);
 
 export default router;

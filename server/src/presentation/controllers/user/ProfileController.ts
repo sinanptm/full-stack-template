@@ -8,8 +8,8 @@ import { inject } from "inversify";
 export default class ProfileController {
   constructor(
     @inject(UseCases.GetProfileUseCase) private readonly getProfileUseCase: GetProfileUseCase,
-    @inject(UseCases.UpdateProfileUseCase) private readonly updateProfileUseCase: UpdateProfileUseCase
-  ) { }
+    @inject(UseCases.UpdateProfileUseCase) private readonly updateProfileUseCase: UpdateProfileUseCase,
+  ) {}
 
   getProfile = tryCatch(async (req, res) => {
     const userId = req.user?.id!;

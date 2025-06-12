@@ -5,38 +5,36 @@ import { tryCatch } from "@/utils";
 import { inject } from "inversify";
 
 export default class AdminAuthController {
-    constructor(
-        @inject(UseCases.AdminSigninUseCase) private readonly adminSigninUseCase: AdminSigninUseCase
-    ) { };
+  constructor(@inject(UseCases.AdminSigninUseCase) private readonly adminSigninUseCase: AdminSigninUseCase) {}
 
-    signin = tryCatch(async (req, res) => {
-        const { accessToken, refreshToken } = this.adminSigninUseCase.exec(req.body);
+  signin = tryCatch(async (req, res) => {
+    const { accessToken, refreshToken } = this.adminSigninUseCase.exec(req.body);
 
-        res.cookie(Cookies.Admin, refreshToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "strict",
-            maxAge: 30 * 24 * 60 * 60 * 1000,
-        });
-
-        res.status(StatusCode.Success).json({ accessToken, message: "Signin Successful." });
+    res.cookie(Cookies.Admin, refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    logout = tryCatch(async (req, res) => {
-        const { admin_token } = req.cookies;
-        if (!admin_token) return res.sendStatus(StatusCode.NoContent);
+    res.status(StatusCode.Success).json({ accessToken, message: "Signin Successful." });
+  });
 
-        res.clearCookie(Cookies.Admin, {
-            httpOnly: true,
-            sameSite: "strict",
-            secure: true,
-        });
-        res.status(StatusCode.Success).json({ message: "Successfully logged out." });
-    });
+  logout = tryCatch(async (req, res) => {
+    const { admin_token } = req.cookies;
+    if (!admin_token) return res.sendStatus(StatusCode.NoContent);
 
-    refreshAccessToken = tryCatch(async (req, res) => {
-        const { admin_token } = req.cookies;
-        const { accessToken } = await this.adminSigninUseCase.refreshAccessToken(admin_token);
-        res.status(StatusCode.Success).json({ accessToken, message: "Access token refreshed successfully." });
+    res.clearCookie(Cookies.Admin, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
     });
+    res.status(StatusCode.Success).json({ message: "Successfully logged out." });
+  });
+
+  refreshAccessToken = tryCatch(async (req, res) => {
+    const { admin_token } = req.cookies;
+    const { accessToken } = await this.adminSigninUseCase.refreshAccessToken(admin_token);
+    res.status(StatusCode.Success).json({ accessToken, message: "Access token refreshed successfully." });
+  });
 }

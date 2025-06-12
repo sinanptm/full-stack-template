@@ -5,7 +5,6 @@ import { resolve } from "@/di";
 import AdminAuthMiddleware from "@/presentation/middlewares/AdminAuthMiddleware";
 import { MiddleWares } from "@/di/middlewares";
 
-
 const router = Router();
 
 const authMiddleWare = resolve<AdminAuthMiddleware>(MiddleWares.AdminAuthMiddleware);

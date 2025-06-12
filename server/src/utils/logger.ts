@@ -31,31 +31,29 @@ const consoleFormat = format.printf(
   },
 );
 
-const fileFormat = format.printf(
-  ({ timestamp, level, message, stack, location, statusCode, url, data }) => {
-    const logLevel = level.toUpperCase();
-    let output = `${timestamp} ${logLevel}\n`;
-    output += `Message: ${message}\n`;
+const fileFormat = format.printf(({ timestamp, level, message, stack, location, statusCode, url, data }) => {
+  const logLevel = level.toUpperCase();
+  let output = `${timestamp} ${logLevel}\n`;
+  output += `Message: ${message}\n`;
 
-    if (location) {
-      output += `Location: ${location}\n`;
-    }
-    if (statusCode) {
-      output += `Status Code: ${statusCode}\n`;
-    }
-    if (url) {
-      output += `URL: ${url}\n`;
-    }
-    if (data) {
-      output += `Data: ${JSON.stringify(data, null, 2)}\n`;
-    }
-    if (stack) {
-      output += `Stack: ${stack}\n`;
-    }
+  if (location) {
+    output += `Location: ${location}\n`;
+  }
+  if (statusCode) {
+    output += `Status Code: ${statusCode}\n`;
+  }
+  if (url) {
+    output += `URL: ${url}\n`;
+  }
+  if (data) {
+    output += `Data: ${JSON.stringify(data, null, 2)}\n`;
+  }
+  if (stack) {
+    output += `Stack: ${stack}\n`;
+  }
 
-    return output; 
-  },
-);
+  return output;
+});
 
 const skipFileLogs = format((info) => {
   // @ts-ignore

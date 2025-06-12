@@ -9,36 +9,36 @@ import useAuthRedirectToast from "@/hooks/store/useAuthRedirectToast";
 import OAuthButtons from "./OAuthButtons";
 
 const SigninClient = () => {
-    const { mutate: handleSignin, isPending: isSigninPending } = useSigninUser();
-    const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false);
-    useAuthRedirectToast();
+  const { mutate: handleSignin, isPending: isSigninPending } = useSigninUser();
+  const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false);
+  useAuthRedirectToast();
 
-    const handleOpenForgotPassword = useCallback(() => {
-        setShowForgotPasswordDialog(true);
-    }, []);
+  const handleOpenForgotPassword = useCallback(() => {
+    setShowForgotPasswordDialog(true);
+  }, []);
 
-    return (
-        <>
-            <Card className="w-full max-w-sm">
-                <CardHeader>
-                    <CardTitle className="text-center">Sign In</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <OAuthButtons className="mb-4" />
-                    <SigninForm
-                        onSubmit={handleSignin}
-                        isLoading={isSigninPending}
-                        showForgotPassword
-                        signUpLink="/auth/signup"
-                        forgotPasswordLink="/auth/forgot-password"
-                        showSignUp
-                        onForgotPassword={handleOpenForgotPassword}
-                    />
-                </CardContent>
-            </Card>
-            <ForgotPasswordDialog open={showForgotPasswordDialog} onOpenChange={setShowForgotPasswordDialog} />
-        </>
-    );
+  return (
+    <>
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-center">Sign In</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <OAuthButtons className="mb-4" />
+          <SigninForm
+            onSubmit={handleSignin}
+            isLoading={isSigninPending}
+            showForgotPassword
+            signUpLink="/auth/signup"
+            forgotPasswordLink="/auth/forgot-password"
+            showSignUp
+            onForgotPassword={handleOpenForgotPassword}
+          />
+        </CardContent>
+      </Card>
+      <ForgotPasswordDialog open={showForgotPasswordDialog} onOpenChange={setShowForgotPasswordDialog} />
+    </>
+  );
 };
 
 export default memo(SigninClient);

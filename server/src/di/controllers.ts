@@ -8,7 +8,7 @@ export enum Controllers {
   AuthControllers = "AuthControllers",
   ProfileController = "ProfileController",
   AdminAuthController = "AdminAuthController",
-  AdminController = "AdminController"
+  AdminController = "AdminController",
 }
 
 container.bind(Controllers.AuthControllers).to(AuthControllers);

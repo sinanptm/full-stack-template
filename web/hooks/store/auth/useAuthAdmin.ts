@@ -46,6 +46,6 @@ const useAuthAdmin = () => {
     ...store,
     isHydrated,
   };
-}
+};
 
 export default useAuthAdmin;

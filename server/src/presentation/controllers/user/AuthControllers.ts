@@ -14,8 +14,8 @@ export default class AuthControllers {
     @inject(UseCases.SignupUseCase) private readonly signupUseCase: SignupUseCase,
     @inject(UseCases.OtpUseCase) private readonly otpUseCase: OtpUseCase,
     @inject(UseCases.ResetPasswordUseCase) private readonly resetPasswordUseCase: ResetPasswordUseCase,
-    @inject(UseCases.OAuthUseCase) private readonly oauthUseCase: OAuthUseCase
-  ) { }
+    @inject(UseCases.OAuthUseCase) private readonly oauthUseCase: OAuthUseCase,
+  ) {}
 
   signin = tryCatch(async (req, res) => {
     const { email } = await this.signinUseCase.exec(req.body);

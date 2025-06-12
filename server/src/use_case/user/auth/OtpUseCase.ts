@@ -25,7 +25,7 @@ export default class OtpUseCase {
     @inject(Services.ValidatorService) private readonly validatorService: IValidatorService,
     @inject(Repositories.OtpRepository) private readonly otpRepository: IOtpRepository,
     @inject(Services.MailService) private readonly mailService: IMailService,
-  ) { }
+  ) {}
 
   async exec({ email, otp }: Payload) {
     this.validatorService.validateRequiredFields({ email, otp });
@@ -78,7 +78,7 @@ export default class OtpUseCase {
     return { refreshToken, accessToken };
   }
 
-  async resendOtp({ email }: { email: string; }) {
+  async resendOtp({ email }: { email: string }) {
     this.validatorService.validateEmailFormat(email);
 
     const user = await this.userRepository.findByEmail(email);

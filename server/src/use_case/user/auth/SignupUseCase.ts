@@ -15,7 +15,7 @@ export default class SignupUseCase {
   ) {}
 
   async exec(data: IUser) {
-    const { email, name, password } = this.validate(data)
+    const { email, name, password } = this.validate(data);
     const existingUser = await this.userRepository.findByEmail(email!);
     if (existingUser) {
       throw new ConflictError("User with this email already exists");
@@ -27,7 +27,7 @@ export default class SignupUseCase {
       password: hashedPassword,
       email,
       name,
-      isOAuthUser: false
+      isOAuthUser: false,
     });
   }
 

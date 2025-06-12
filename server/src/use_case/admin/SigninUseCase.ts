@@ -8,47 +8,45 @@ import { inject } from "inversify";
 // TODO: Need Store the admin details in db
 
 interface Payload {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export default class AdminSigninUseCase {
-    constructor(
-        @inject(Services.TokenService) private readonly tokenService: ITokenService
-    ) { }
-    exec({ email, password }: Payload) {
-        if (email !== ADMIN_MAIL || password !== ADMIN_PASSWORD) {
-            throw new UnauthorizedError("Invalid email or password provided");
-        };
-
-        const { accessToken, refreshToken } = this.createToken(email);
-
-        return { accessToken, refreshToken };
+  constructor(@inject(Services.TokenService) private readonly tokenService: ITokenService) {}
+  exec({ email, password }: Payload) {
+    if (email !== ADMIN_MAIL || password !== ADMIN_PASSWORD) {
+      throw new UnauthorizedError("Invalid email or password provided");
     }
 
-    private createToken(email: string) {
-        const accessToken = this.tokenService.createAccessToken({
-            email,
-            id: email,
-            role: UserRole.Admin,
-        });
+    const { accessToken, refreshToken } = this.createToken(email);
 
-        const refreshToken = this.tokenService.createRefreshToken({
-            email,
-            id: email,
-        });
+    return { accessToken, refreshToken };
+  }
 
-        return { refreshToken, accessToken };
+  private createToken(email: string) {
+    const accessToken = this.tokenService.createAccessToken({
+      email,
+      id: email,
+      role: UserRole.Admin,
+    });
+
+    const refreshToken = this.tokenService.createRefreshToken({
+      email,
+      id: email,
+    });
+
+    return { refreshToken, accessToken };
+  }
+
+  async refreshAccessToken(refreshToken: string): Promise<{ accessToken: string }> {
+    if (!refreshToken) {
+      throw new ForbiddenError("Unauthenticated");
     }
+    const { id, email } = this.tokenService.verifyRefreshToken(refreshToken);
 
-    async refreshAccessToken(refreshToken: string): Promise<{ accessToken: string; }> {
-        if (!refreshToken) {
-            throw new ForbiddenError("Unauthenticated");
-        }
-        const { id, email } = this.tokenService.verifyRefreshToken(refreshToken);
+    const accessToken = this.tokenService.createAccessToken({ email, id, role: UserRole.Admin });
 
-        const accessToken = this.tokenService.createAccessToken({ email, id, role: UserRole.Admin });
-
-        return { accessToken };
-    };
+    return { accessToken };
+  }
 }

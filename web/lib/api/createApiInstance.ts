@@ -30,9 +30,13 @@ const createApiInstance = (role: UserRole = UserRole.User): AxiosInstance => {
     try {
       const route = `${SERVER_URL}/api${role === UserRole.Admin ? PostRoutes.AdminRefresh : PostRoutes.UserRefresh}`;
 
-      const response = await axios.post(route, {}, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        route,
+        {},
+        {
+          withCredentials: true,
+        },
+      );
 
       const { accessToken } = response.data;
       localStorage.setItem(tokenKey, accessToken);

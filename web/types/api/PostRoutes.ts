@@ -9,7 +9,7 @@ export enum PostRoutes {
   OAuthSignIn = "/auth/oauth-2",
 
   AdminSignin = "/admin/auth",
-  AdminRefresh = "/admin/auth/refresh"
+  AdminRefresh = "/admin/auth/refresh",
 }
 export enum PostRoutesWithParams {
   test = "/test/:id",

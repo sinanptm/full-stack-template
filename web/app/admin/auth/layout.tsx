@@ -5,11 +5,11 @@ import { WrapperProps } from "@/types";
 import { notFound } from "next/navigation";
 
 const AuthLayout = ({ children }: WrapperProps) => {
-    const { isAuthenticated } = useAuthAdmin();
+  const { isAuthenticated } = useAuthAdmin();
 
-    if (isAuthenticated) {
-        notFound();
-    }
-    return children;
+  if (isAuthenticated) {
+    notFound();
+  }
+  return children;
 };
 export default AuthLayout;

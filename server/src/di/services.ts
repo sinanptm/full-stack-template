@@ -10,7 +10,7 @@ export enum Services {
   ValidatorService = "ValidatorService",
   MailService = "MailService",
   HashService = "HashService",
-  OAuthService = "OAuthService"
+  OAuthService = "OAuthService",
 }
 
 container.bind(Services.ValidatorService).to(ValidatorService).inSingletonScope();

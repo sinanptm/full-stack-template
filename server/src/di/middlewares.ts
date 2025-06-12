@@ -4,7 +4,7 @@ import AdminAuthMiddleware from "@/presentation/middlewares/AdminAuthMiddleware"
 
 export enum MiddleWares {
   UserAuthMiddleware = "UserAuthMiddleware",
-  AdminAuthMiddleware = "AdminAuthMiddleware"
+  AdminAuthMiddleware = "AdminAuthMiddleware",
 }
 
 container.bind(MiddleWares.UserAuthMiddleware).to(UserAuthMiddleware);

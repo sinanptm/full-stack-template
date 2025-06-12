@@ -3,12 +3,12 @@ import ForgotPasswordClient from "@/components/user/auth/forgot-password/ForgotP
 import { ForgotPasswordTokenData } from "@/types";
 
 interface PageProps {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined; }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const ForgotPasswordPage = async ({ searchParams }: PageProps) => {
   const params = await searchParams;
-  const token = typeof params.token === 'string' ? params.token : null;
+  const token = typeof params.token === "string" ? params.token : null;
 
   if (!token) {
     return <ForgotPasswordClient isTokenValid={false} tokenData={null} />;

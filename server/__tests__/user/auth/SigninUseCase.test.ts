@@ -124,7 +124,9 @@ describe("SigninUseCase", () => {
       mockUserRepository.findByIdWithCredentials.mockResolvedValue(blockedUser);
 
       await expect(signinUseCase.refreshAccessToken(mockToken)).rejects.toThrow(ForbiddenError);
-      await expect(signinUseCase.refreshAccessToken(mockToken)).rejects.toThrow("Your account has been blocked. Please contact support for assistance.");
+      await expect(signinUseCase.refreshAccessToken(mockToken)).rejects.toThrow(
+        "Your account has been blocked. Please contact support for assistance.",
+      );
     });
   });
 });

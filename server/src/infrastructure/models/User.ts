@@ -9,7 +9,7 @@ const userSchema = new Schema<IUser>(
     token: { type: String },
     isBlocked: { type: Boolean, default: false },
     isOAuthUser: { type: Boolean, default: false },
-    profile: { type: String }
+    profile: { type: String },
   },
   {
     timestamps: true,

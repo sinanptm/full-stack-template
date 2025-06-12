@@ -24,7 +24,7 @@ export default class SigninUseCase {
     @inject(Services.MailService) private readonly mailService: IMailService,
     @inject(Services.HashService) private readonly hashService: IHashService,
     @inject(Services.TokenService) private readonly tokenService: ITokenService,
-  ) { }
+  ) {}
 
   async exec({ email, password }: Payload) {
     this.validatorService.validateRequiredFields({ email, password });
@@ -35,8 +35,6 @@ export default class SigninUseCase {
     if (!user) {
       throw new NotFoundError("Invalid Credentials");
     }
-    console.log(user);
-
 
     if (user.isOAuthUser) {
       throw new UnauthorizedError("Please use your OAuth provider to sign in");
@@ -66,7 +64,7 @@ export default class SigninUseCase {
     });
   }
 
-  async refreshAccessToken(refreshToken: string): Promise<{ accessToken: string; }> {
+  async refreshAccessToken(refreshToken: string): Promise<{ accessToken: string }> {
     if (!refreshToken) {
       throw new ForbiddenError("Unauthenticated");
     }
@@ -75,7 +73,8 @@ export default class SigninUseCase {
     const user = await this.userRepository.findByIdWithCredentials(id);
     if (!user) throw new UnauthorizedError("Unauthorized");
 
-    if (user.isBlocked) throw new ForbiddenError("Your account has been blocked. Please contact support for assistance.");
+    if (user.isBlocked)
+      throw new ForbiddenError("Your account has been blocked. Please contact support for assistance.");
 
     const accessToken = this.tokenService.createAccessToken({ email, id, role: UserRole.User });
 

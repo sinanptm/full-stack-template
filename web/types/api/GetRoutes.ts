@@ -1,7 +1,7 @@
 export enum GetRoutes {
   GetProfile = "/profile",
 
-  GetUsersAdmin = "/admin/user"
+  GetUsersAdmin = "/admin/user",
 }
 
 export enum GetRoutesWithParams {

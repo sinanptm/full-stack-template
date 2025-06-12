@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 const useLogout = () => {
   const { logout } = useAuthUser();
-  const router = useRouter()
+  const router = useRouter();
   return useMutation({
     mutationFn: async () => {
       const response = await DELETE<MessageResponse>({
@@ -19,10 +19,10 @@ const useLogout = () => {
     },
     onSuccess: ({ message }) => {
       logout();
-      router.push('/auth')
+      router.push("/auth");
       toast.success(message);
     },
-    onError
+    onError,
   });
 };
 

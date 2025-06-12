@@ -12,15 +12,16 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
 
-### 🌟 *Production-ready full-stack template with clean architecture and complete authentication system*
+### 🌟 _Production-ready full-stack template with clean architecture and complete authentication system_
 
 **🎯 Built for Easy Customization & Rapid Development**  
 **📚 Documentation: https://full-stack-clean-auth-template.vercel.app/**
 
 ---
 
-### 💝 **This is a completely FREE and OPEN SOURCE project!**  
-*Feel free to use, modify, and contribute to help the developer community grow together.*
+### 💝 **This is a completely FREE and OPEN SOURCE project!**
+
+_Feel free to use, modify, and contribute to help the developer community grow together._
 
 </div>
 
@@ -33,6 +34,7 @@
 <td width="50%">
 
 ### 🏗️ **Architecture & Design**
+
 - **Clean Architecture Design** - Domain-driven structure makes adding/removing features effortless
 - **Highly Customizable** - Modular components and services for easy adaptation
 - **Framework Independence** - Core logic isn't tied to specific frameworks
@@ -41,6 +43,7 @@
 <td width="50%">
 
 ### 🔐 **Security & Authentication**
+
 - **Complete Authentication System** - Email/Password with OTP, OAuth (Google, GitHub)
 - **Role-Based Access Control** - Secure user and admin roles with protected routes
 - **Security-First Design** - JWT tokens, HTTP-only cookies, rate limiting, bcrypt hashing
@@ -51,6 +54,7 @@
 <td width="50%">
 
 ### ⚡ **Modern Technology**
+
 - **Latest Tech Stack** - Next.js 15, Express.js 5, MongoDB, TypeScript, Firebase OAuth
 - **Excellent Developer Experience** - Hot reload, TypeScript support, comprehensive testing setup
 
@@ -58,6 +62,7 @@
 <td width="50%">
 
 ### 🚀 **Production Ready**
+
 - **Scalable Structure** - Built for enterprise-level applications
 - **Testing Setup** - Comprehensive testing framework included
 - **Documentation** - Complete setup and usage guides
@@ -88,7 +93,7 @@
 ✅ **Switch from MongoDB to PostgreSQL?** → Replace repository implementation  
 ✅ **Add email notifications?** → Create new service and inject where needed  
 ✅ **Implement two-factor authentication?** → Extend existing auth use cases  
-✅ **Change UI library?** → Components are decoupled from business logic  
+✅ **Change UI library?** → Components are decoupled from business logic
 
 </details>
 
@@ -110,7 +115,7 @@
 graph TB
     %% Entry Point
     A["🔑 Sign In/Up Page"] --> B{"Authentication Method"}
-    
+
     %% Email/Password Flow
     B -->|"📧 Email/Password"| C["📝 Enter Credentials"]
     C --> D{"Valid Credentials?"}
@@ -124,7 +129,7 @@ graph TB
     J -->|"❌"| K["Try Again"]
     K --> I
     J -->|"✅"| L["🎯 Generate JWT"]
-    
+
     %% OAuth Flow
     B -->|"🔥 OAuth (Google/GitHub)"| M["🔥 Firebase OAuth Popup"]
     M --> N["👤 Select Provider"]
@@ -144,21 +149,21 @@ graph TB
     X -->|"✅"| Z["📝 Update User Info"]
     Y --> L
     Z --> L
-    
+
     %% Common Final Steps
     L --> AA["🍪 Set HTTP-Only Cookies"]
     AA --> BB["✨ Authenticated User"]
     BB --> CC["🛡️ User Dashboard Access"]
-    
+
     %% Additional Flows
     DD["🔄 Token Expiry"] --> EE["🔄 Auto Refresh"]
     EE --> BB
-    
+
     FF["🔒 Forgot Password"] --> GG["📧 Reset Email with OTP"]
     GG --> HH["🔢 OTP Verification"]
     HH --> II["🔑 New Password"]
     II --> A
-    
+
     %% Admin Flow (Separate)
     JJ["🔒 Admin Login"] --> KK["📧 Admin Credentials"]
     KK --> LL["🔍 Validate with .env"]
@@ -170,7 +175,7 @@ graph TB
     PP --> QQ["🍪 Set Admin Cookies"]
     QQ --> RR["✨ Authenticated Admin"]
     RR --> SS["👑 Admin Panel Access"]
-    
+
     %% Styling with Black Text
     style A fill:#dbeafe,stroke:#3b82f6,stroke-width:3px,color:#000000
     style BB fill:#dcfce7,stroke:#22c55e,stroke-width:3px,color:#000000
@@ -179,13 +184,13 @@ graph TB
     style M fill:#fee2e2,stroke:#ef4444,stroke-width:2px,color:#000000
     style CC fill:#f0fdf4,stroke:#16a34a,stroke-width:2px,color:#000000
     style SS fill:#fef7ff,stroke:#a855f7,stroke-width:2px,color:#000000
-    
+
     %% Error States with Black Text
     style E fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
     style Q fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
     style W fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
     style NN fill:#fecaca,stroke:#dc2626,stroke-width:1px,color:#000000
-    
+
     %% Additional Key Nodes with Black Text
     style B fill:#f3f4f6,stroke:#6b7280,stroke-width:2px,color:#000000
     style D fill:#fef3c7,stroke:#f59e0b,stroke-width:2px,color:#000000
@@ -248,6 +253,7 @@ graph TB
 ## 🚀 **Quick Start**
 
 ### **Prerequisites**
+
 - Node.js v22+
 - pnpm v10.8.1+
 - MongoDB (local or Atlas)
@@ -336,6 +342,7 @@ pnpm --prefix web dev       # Frontend: http://localhost:3000
 <td width="50%">
 
 ### **🔑 Authentication Routes**
+
 ```
 POST /api/auth/signup         - User registration
 POST /api/auth/signin         - Login with OTP
@@ -349,12 +356,13 @@ POST /api/auth/reset-password  - Reset with OTP
 <td width="50%">
 
 ### **🛡️ Protected Routes**
+
 ```
 # User Routes
 GET  /api/user/profile        - User profile
 POST /api/auth/refresh        - Token refresh
 
-# Admin Routes  
+# Admin Routes
 POST /api/admin/signin        - Admin login
 GET  /api/admin/users         - All users
 GET  /api/admin/users/:id     - Specific user
@@ -376,6 +384,7 @@ GET  /api/admin/analytics     - System analytics
 <td width="33.33%">
 
 ### **🔧 Development**
+
 ```bash
 pnpm dev                      # Both servers
 pnpm --prefix server dev      # Backend only
@@ -386,6 +395,7 @@ pnpm --prefix web dev         # Frontend only
 <td width="33.33%">
 
 ### **🧪 Testing & Quality**
+
 ```bash
 pnpm --prefix server test     # Backend tests
 pnpm --prefix web lint        # Lint frontend
@@ -396,6 +406,7 @@ pnpm format                   # Format code
 <td width="33.33%">
 
 ### **🚀 Production**
+
 ```bash
 pnpm --prefix server build    # Build backend
 pnpm --prefix web build       # Build frontend
@@ -412,26 +423,28 @@ pnpm --prefix server start    # Start production
 
 <div align="center">
 
-| Feature | Description | Implementation |
-|---------|-------------|----------------|
-| 🔐 **JWT Authentication** | Secure token-based auth | Automatic token refresh |
-| 🛡️ **Role-Based Access** | User/Admin role control | Protected route middleware |
-| 🔥 **Firebase OAuth** | Social login integration | Server-side token validation |
-| 🍪 **HTTP-Only Cookies** | XSS attack prevention | Secure cookie configuration |
-| 🔒 **Password Security** | Strong password hashing | bcrypt with 10 rounds |
-| ⚡ **Rate Limiting** | DDoS protection | Request throttling + CORS |
-| ✅ **Input Validation** | Data integrity | Comprehensive Joi schemas |
-| 🚫 **Injection Prevention** | SQL injection protection | Parameterized queries |
+| Feature                     | Description              | Implementation               |
+| --------------------------- | ------------------------ | ---------------------------- |
+| 🔐 **JWT Authentication**   | Secure token-based auth  | Automatic token refresh      |
+| 🛡️ **Role-Based Access**    | User/Admin role control  | Protected route middleware   |
+| 🔥 **Firebase OAuth**       | Social login integration | Server-side token validation |
+| 🍪 **HTTP-Only Cookies**    | XSS attack prevention    | Secure cookie configuration  |
+| 🔒 **Password Security**    | Strong password hashing  | bcrypt with 10 rounds        |
+| ⚡ **Rate Limiting**        | DDoS protection          | Request throttling + CORS    |
+| ✅ **Input Validation**     | Data integrity           | Comprehensive Joi schemas    |
+| 🚫 **Injection Prevention** | SQL injection protection | Parameterized queries        |
 
 </div>
 
 ### **🔥 Firebase Setup**
+
 1. Create Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
 2. Enable Authentication providers (Google, GitHub)
 3. Generate service account key
 4. Configure authorized domains
 
 ### **✅ Production Checklist**
+
 - [ ] Environment variables configured
 - [ ] MongoDB Atlas connection established
 - [ ] Firebase production settings applied
@@ -468,7 +481,7 @@ pnpm --prefix server start    # Start production
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 **🎯 This means you can use, modify, distribute, and even sell this code!**  
-*Just keep the license notice intact.*
+_Just keep the license notice intact._
 
 </div>
 
@@ -478,14 +491,15 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🌟 **Ready to build your next project?**
 
-### *This template provides everything you need to start building production-ready applications with clean architecture that scales with your requirements.*
+### _This template provides everything you need to start building production-ready applications with clean architecture that scales with your requirements._
 
 **💝 100% Free & Open Source • 🏗️ Built with Modern Technologies • 🚀 Production Ready**
 
 ---
 
 ### **⭐ If this project helped you, please consider giving it a star!**
-*It helps others discover this template and motivates continued development.*
+
+_It helps others discover this template and motivates continued development._
 
 [![GitHub stars](https://img.shields.io/github/stars/sinanptm/fullstack-clean-auth-template?style=social)](https://github.com/sinanptm/fullstack-clean-auth-template)
 

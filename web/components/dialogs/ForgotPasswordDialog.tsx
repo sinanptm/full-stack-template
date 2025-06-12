@@ -30,7 +30,7 @@ const ForgotPasswordDialog = ({
     reset,
   } = useForm<ForgotPasswordData>({
     resolver: zodResolver(forgotPasswordSchema),
-    mode: "onBlur"
+    mode: "onBlur",
   });
   const { mutate, isPending } = useForgotPasswordUser();
 
@@ -39,7 +39,7 @@ const ForgotPasswordDialog = ({
       mutate(data);
       reset();
       onSubmit?.();
-      onOpenChange(false)
+      onOpenChange(false);
     } catch (error) {
       console.error("Forgot password submission error:", error);
     }
