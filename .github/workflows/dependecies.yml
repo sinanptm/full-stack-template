@@ -1,0 +1,47 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly on Sunday at midnight
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  update:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+        
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
+    - name: Update dependencies
+      run: |
+        pnpm update --latest
+        pnpm --prefix server update --latest
+        pnpm --prefix web update --latest
+        
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore: update dependencies'
+        title: 'chore: update dependencies'
+        body: |
+          This PR updates all dependencies to their latest versions.
+          
+          Please review the changes and test thoroughly before merging.
+        branch: update-dependencies
+        delete-branch: true

@@ -1,0 +1,113 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  server:
+    name: Server Tests & Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+        
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
+    - name: Install dependencies
+      run: pnpm install
+      
+    - name: Run server tests
+      run: pnpm test
+      env:
+        NODE_ENV: test
+        
+    - name: Build server
+      run: pnpm --prefix server build
+      
+    - name: Upload server build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: server-build
+        path: server/dist/
+
+  # Test and Build Web
+  web:
+    name: Web Build & Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+        
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
+    - name: Install dependencies
+      run: pnpm install
+      
+    - name: Lint web app
+      run: pnpm --prefix web lint
+      
+    - name: Build web app
+      run: pnpm --prefix web build
+      env:
+        NEXT_TELEMETRY_DISABLED: 1
+        
+    - name: Upload web build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: web-build
+        path: web/.next/
+
+  # Code Quality Checks
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+        
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
+    - name: Install dependencies
+      run: pnpm install
+      
+    - name: Check formatting
+      run: pnpm format --check
+      
+    - name: Type check server
+      run: pnpm --prefix server exec tsc --noEmit
+      
+    - name: Type check web
+      run: pnpm --prefix web exec tsc --noEmit

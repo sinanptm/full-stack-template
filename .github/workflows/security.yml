@@ -1,0 +1,40 @@
+name: Security Audit
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+        
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
+    - name: Install dependencies
+      run: pnpm install
+      
+    - name: Run security audit
+      run: pnpm audit
+      
+    - name: Check for vulnerabilities
+      run: |
+        pnpm --prefix server audit --audit-level moderate
+        pnpm --prefix web audit --audit-level moderate

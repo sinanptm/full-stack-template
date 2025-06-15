@@ -32,11 +32,11 @@ const OAuthButtons = ({ className = "" }: { className?: string }) => {
         };
 
         mutate(serverPayload);
-      } catch (error: any) {
+      } catch (error) {
         console.log(error);
       }
     },
-    [mutate],
+    [mutate, auth],
   );
 
   return (
