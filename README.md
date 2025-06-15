@@ -44,6 +44,7 @@ This is a comprehensive full-stack authentication template designed with clean a
 - **Comprehensive Testing** - Unit and integration tests included
 - **Development Tools** - ESLint, Prettier, Hot reload
 - **Deployment Ready** - Production-optimized builds
+- **CI/CD Pipeline** - Automated testing, building, and quality checks
 
 ## Technology Stack
 
@@ -56,6 +57,7 @@ This is a comprehensive full-stack authentication template designed with clean a
 | **State Management** | Zustand, React Query |
 | **Development** | ESLint, Prettier, Jest |
 | **Security** | bcrypt, CORS, Rate Limiting, Joi Validation |
+| **CI/CD** | GitHub Actions, Automated Testing, Code Quality Checks |
 
 ## Architecture
 
@@ -157,6 +159,27 @@ graph TB
     style AA fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px,color:#000000
 ```
 
+## CI/CD Pipeline
+
+### 🔄 Automated Workflows
+- **Continuous Integration** - Automated testing and building on every push
+- **Quality Assurance** - Code formatting, linting, and type checking
+- **Security Auditing** - Weekly dependency vulnerability scans
+- **Dependency Management** - Automated dependency updates with PR creation
+
+### GitHub Actions Workflows
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| **CI/CD Pipeline** | Push to `main`/`develop`, PRs | Build, test, and quality checks |
+| **Security Audit** | Weekly schedule, Push/PR | Vulnerability scanning |
+| **Update Dependencies** | Weekly schedule, Manual | Automated dependency updates |
+
+#### Pipeline Features
+- **Parallel Execution** - Server and web builds run simultaneously
+- **Caching Strategy** - Optimized build times with dependency caching
+- **Artifact Management** - Build artifacts stored for deployment
+- **Multi-stage Validation** - Tests, linting, and type checking
 
 ## Getting Started
 
@@ -341,19 +364,6 @@ pnpm lint         # Lint frontend code
 1. Connect your GitHub repository to Vercel
 2. Configure environment variables in Vercel dashboard
 3. Deploy with automatic CI/CD
-
-#### Railway/Render (Backend)
-1. Connect your GitHub repository
-2. Configure environment variables
-3. Set up automatic deployments
-
-#### Docker Deployment
-```bash
-# Build and run with Docker Compose
-docker-compose up --build
-```
-
-## Contributing
 
 We welcome contributions from the community! Here's how you can help:
 
