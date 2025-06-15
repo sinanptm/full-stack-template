@@ -8,6 +8,9 @@
 
 ### 🌟 _Production-ready full-stack template with clean architecture and complete authentication system_
 
+<img width="1710" alt="image" src="https://github.com/user-attachments/assets/cbbfc5f3-c470-4426-a823-aaf796607203" />
+
+
 **🎯 Built for Easy Customization & Rapid Development**  
 **📚 Documentation: https://full-stack-clean-auth-template.vercel.app/**
 
