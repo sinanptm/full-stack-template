@@ -1,3 +1,5 @@
+
+# .github/workflows/ci.yml
 name: CI/CD Pipeline
 
 on:
@@ -7,6 +9,7 @@ on:
     branches: [ main ]
 
 jobs:
+  # Test and Build Server
   server:
     name: Server Tests & Build
     runs-on: ubuntu-latest
@@ -15,16 +18,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'pnpm'
-        
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 10.8.1
         
     - name: Install dependencies
       run: pnpm install
@@ -52,16 +55,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'pnpm'
-        
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 10.8.1
         
     - name: Install dependencies
       run: pnpm install
@@ -80,7 +83,7 @@ jobs:
         name: web-build
         path: web/.next/
 
-  # Code Quality Checks
+ # Code Quality Checks
   quality:
     name: Code Quality
     runs-on: ubuntu-latest
@@ -89,16 +92,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.8.1
+        
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'pnpm'
-        
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 10.8.1
         
     - name: Install dependencies
       run: pnpm install
