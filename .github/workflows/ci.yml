@@ -19,13 +19,23 @@ jobs:
     - name: Install pnpm
       uses: pnpm/action-setup@v4
       
-        
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'pnpm'
         
+    - name: Cache node_modules
+      id: cache-node-modules-server
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          ~/.pnpm-store
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+          
     - name: Install dependencies
       run: pnpm install
       
@@ -61,6 +71,17 @@ jobs:
         node-version: '20'
         cache: 'pnpm'
         
+    - name: Cache node_modules
+      id: cache-node-modules-web
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          ~/.pnpm-store
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+          
     - name: Install dependencies
       run: pnpm install
       
@@ -96,6 +117,17 @@ jobs:
         node-version: '20'
         cache: 'pnpm'
         
+    - name: Cache node_modules
+      id: cache-node-modules-quality
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          ~/.pnpm-store
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+          
     - name: Install dependencies
       run: pnpm install
       
